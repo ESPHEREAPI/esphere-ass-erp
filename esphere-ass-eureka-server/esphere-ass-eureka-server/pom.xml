@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.micrommerce</groupId>
-    <artifactId>eureka-server</artifactId>
+    <artifactId>esphere-ass-eureka-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eureka-server</name>
+    <name>esphere-ass-eureka-server</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>
@@ -33,7 +33,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <start-class>zuul_server.ZuulServerApplication</start-class>
+        <start-class>zuul_server.EurekaServerApplication</start-class>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
    
         <resource.delimiter>@</resource.delimiter>
