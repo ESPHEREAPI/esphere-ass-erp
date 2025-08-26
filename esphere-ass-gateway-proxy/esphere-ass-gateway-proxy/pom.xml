@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.sid</groupId>
-    <artifactId>gateway-proxy</artifactId>
+    <artifactId>esphere-ass-gateway-proxy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gateway-proxy</name>
+    <name>esphere-ass-gateway-proxy</name>
     <description>API Gateway avec Spring Cloud Gateway</description>
     <url/>
     <licenses>
