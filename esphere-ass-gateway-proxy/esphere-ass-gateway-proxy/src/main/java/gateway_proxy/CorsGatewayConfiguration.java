@@ -181,42 +181,42 @@ public class CorsGatewayConfiguration {
     }
 
     // ✅ AJOUT IMPORTANT: Bean pour gérer les requêtes OPTIONS
-    @Bean
-    public WebFilter corsWebFilter2() {
-        return (ServerWebExchange ctx, WebFilterChain chain) -> {
-            ServerHttpRequest request = ctx.getRequest();
-            
-            if (CorsUtils.isCorsRequest(request)) {
-                ServerHttpResponse response = ctx.getResponse();
-                HttpHeaders headers = response.getHeaders();
-                
-                // Ajouter les headers CORS manuellement si nécessaire
-                String origin = request.getHeaders().getOrigin();
-                if (origin != null && (
-                    origin.startsWith("http://localhost:") || 
-                    origin.startsWith("https://localhost:") ||
-                    origin.startsWith("http://easycom-app:")||
-                    origin.startsWith("http://127.0.0.1:")   ||
-                         origin.startsWith("http://192.168.123.")||
-                        origin.startsWith("http://192.168.1.")||
-                        origin.startsWith("http://localhost:4200")
-                )) {
-                    headers.add("Access-Control-Allow-Origin", origin);
-                    headers.add("Access-Control-Allow-Credentials", "true");
-                }
-                
-                if (request.getMethod() == HttpMethod.OPTIONS) {
-                    headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
-                    headers.add("Access-Control-Allow-Headers", "Authorization,Content-Type,Accept,X-Requested-With,Cache-Control");
-                    headers.add("Access-Control-Max-Age", "3600");
-                    response.setStatusCode(HttpStatus.OK);
-                    return Mono.empty();
-                }
-            }
-            
-            return chain.filter(ctx);
-        };
-    }
+//    @Bean
+//    public WebFilter corsWebFilter2() {
+//        return (ServerWebExchange ctx, WebFilterChain chain) -> {
+//            ServerHttpRequest request = ctx.getRequest();
+//            
+//            if (CorsUtils.isCorsRequest(request)) {
+//                ServerHttpResponse response = ctx.getResponse();
+//                HttpHeaders headers = response.getHeaders();
+//                
+//                // Ajouter les headers CORS manuellement si nécessaire
+//                String origin = request.getHeaders().getOrigin();
+//                if (origin != null && (
+//                    origin.startsWith("http://localhost:") || 
+//                    origin.startsWith("https://localhost:") ||
+//                    origin.startsWith("http://easycom-app:")||
+//                    origin.startsWith("http://127.0.0.1:")   ||
+//                         origin.startsWith("http://192.168.123.")||
+//                        origin.startsWith("http://192.168.1.")||
+//                        origin.startsWith("http://localhost:4200")
+//                )) {
+//                    headers.add("Access-Control-Allow-Origin", origin);
+//                    headers.add("Access-Control-Allow-Credentials", "true");
+//                }
+//                
+//                if (request.getMethod() == HttpMethod.OPTIONS) {
+//                    headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
+//                    headers.add("Access-Control-Allow-Headers", "Authorization,Content-Type,Accept,X-Requested-With,Cache-Control");
+//                    headers.add("Access-Control-Max-Age", "3600");
+//                    response.setStatusCode(HttpStatus.OK);
+//                    return Mono.empty();
+//                }
+//            }
+//            
+//            return chain.filter(ctx);
+//        };
+//    }
 }
 
 

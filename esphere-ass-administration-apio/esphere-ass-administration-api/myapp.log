@@ -1,0 +1,99 @@
+2025-08-30T11:03:52.897+01:00  WARN 13296 --- [esphere-ass-microservice-admin] [HikariPool-1 housekeeper] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16h54m56s892ms726µs700ns).
+2025-08-30T11:07:46.929+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2025-08-30T11:07:46.985+01:00 TRACE 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] o.s.t.i.TransactionInterceptor           : No need to create transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.posteTravailByUsername]: This method is not transactional.
+2025-08-30T11:07:46.989+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] org.hibernate.orm.sql.exec               : Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-08-30T11:07:46.990+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] org.hibernate.SQL                        : 
+    /* SELECT
+        p 
+    FROM
+        PosteTravail p 
+    WHERE
+        p.nomUtil = :username */ select
+            pt1_0.nom_util,
+            pt1_0.abreuser,
+            pt1_0.aczoatpr,
+            pt1_0.agenenca,
+            pt1_0.aucrasva,
+            pt1_0.autaccbe,
+            pt1_0.autocomp,
+            pt1_0.caischeq,
+            pt1_0.caisdepe,
+            pt1_0.caisrece,
+            pt1_0.chemword,
+            pt1_0.codageba,
+            pt1_0.codbanba,
+            pt1_0.codeinte,
+            pt1_0.codelang,
+            pt1_0.codpropr,
+            pt1_0.condwher,
+            pt1_0.ctrimpat,
+            pt1_0.devarapp,
+            pt1_0.entigest,
+            pt1_0.fixerecu,
+            pt1_0.flagfoia,
+            pt1_0.flagstoc,
+            pt1_0.fordevat,
+            pt1_0.forinteq,
+            pt1_0.forintre,
+            pt1_0.gsm_user,
+            pt1_0.intgessi,
+            pt1_0.mailuser,
+            pt1_0.natuutil,
+            pt1_0.nivvisdo,
+            pt1_0.noefpotr,
+            pt1_0.nombacat,
+            pt1_0.nomimpat,
+            pt1_0.ousisusi,
+            pt1_0.recutech,
+            pt1_0.sitecomp,
+            pt1_0.suivsini,
+            pt1_0.tauencco,
+            pt1_0.valcomre,
+            pt1_0.valtecre 
+        from
+            poste_travail pt1_0 
+        where
+            pt1_0.nom_util=?
+2025-08-30T11:07:46.994+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] org.hibernate.orm.sql.exec               : Skipping reading Query result cache data: cache-enabled = false, cache-mode = IGNORE
+2025-08-30T11:07:46.994+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] org.hibernate.SQL                        : 
+    select
+        pu1_0.codeprof,
+        pu1_0.abreuser,
+        pu1_0.aczoatpr,
+        pu1_0.aucrasva,
+        pu1_0.codelang,
+        pu1_0.ctrimpat,
+        pu1_0.fixerecu,
+        pu1_0.flagstoc,
+        pu1_0.fordevat,
+        pu1_0.forinteq,
+        pu1_0.forintre,
+        pu1_0.libeprof,
+        pu1_0.ousisusi,
+        pu1_0.suivsini,
+        pu1_0.valcomre,
+        pu1_0.valtecre 
+    from
+        profil_user pu1_0 
+    where
+        pu1_0.codeprof=?
+2025-08-30T11:07:47.010+01:00 DEBUG 13296 --- [esphere-ass-microservice-admin] [http-nio-9002-exec-8] [68b2cd722916b8149a0f29c3d25a7f7b-e0ebd52deec5ac35] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2025-08-30T11:08:04.280+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:13:04.291+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:18:04.321+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:23:04.330+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:28:04.338+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:33:04.342+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:38:04.343+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:43:04.354+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:48:04.361+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:53:04.376+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T11:58:04.385+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:03:04.387+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:08:04.403+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:13:04.415+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:18:04.422+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:23:04.434+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:28:04.443+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:33:04.448+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-08-30T12:38:04.449+01:00  INFO 13296 --- [esphere-ass-microservice-admin] [AsyncResolver-bootstrap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
