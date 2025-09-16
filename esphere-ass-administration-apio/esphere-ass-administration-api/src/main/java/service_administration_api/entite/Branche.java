@@ -12,9 +12,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  *
@@ -29,6 +31,9 @@ import java.math.BigInteger;
     @NamedQuery(name = "Branche.findByNumeLot", query = "SELECT b FROM Branche b WHERE b.numeLot = :numeLot"),
     @NamedQuery(name = "Branche.findByCodbraor", query = "SELECT b FROM Branche b WHERE b.codbraor = :codbraor")})
 public class Branche implements Serializable {
+
+    @OneToMany(mappedBy = "codebran")
+    private List<Categorie> categorieList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -121,6 +126,14 @@ public class Branche implements Serializable {
     @Override
     public String toString() {
         return "service_administration_api.entite.Branche[ codebran=" + codebran + " ]";
+    }
+
+    public List<Categorie> getCategorieList() {
+        return categorieList;
+    }
+
+    public void setCategorieList(List<Categorie> categorieList) {
+        this.categorieList = categorieList;
     }
     
 }
