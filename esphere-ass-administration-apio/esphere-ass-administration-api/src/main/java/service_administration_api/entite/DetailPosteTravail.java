@@ -5,14 +5,13 @@
 package service_administration_api.entite;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import java.io.Serializable;
+import java.util.Objects;
 import lombok.Data;
 
 /**
@@ -21,136 +20,173 @@ import lombok.Data;
  */
 @Entity
 @Data
-@Table(name = "DETAIL_POSTE_TRAVAIL", schema = "ORASSADM",
-       uniqueConstraints = {
-           @UniqueConstraint(name = "UNI_DETAIL_POSTE_TRAVAIL", 
-                           columnNames = {"NOM_UTIL", "CODEINTE", "CODEBRAN", "CODECATE"})
-       })
-public class DetailPosteTravail implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Clé primaire technique auto-générée
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "detail_poste_seq")
-    @SequenceGenerator(name = "detail_poste_seq", 
-                      sequenceName = "SEQ_DETAIL_POSTE_TRAVAIL", 
-                      schema = "ORASSADM",
-                      allocationSize = 1)
-    @Column(name = "ID")
-    private Long id;
-
+@Table(name = "DETAIL_POSTE_TRAVAIL")
+      
+public class DetailPosteTravail {
     
-    /**
-     * Nom de l'utilisateur - Partie de la contrainte d'unicité métier
-     */
-    @Column(name = "NOM_UTIL", length = 30, nullable = false)
-    private String nomUtil;
-
-    /**
-     * Code interne - Partie de la contrainte d'unicité métier
-     */
-    @Column(name = "CODEINTE", precision = 5)
-    private Integer codeInte;
-
-    /**
-     * Code branche - Partie de la contrainte d'unicité métier
-     */
-    @Column(name = "CODEBRAN", precision = 2, nullable = false)
-    private Integer codeBran;
-
-    /**
-     * Code catégorie - Partie de la contrainte d'unicité métier
-     */
-    @Column(name = "CODECATE", precision = 5)
-    private Integer codeCate;
-
-    /**
-     * Validation AN - Valeur par défaut 'O'
-     */
+    @EmbeddedId
+    private DetailPosteTravailId id;
+    
     @Column(name = "VALI__AN", length = 1, columnDefinition = "VARCHAR2(1) DEFAULT 'O'")
     private String valiAn = "O";
-
-    /**
-     * Validation AV - Valeur par défaut 'O'
-     */
+    
     @Column(name = "VALI__AV", length = 1, columnDefinition = "VARCHAR2(1) DEFAULT 'O'")
     private String valiAv = "O";
-
-    /**
-     * Stock attendu
-     */
+    
     @Column(name = "STOCATTE", length = 1)
     private String stocAtte;
-
-    // Relations avec les autres entités (optionnelles)
     
-    /**
-     * Relation vers la table BRANCHE
-     */
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CODEBRAN", referencedColumnName = "CODEBRAN")
-//    private Branche branche;
-//
-//    /**
-//     * Relation vers la table CATEGORIE
-//     */
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CODECATE", referencedColumnName = "CODECATE")
-//    private Categorie categorie;
-//
-//    /**
-//     * Relation vers la table POSTE_TRAVAIL
-//     */
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "NOM_UTIL", referencedColumnName = "NOM_UTIL")
-//    private PosteTravail posteTravail;
-
+    // Relations avec les entités référencées (optionnel)
+    // Utilisation d'AttributeOverride pour éviter les conflits
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NOM_UTIL", referencedColumnName = "NOM_UTIL", insertable = false, updatable = false)
+    private PosteTravail posteTravail;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CODEBRAN", referencedColumnName = "CODEBRAN", insertable = false, updatable = false)
+    private Branche branche;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CODECATE", referencedColumnName = "CODECATE", insertable = false, updatable = false)
+    private Categorie categorie;
+    
     // Constructeurs
     public DetailPosteTravail() {
-        super();
+        this.id = new DetailPosteTravailId();
     }
-
-    public DetailPosteTravail(String nomUtil, Integer codeInte, Integer codeBran, Integer codeCate) {
-        this.nomUtil = nomUtil;
-        this.codeInte = codeInte;
-        this.codeBran = codeBran;
-        this.codeCate = codeCate;
+    
+    public DetailPosteTravail(String nomUtil, Integer codeInte, Integer codeBran, Integer codecate) {
+        this.id = new DetailPosteTravailId(nomUtil, codeInte, codeBran, codecate);
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    
+    public DetailPosteTravail(DetailPosteTravailId id) {
         this.id = id;
     }
-
+    
+    // Getters et Setters pour l'ID
+    public DetailPosteTravailId getId() {
+        return id;
+    }
+    
+    public void setId(DetailPosteTravailId id) {
+        this.id = id;
+    }
+    
+    // Méthodes utilitaires pour accéder aux champs de l'ID sans exposer l'objet complet
+    public String getNomUtil() {
+        return id != null ? id.getNomUtil() : null;
+    }
+    
+    public void setNomUtil(String nomUtil) {
+        if (id == null) {
+            id = new DetailPosteTravailId();
+        }
+        id.setNomUtil(nomUtil);
+    }
+    
+    public Integer getCodeInte() {
+        return id != null ? id.getCodeInte() : null;
+    }
+    
+    public void setCodeInte(Integer codeInte) {
+        if (id == null) {
+            id = new DetailPosteTravailId();
+        }
+        id.setCodeInte(codeInte);
+    }
+    
+    public Integer getCodeBran() {
+        return id != null ? id.getCodeBran() : null;
+    }
+    
+    public void setCodeBran(Integer codeBran) {
+        if (id == null) {
+            id = new DetailPosteTravailId();
+        }
+        id.setCodeBran(codeBran);
+    }
+    
+    public Integer getCodecate() {
+        return id != null ? id.getCodecate() : null;
+    }
+    
+    public void setCodecate(Integer codecate) {
+        if (id == null) {
+            id = new DetailPosteTravailId();
+        }
+        id.setCodecate(codecate);
+    }
+    
+    // Getters et Setters pour les autres champs
+    public String getValiAn() {
+        return valiAn;
+    }
+    
+    public void setValiAn(String valiAn) {
+        this.valiAn = valiAn;
+    }
+    
+    public String getValiAv() {
+        return valiAv;
+    }
+    
+    public void setValiAv(String valiAv) {
+        this.valiAv = valiAv;
+    }
+    
+    public String getStocAtte() {
+        return stocAtte;
+    }
+    
+    public void setStocAtte(String stocAtte) {
+        this.stocAtte = stocAtte;
+    }
+    
+    public PosteTravail getPosteTravail() {
+        return posteTravail;
+    }
+    
+    public void setPosteTravail(PosteTravail posteTravail) {
+        this.posteTravail = posteTravail;
+    }
+    
+    public Branche getBranche() {
+        return branche;
+    }
+    
+    public void setBranche(Branche branche) {
+        this.branche = branche;
+    }
+    
+    public Categorie getCategorie() {
+        return categorie;
+    }
+    
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DetailPosteTravail that = (DetailPosteTravail) o;
+        return Objects.equals(id, that.id);
+    }
+    
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return Objects.hash(id);
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DetailPosteTravail)) {
-            return false;
-        }
-        DetailPosteTravail other = (DetailPosteTravail) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
+    
     @Override
     public String toString() {
-        return "service_administration_api.entite.DetailPosteTravail[ id=" + id + " ]";
+        return "DetailPosteTravail{" +
+               "id=" + id +
+               ", valiAn='" + valiAn + '\'' +
+               ", valiAv='" + valiAv + '\'' +
+               ", stocAtte='" + stocAtte + '\'' +
+               '}';
     }
     
 }
