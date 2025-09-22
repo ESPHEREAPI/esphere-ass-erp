@@ -9,14 +9,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>sid.org</groupId>
-    <artifactId>biometry</artifactId>
+    <artifactId>biometry-angular</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>biometry</name>
+    <name>biometry-angular</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>21</java.version>
         <spring-cloud.version>2024.0.1</spring-cloud.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <start-class>db.biometry.biometry.BiometryApplication</start-class>
@@ -100,10 +103,16 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <!--<version>1.18.34</version>  compatible Java 17/21 & Spring Boot 3 -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,7 +120,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-      <dependencyManagement>
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -129,7 +138,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+       
         </plugins>
+       
+    
+
     </build>
 
 </project>
