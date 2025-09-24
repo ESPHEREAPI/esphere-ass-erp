@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer>{
-    Utilisateur findByLogin(String username);
+    Utilisateur findByLogin(String login);
     @Query("SELECT u FROM Utilisateur u WHERE u.nom  like :kw or u.login like :kw")
      public List<Utilisateur> searchUser(@Param(value ="kw")String keyword);
     

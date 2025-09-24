@@ -32,20 +32,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("service-biometrie/auth" +
-"server.port=8080")
+@RequestMapping("auth/users")
 public class UtlisateurRestController {
 
     private UtilisateurService utilisateurService;
      private EmployeRepository employeRepository;
     private MapperDtoImpl mappers;
 
-    @GetMapping("/users")
+    @GetMapping("/alls")
     public List<UtilisateurDto> listeusers() {
         return utilisateurService.listeUtilisateur();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public UtilisateurDto getUser(@PathVariable(name = "id") int userId) {
         UtilisateurDto userDto = new UtilisateurDto();
         try {
@@ -59,7 +58,7 @@ public class UtlisateurRestController {
         return userDto;
     }
     
-  @PostMapping("/users/login")  
+  @PostMapping("/login")  
   public UserSessionDTO connect(@RequestBody UserLogin userLogin){
       UserDTO user=utilisateurService.findUserByLogin(userLogin);
       Employe employe=getEmployeByLogin(userLogin.getLogin());
@@ -67,7 +66,7 @@ public class UtlisateurRestController {
       return userSessionDTO;
   }
   
-  @GetMapping("/users/search")
+  @GetMapping("/search")
   public List<UtilisateurDto> searchUsers(@RequestParam(name = "keyword", defaultValue = "")String keyword){
       return utilisateurService.seacrhUsers(keyword);
   }
