@@ -15,6 +15,6 @@ import lombok.Data;
 @Data
 public class UserLogin implements Serializable{
     private int id;
-  private String login;
-  private   String motPasse;
+  private String username;
+  private   String password;
 }

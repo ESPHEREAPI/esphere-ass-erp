@@ -11,9 +11,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 
 /**
@@ -87,5 +89,26 @@ public class JwtExpiration {
                 .compact();
         
     }
-     
+      public static  LocalDateTime convetLongToDate(Long time){
+         long millis = 1731502800000L; // Exemple : timestamp en millisecondes
+        LocalDateTime dateTime = Instant.ofEpochMilli(millis)
+                                        .atZone(ZoneId.systemDefault())
+                                        .toLocalDateTime();
+        System.out.println("LocalDateTime  : " + dateTime);
+
+        // Formatage de la date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dateFormatee = dateTime.format(formatter);
+
+        System.out.println("Date correspondante : " + dateFormatee);
+        return  dateTime;
+    }
+     public static Long convertToLong(LocalDateTime dateTime){
+         // LocalDateTime dateTime = LocalDateTime.of(2025, 11, 13, 14, 0, 0); // exemple
+        ZonedDateTime zdt = dateTime.atZone(ZoneId.systemDefault());
+        long millis = zdt.toInstant().toEpochMilli();
+
+        System.out.println("Timestamp en millisecondes : " + millis);
+        return millis;
+     }
 }

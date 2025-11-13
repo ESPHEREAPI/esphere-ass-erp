@@ -32,8 +32,9 @@ public class MapperDtoImpl {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(employe.getUtilisateurId().getLogin());
         userDTO.setPrestataire(employe.getPrestataireId().getNom());
-        userDTO.setNomcomplet(employe.getUtilisateurId().getNom());
+        userDTO.setNomcomplet((employe.getUtilisateurId().getPrenom()==null || employe.getUtilisateurId().getPrenom()=="") ? employe.getUtilisateurId().getNom(): employe.getUtilisateurId().getPrenom()+" "+employe.getUtilisateurId().getNom());
         userDTO.setProfil(employe.getProfilId().getId());
+        userDTO.setProfil_name(employe.getProfilId().getCode());
 
         // Création de l'objet UserSessionDTO
         UserSessionDTO userSessionDTO = new UserSessionDTO();

@@ -1,224 +1,285 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gateway_proxy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
 
 /**
- *
+ * Configuration CORS pour Spring Cloud Gateway
+ * 
+ * RÔLE : Permet au frontend Angular (localhost:4200) de communiquer 
+ *        avec les microservices via la Gateway (localhost:8080)
+ * 
+ * ORDRE D'EXÉCUTION : @Order(-1) = Priorité maximale
+ *                     Ce filtre s'exécute AVANT tous les autres
+ * 
  * @author USER01
  */
 @Configuration
 public class CorsGatewayConfiguration {
-//     @Bean
-//    public CorsWebFilter corsWebFilter() {
-//        CorsConfiguration corsConfig = new CorsConfiguration();
-//        
-//        // Définir une seule origine, pas plusieurs
-//        corsConfig.addAllowedOrigin("http://localhost:4200");
-//        corsConfig.addAllowedOrigin("http://localhost:8080");
-//        
-//        // Pour permettre les cookies si nécessaire
-//        corsConfig.setAllowCredentials(true);
-//        
-//        // Autres configurations
-//        corsConfig.addAllowedHeader("*");
-//        corsConfig.addAllowedMethod("*");
-//        
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfig);
-//        
-//        return new CorsWebFilter( source);
-//    }
-//    
 
-//    @Bean
-//    public CorsWebFilter corsWebFilter() {
-//        CorsConfiguration corsConfig = new CorsConfiguration();
-//
-//        // Permettre spécifiquement l'origine qui génère l'erreur
-//        corsConfig.addAllowedOrigin("http://easycom-app");
-//        corsConfig.addAllowedOrigin("http://easycom-app:80");
-//        corsConfig.addAllowedOrigin("http://localhost:3000");
-//        corsConfig.addAllowedOrigin("http://localhost:8080");
-//        corsConfig.addAllowedOrigin("http://localhost:4200");
-//        //corsConfig.addAllowedOrigin("http://localhost:9002");
-//
-//        // Pour permettre les cookies - IMPORTANT pour les requêtes authentifiées
-//        corsConfig.setAllowCredentials(true);
-//
-//        // Configurer les headers autorisés - nécessaire pour les requêtes préliminaires (preflight)
-//        corsConfig.addAllowedHeader("*");
-//        corsConfig.addAllowedHeader("Authorization");
-//        corsConfig.addAllowedHeader("Content-Type");
-//        corsConfig.addAllowedHeader("Accept");
-//        // Ajoutez ces headers exposés dans votre configuration CORS
-//
-//        corsConfig.addExposedHeader("Content-Length");
-//        corsConfig.addExposedHeader("Date");
-//        corsConfig.addExposedHeader("Server");
-//
-//        // Configurer les méthodes autorisées
-//        corsConfig.addAllowedMethod("*");
-//
-//        // Exposer les headers pour permettre l'accès côté client
-//        corsConfig.addExposedHeader("Authorization");
-//        corsConfig.addExposedHeader("Access-Control-Allow-Origin");
-//
-//        // Configurer le temps d'expiration du cache de pré-vérification en secondes
-//        corsConfig.setMaxAge(3600L);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfig);
-//
-//        return new CorsWebFilter(source);
-//    }
-
-//     @Bean
-//     @Order(-1)
-//    public CorsWebFilter corsWebFilter() {
-//        CorsConfiguration corsConfig = new CorsConfiguration();
-//        
-//        // Configuration simplifiée et corrigée
-//        corsConfig.addAllowedOriginPattern("http://localhost:*"); // Permet tous les ports localhost
-//        corsConfig.addAllowedOriginPattern("http://easycom-app*"); // Permet vos apps Docker
-//        
-//        // OU si vous préférez être plus spécifique :
-//        // corsConfig.addAllowedOrigin("http://localhost:4200");
-//        // corsConfig.addAllowedOrigin("http://localhost:3000");
-//        // corsConfig.addAllowedOrigin("http://localhost:8080");
-//        // corsConfig.addAllowedOrigin("http://easycom-app");
-//        // corsConfig.addAllowedOrigin("http://easycom-app:80");
-//        
-//        // Credentials - nécessaire pour les requêtes authentifiées
-//        corsConfig.setAllowCredentials(true);
-//        
-//        // Headers autorisés
-//        corsConfig.addAllowedHeader("*");
-//        
-//        // Méthodes autorisées
-//        corsConfig.addAllowedMethod("*");
-//        
-//        // Headers exposés (optionnel)
-//        corsConfig.addExposedHeader("Authorization");
-//        corsConfig.addExposedHeader("Content-Type");
-//        corsConfig.addExposedHeader("Accept");
-//        
-//        // Cache preflight
-//        corsConfig.setMaxAge(3600L);
-//        
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfig);
-//        
-//        return new CorsWebFilter(source);
-//    }
-
- @Bean
+    /**
+     * Configuration CORS globale pour toutes les routes Gateway
+     * 
+     * POURQUOI @Order(-1) ?
+     * - Les requêtes OPTIONS (preflight) doivent être traitées EN PREMIER
+     * - Si un autre filtre s'exécute avant, la requête CORS peut échouer
+     * - L'ordre -1 garantit que CORS est traité en priorité
+     * @return 
+     */
+    @Bean
     @Order(-1)
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
+
+        // ========================================
+        // 1. ORIGINES AUTORISÉES
+        // ========================================
         
-        // ✅ SOLUTION 1: Utiliser addAllowedOriginPattern (recommandé)
+        /**
+         * addAllowedOriginPattern vs addAllowedOrigin :
+         * 
+         * - addAllowedOrigin("http://localhost:4200")
+         *   → Accepte UNIQUEMENT cette URL exacte
+         * 
+         * - addAllowedOriginPattern("http://localhost:*")
+         *   → Accepte tous les ports localhost (4200, 8080, 3000, etc.)
+         *   → Plus flexible pour le développement
+         * 
+         * ⚠️ IMPORTANT : Quand allowCredentials=true, 
+         *    on NE PEUT PAS utiliser "*" comme origine
+         *    On DOIT spécifier les origines exactes ou patterns
+         */
+        
+        // Pattern pour localhost (tous les ports)
         corsConfig.addAllowedOriginPattern("http://localhost:*");
         corsConfig.addAllowedOriginPattern("https://localhost:*");
+        
+        // Pattern pour 127.0.0.1 (équivalent localhost en IP)
+        corsConfig.addAllowedOriginPattern("http://127.0.0.1:*");
+        corsConfig.addAllowedOriginPattern("https://127.0.0.1:*");
+        
+        // Pattern pour réseau local (Docker, VM, etc.)
+        corsConfig.addAllowedOriginPattern("http://192.168.1.*:*");    // Réseau local 1
+        corsConfig.addAllowedOriginPattern("http://192.168.123.*:*");  // Réseau local 2
+        
+        // Origine Docker (conteneur nommé)
         corsConfig.addAllowedOriginPattern("http://easycom-app*");
-         corsConfig.addAllowedOriginPattern("http://192.168.123.*:*");
-          corsConfig.addAllowedOriginPattern("http://192.168.1.*:*");
-                  corsConfig.addAllowedOriginPattern("http://192.168.123.*");
-                  corsConfig.addAllowedOriginPattern("http://192.168.1.*");
-                   corsConfig.addAllowedOriginPattern("http://localhost:4200");
-        // ✅ SOLUTION 2: Ou spécifier les origines exactes (plus sécurisé)
-        // corsConfig.addAllowedOrigin("http://localhost:4200");
-        // corsConfig.addAllowedOrigin("http://localhost:3000");
-        // corsConfig.addAllowedOrigin("http://localhost:8080");
         
-        // ✅ Credentials autorisés
+        // Origines spécifiques (plus sécurisé pour production)
+        corsConfig.addAllowedOriginPattern("http://localhost:4200");   // Angular dev
+        corsConfig.addAllowedOriginPattern("https://localhost:4200");  // Angular dev HTTPS
+        
+        /**
+         * 📝 RECOMMANDATION PRODUCTION :
+         * Remplacer les patterns par des origines exactes :
+         * 
+         * corsConfig.addAllowedOrigin("https://app.zenithe-insurance.com");
+         * corsConfig.addAllowedOrigin("https://www.zenithe-insurance.com");
+         */
+
+        // ========================================
+        // 2. CREDENTIALS (Cookies, Auth Headers)
+        // ========================================
+        
+        /**
+         * setAllowCredentials(true) :
+         * 
+         * - Permet l'envoi de cookies et headers d'authentification
+         * - Nécessaire pour JWT, sessions, tokens
+         * - Quand activé, INTERDIT l'utilisation de "*" pour origins
+         * 
+         * ⚠️ Si false, les tokens Bearer ne seront PAS envoyés automatiquement
+         */
         corsConfig.setAllowCredentials(true);
+
+        // ========================================
+        // 3. HEADERS AUTORISÉS (Request)
+        // ========================================
         
-        // ✅ Headers autorisés - spécifiez les headers nécessaires
-        corsConfig.addAllowedHeader("Authorization");
-        corsConfig.addAllowedHeader("Content-Type");
-        corsConfig.addAllowedHeader("Accept");
-        corsConfig.addAllowedHeader("X-Requested-With");
-        corsConfig.addAllowedHeader("Cache-Control");
+        /**
+         * Headers que le frontend PEUT envoyer au backend
+         * 
+         * Ces headers sont vérifiés lors de la requête preflight (OPTIONS)
+         * Si un header n'est pas autorisé, la requête échouera
+         */
+        corsConfig.addAllowedHeader("Authorization");      // Token JWT Bearer
+        corsConfig.addAllowedHeader("Content-Type");       // application/json
+        corsConfig.addAllowedHeader("Accept");             // application/json
+        corsConfig.addAllowedHeader("X-Requested-With");   // XMLHttpRequest
+        corsConfig.addAllowedHeader("Cache-Control");      // Gestion cache
+        corsConfig.addAllowedHeader("X-Gateway-Token");    // Token Gateway personnalisé
         
-        // ✅ Méthodes autorisées
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
-        corsConfig.addAllowedMethod("OPTIONS");
-        corsConfig.addAllowedMethod("PATCH");
+        /**
+         * Alternative : corsConfig.addAllowedHeader("*");
+         * Autorise TOUS les headers
+         * ⚠️ Moins sécurisé mais plus flexible en développement
+         */
+
+        // ========================================
+        // 4. MÉTHODES HTTP AUTORISÉES
+        // ========================================
         
-        // ✅ Headers exposés
-        corsConfig.addExposedHeader("Authorization");
-        corsConfig.addExposedHeader("Content-Type");
+        /**
+         * Méthodes que le frontend PEUT utiliser
+         * 
+         * Liste exhaustive pour couvrir tous les cas d'usage REST
+         */
+        corsConfig.addAllowedMethod("GET");      // Lecture
+        corsConfig.addAllowedMethod("POST");     // Création
+        corsConfig.addAllowedMethod("PUT");      // Mise à jour complète
+        corsConfig.addAllowedMethod("PATCH");    // Mise à jour partielle
+        corsConfig.addAllowedMethod("DELETE");   // Suppression
+        corsConfig.addAllowedMethod("OPTIONS");  // Preflight (obligatoire)
+        corsConfig.addAllowedMethod("HEAD");     // Headers seulement
         
-        // ✅ Cache preflight
+        /**
+         * Alternative : corsConfig.addAllowedMethod("*");
+         * Autorise TOUTES les méthodes
+         */
+
+        // ========================================
+        // 5. HEADERS EXPOSÉS (Response)
+        // ========================================
+        
+        /**
+         * Headers que le frontend PEUT lire dans la réponse
+         * 
+         * Par défaut, seuls ces headers sont accessibles côté client :
+         * - Cache-Control
+         * - Content-Language
+         * - Content-Type
+         * - Expires
+         * - Last-Modified
+         * - Pragma
+         * 
+         * Pour accéder à d'autres headers (ex: Authorization),
+         * il faut les exposer explicitement
+         */
+        corsConfig.addExposedHeader("Authorization");   // Token refresh
+        corsConfig.addExposedHeader("Content-Type");    // Type de contenu
+        corsConfig.addExposedHeader("X-Total-Count");   // Pagination
+        
+        /**
+         * Exemple d'utilisation côté Angular :
+         * 
+         * this.http.get(url).subscribe(response => {
+         *   const token = response.headers.get('Authorization');
+         *   const totalCount = response.headers.get('X-Total-Count');
+         * });
+         */
+
+        // ========================================
+        // 6. CACHE PREFLIGHT
+        // ========================================
+        
+        /**
+         * setMaxAge(3600L) :
+         * 
+         * - Cache la réponse preflight (OPTIONS) pendant 3600 secondes (1 heure)
+         * - Évite de refaire la requête OPTIONS à chaque requête réelle
+         * - Améliore les performances
+         * 
+         * FONCTIONNEMENT :
+         * 1. Frontend fait OPTIONS → Gateway répond avec headers CORS
+         * 2. Navigateur met en cache cette réponse pendant 1 heure
+         * 3. Pendant 1 heure, les requêtes suivantes ne refont PAS de preflight
+         * 4. Après 1 heure, une nouvelle requête OPTIONS sera faite
+         */
         corsConfig.setMaxAge(3600L);
+
+        // ========================================
+        // 7. ENREGISTREMENT DE LA CONFIGURATION
+        // ========================================
         
+        /**
+         * Applique la configuration CORS à toutes les routes
+         * 
+         * "/**" = Toutes les URLs passant par la Gateway
+         * 
+         * Exemples d'URLs couvertes :
+         * - /gateway-proxy/api/service-biometrie/auth/users/login
+         * - /gateway-proxy/api/esphere-ass-microservice-admin/users
+         * - Toutes les autres routes définies dans bootstrap.properties
+         */
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
-        
+
         return new CorsWebFilter(source);
     }
 
-    // ✅ AJOUT IMPORTANT: Bean pour gérer les requêtes OPTIONS
-//    @Bean
-//    public WebFilter corsWebFilter2() {
-//        return (ServerWebExchange ctx, WebFilterChain chain) -> {
-//            ServerHttpRequest request = ctx.getRequest();
-//            
-//            if (CorsUtils.isCorsRequest(request)) {
-//                ServerHttpResponse response = ctx.getResponse();
-//                HttpHeaders headers = response.getHeaders();
-//                
-//                // Ajouter les headers CORS manuellement si nécessaire
-//                String origin = request.getHeaders().getOrigin();
-//                if (origin != null && (
-//                    origin.startsWith("http://localhost:") || 
-//                    origin.startsWith("https://localhost:") ||
-//                    origin.startsWith("http://easycom-app:")||
-//                    origin.startsWith("http://127.0.0.1:")   ||
-//                         origin.startsWith("http://192.168.123.")||
-//                        origin.startsWith("http://192.168.1.")||
-//                        origin.startsWith("http://localhost:4200")
-//                )) {
-//                    headers.add("Access-Control-Allow-Origin", origin);
-//                    headers.add("Access-Control-Allow-Credentials", "true");
-//                }
-//                
-//                if (request.getMethod() == HttpMethod.OPTIONS) {
-//                    headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
-//                    headers.add("Access-Control-Allow-Headers", "Authorization,Content-Type,Accept,X-Requested-With,Cache-Control");
-//                    headers.add("Access-Control-Max-Age", "3600");
-//                    response.setStatusCode(HttpStatus.OK);
-//                    return Mono.empty();
-//                }
-//            }
-//            
-//            return chain.filter(ctx);
-//        };
-//    }
+    /**
+     * ========================================
+     * NOTES IMPORTANTES
+     * ========================================
+     * 
+     * 1. ORDRE DES FILTRES :
+     *    @Order(-1) garantit que CORS s'exécute EN PREMIER
+     *    Si un autre filtre a @Order(0) ou plus, CORS passera avant
+     * 
+     * 2. DOUBLE CONFIGURATION CORS :
+     *    ⚠️ Évitez d'avoir CORS configuré dans :
+     *    - CorsGatewayConfiguration.java (cette classe)
+     *    - bootstrap.properties (spring.cloud.gateway.globalcors.*)
+     *    - Backend Spring Boot (WebConfig.java)
+     *    
+     *    Choisissez UNE seule approche, sinon conflit possible
+     * 
+     * 3. DEBUGGING :
+     *    Pour tester si CORS fonctionne :
+     *    
+     *    curl -X OPTIONS \
+     *      -H "Origin: http://localhost:4200" \
+     *      -H "Access-Control-Request-Method: POST" \
+     *      -H "Access-Control-Request-Headers: Content-Type" \
+     *      -v https://localhost:8080/gateway-proxy/api/service-biometrie/auth/users/login
+     *    
+     *    Réponse attendue :
+     *    < Access-Control-Allow-Origin: http://localhost:4200
+     *    < Access-Control-Allow-Credentials: true
+     *    < Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS,PATCH,HEAD
+     * 
+     * 4. PRODUCTION :
+     *    ❌ Ne PAS utiliser addAllowedOriginPattern("http://localhost:*")
+     *    ✅ Utiliser addAllowedOrigin("https://votredomaine.com")
+     * 
+     * 5. SÉCURITÉ :
+     *    - allowCredentials + wildcard origins = INTERDIT
+     *    - Toujours spécifier les origines exactes en production
+     *    - Limiter les headers autorisés au strict nécessaire
+     */
 }
 
-
-    
-
+/**
+ * ========================================
+ * FAQ - Questions Fréquentes
+ * ========================================
+ * 
+ * Q: Pourquoi ma requête échoue avec "CORS policy" ?
+ * R: 1. Vérifiez que l'origine est dans addAllowedOriginPattern
+ *    2. Vérifiez que la méthode est dans addAllowedMethod
+ *    3. Vérifiez que les headers sont dans addAllowedHeader
+ *    4. Vérifiez les logs Gateway pour voir la requête OPTIONS
+ * 
+ * Q: Dois-je aussi configurer CORS dans le backend Spring Boot ?
+ * R: NON si la Gateway gère déjà CORS
+ *    Le backend ne voit QUE la Gateway, pas le frontend
+ *    CORS doit être configuré à la frontière (Gateway)
+ * 
+ * Q: Quelle est la différence entre cette config et bootstrap.properties ?
+ * R: Cette classe = Configuration Java programmatique (plus flexible)
+ *    bootstrap.properties = Configuration déclarative (plus simple)
+ *    Choisissez l'une ou l'autre, pas les deux
+ * 
+ * Q: Pourquoi @Order(-1) ?
+ * R: Pour que CORS s'exécute AVANT les autres filtres
+ *    Sinon, une authentification pourrait bloquer OPTIONS
+ * 
+ * Q: Que fait exactement maxAge(3600L) ?
+ * R: Cache la réponse preflight pendant 1 heure
+ *    Réduit le nombre de requêtes OPTIONS
+ *    Améliore les performances
+ */
