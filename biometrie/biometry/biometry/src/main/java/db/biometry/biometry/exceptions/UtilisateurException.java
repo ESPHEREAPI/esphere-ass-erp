@@ -8,7 +8,7 @@ package db.biometry.biometry.exceptions;
  *
  * @author JIATOU FRANCK
  */
-public class UtilisateurException extends Exception{
+public class UtilisateurException extends  RuntimeException{
 
     public UtilisateurException(String message) {
         super(message);

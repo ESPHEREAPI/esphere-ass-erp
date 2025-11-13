@@ -25,7 +25,7 @@ public class MapperDtoImpl {
     @Autowired
     PosteTravailRepository posteTravailRepository;
    
-     public UserSessionDTO mapUserSessionDTOByuserDTO(String usename) {
+     public UserDTO mapUserSessionDTOByuserDTO(String usename) {
          PosteTravail p=posteTravailRepository.posteTravailByUsername(usename.toUpperCase());
        // Vérification si l'utilisateur existe
     if (p == null) {
@@ -33,23 +33,26 @@ public class MapperDtoImpl {
     }
 
     // Création de l'objet UserDTO
-    UserDTO userDTO = new UserDTO();
-    userDTO.setUsername(p.getNomUtil());
-    userDTO.setCodeagence(p.getCodeinte());
-    userDTO.setNomcomplet(p.getNoefpotr());
-    userDTO.setProfil(p.getCodpropr() == null ? 0 : p.getCodpropr().getCodeprof());
+    UserDTO userDTO = UserDTO.builder()
+            .username(p.getNomUtil())
+            .codeagence(p.getCodeinte())
+            .nomcomplet(p.getNoefpotr())
+            .profil(p.getCodpropr() == null ? 0 : p.getCodpropr().getCodeprof())
+            .build();
+   
+  
 
     // Création de l'objet UserSessionDTO
     UserSessionDTO userSessionDTO = new UserSessionDTO();
     userSessionDTO.setUserDTO(userDTO);
-    userSessionDTO.setExpiresAt(JwtExpiration.expiresAt(properties.getJwtExpirationMs()));
-         System.out.println("expiration "+ userSessionDTO.getExpiresAt());
+   // userSessionDTO.setExpiresAt(JwtExpiration.expiresAt(properties.getJwtExpirationMs()));
+        // System.out.println("expiration "+ userSessionDTO.getExpiresAt());
     // Génération du token JWT
-    userSessionDTO.setToken(
-        JwtExpiration.generateJwtToken(userDTO.getUsername(), userSessionDTO.getExpiresAt())
-    );
+   // userSessionDTO.setToken(
+    //    JwtExpiration.generateJwtToken(userDTO.getUsername(), userSessionDTO.getExpiresAt())
+  //  );
 
-        return userSessionDTO;
+        return userDTO;
     }
      
      

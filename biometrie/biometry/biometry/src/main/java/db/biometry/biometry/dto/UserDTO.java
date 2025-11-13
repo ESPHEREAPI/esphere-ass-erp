@@ -34,6 +34,7 @@ public class UserDTO {
     private String createdBy;
     private String updateByUserName;
     private String messageEcheck;
+    private String profil_name;
 
     private Boolean autorisationDeletes;
 }

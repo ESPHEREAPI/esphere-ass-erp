@@ -4,20 +4,23 @@
  */
 package service_administration_api.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  *
  * @author USER01
  */
+@Builder
 @Data
 public class UserDTO {
     private Integer codeagence;
-    private String username;
+
    
     private String nomcomplet;
-    private String email;
+
     private String tel;
     private String indicatifPays;
     private String codePays;
@@ -36,4 +39,24 @@ public class UserDTO {
     private String messageEcheck;
 
     private Boolean autorisationDeletes;
+    
+     @JsonProperty("id")
+    private Long id;
+    
+    @JsonProperty("username")
+    private String username;
+    
+    @JsonProperty("email")
+    private String email;
+    
+    @JsonProperty("firstName")
+    private String firstName;
+    
+    @JsonProperty("lastName")
+    private String lastName;
+    
+    @JsonProperty("role")
+    private RoleDTO role;
+    
+  
 }
