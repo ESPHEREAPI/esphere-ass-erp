@@ -11,7 +11,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
  * Configuration CORS pour Spring Cloud Gateway
  * 
  * RÔLE : Permet au frontend Angular (localhost:4200) de communiquer 
- *        avec les microservices via la Gateway (localhost:8080)
+ *        avec les microservices via la Gateway (localhost:8081)
  * 
  * ORDRE D'EXÉCUTION : @Order(-1) = Priorité maximale
  *                     Ce filtre s'exécute AVANT tous les autres
@@ -235,7 +235,7 @@ public class CorsGatewayConfiguration {
      *      -H "Origin: http://localhost:4200" \
      *      -H "Access-Control-Request-Method: POST" \
      *      -H "Access-Control-Request-Headers: Content-Type" \
-     *      -v https://localhost:8080/gateway-proxy/api/service-biometrie/auth/users/login
+     *      -v https://localhost:8081/gateway-proxy/api/service-biometrie/auth/users/login
      *    
      *    Réponse attendue :
      *    < Access-Control-Allow-Origin: http://localhost:4200
