@@ -33,3 +33,320 @@
 2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
 2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
 2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:32:03.716 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:32:03.716 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:32:03.717 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:32:33.718 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:32:33.718 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:32:33.718 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:33:03.731 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:33:03.732 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:33:03.733 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:33:33.735 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:33:33.735 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:33:33.736 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:34:03.736 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:34:03.737 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:34:03.737 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:34:33.750 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:34:33.750 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:34:33.750 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:35:03.761 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:35:03.762 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:35:03.763 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:35:33.774 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:35:33.776 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:35:33.776 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:36:03.789 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:36:03.790 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:36:03.790 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:36:33.796 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:36:33.798 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:36:33.801 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:37:03.808 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:37:03.809 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:37:03.810 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:37:33.822 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:37:33.822 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:37:33.822 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:38:03.826 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:38:03.828 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:38:03.829 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:38:33.838 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:38:33.838 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:38:33.838 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:39:03.842 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:39:03.843 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:39:03.843 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:39:33.846 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:39:33.847 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:39:33.847 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:40:03.851 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:40:03.852 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:40:03.852 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:40:33.856 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:40:33.857 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:40:33.857 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:41:03.861 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:41:03.861 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:41:03.861 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:41:33.867 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:41:33.867 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:41:33.868 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:42:03.869 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:42:03.869 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:42:03.869 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:42:33.878 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:42:33.878 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:42:33.878 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:43:03.888 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:43:03.888 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:43:03.888 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:43:33.891 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:43:33.892 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:43:33.892 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:44:03.899 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:44:03.901 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:44:03.901 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:44:33.910 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:44:33.910 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:44:33.912 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:45:03.916 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:45:03.916 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:45:03.917 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:45:33.918 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:45:33.918 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:45:33.918 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:46:03.930 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:46:03.930 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:46:03.930 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:46:33.944 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:46:33.944 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:46:33.945 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:47:03.950 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:47:03.950 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:47:03.950 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:47:33.956 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:47:33.957 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:47:33.957 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:48:03.966 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:48:03.966 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:48:03.966 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:48:33.971 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:48:33.971 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:48:33.971 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:49:03.984 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:49:03.986 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:49:03.986 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:49:34.000 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:49:34.000 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:49:34.000 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:50:04.005 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:50:04.005 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:50:04.005 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:50:34.007 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:50:34.007 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:50:34.007 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:51:04.018 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:51:04.018 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:51:04.019 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:51:34.021 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:51:34.021 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:51:34.021 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:52:04.024 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:52:04.024 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:52:04.024 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:52:34.039 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:52:34.039 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:52:34.039 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:53:04.049 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:53:04.049 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:53:04.049 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:53:34.062 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:53:34.062 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:53:34.062 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:54:04.070 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:54:04.070 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:54:04.070 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:54:34.077 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:54:34.077 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:54:34.077 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:55:04.079 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:55:04.079 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:55:04.079 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:55:34.086 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:55:34.086 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:55:34.087 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:56:04.088 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:56:04.095 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:56:04.095 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:56:34.108 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:56:34.108 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:56:34.108 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:57:04.135 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:57:04.136 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:57:04.136 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:57:34.143 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:57:34.143 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:57:34.143 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:58:04.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:58:04.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:58:04.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:58:34.153 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:58:34.153 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:58:34.154 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:59:04.156 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:59:04.156 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:59:04.156 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:59:34.159 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:59:34.159 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:59:34.159 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 01:00:04.165 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:04.166 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:04.166 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 01:00:34.175 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:34.175 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:34.175 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 01:00:51.705 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@49acfd78: (connection has passed maxLifetime)
+2025-12-02 01:00:51.741 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@3afa49c8
+2025-12-02 01:00:51.781 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:51.814 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7d3b78de: (connection has passed maxLifetime)
+2025-12-02 01:00:51.826 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@7bc743f3
+2025-12-02 01:00:51.859 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:00:56.671 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@2cc37900: (connection has passed maxLifetime)
+2025-12-02 01:00:56.689 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@4af69879
+2025-12-02 01:00:56.721 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:04.180 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:04.180 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:04.180 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 01:01:30.526 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1d148791: (connection has passed maxLifetime)
+2025-12-02 01:01:30.553 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@3f5e2ccc
+2025-12-02 01:01:30.589 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:33.711 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5c298daa: (connection has passed maxLifetime)
+2025-12-02 01:01:33.742 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e6326f7
+2025-12-02 01:01:33.774 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:34.181 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:34.181 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 01:01:34.181 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:09:43.093 [BiometryHikariPool housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Thread starvation or clock leap detected (housekeeper delta=7h8m15s657ms452µs800ns).
+2025-12-02 08:09:43.094 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.094 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.094 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:09:43.094 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@4af69879: (connection has passed maxLifetime)
+2025-12-02 08:09:43.095 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7bc743f3: (connection has passed maxLifetime)
+2025-12-02 08:09:43.095 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3afa49c8: (connection has passed maxLifetime)
+2025-12-02 08:09:43.096 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7e6326f7: (connection has passed maxLifetime)
+2025-12-02 08:09:43.096 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3f5e2ccc: (connection has passed maxLifetime)
+2025-12-02 08:09:43.100 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@1d82215e
+2025-12-02 08:09:43.139 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=1, active=0, idle=1, waiting=0)
+2025-12-02 08:09:43.143 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@5cbf2b65
+2025-12-02 08:09:43.186 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2025-12-02 08:09:43.193 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@6da9b7e3
+2025-12-02 08:09:43.233 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=3, active=0, idle=3, waiting=0)
+2025-12-02 08:09:43.239 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@3c90d42a
+2025-12-02 08:09:43.279 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=4, active=0, idle=4, waiting=0)
+2025-12-02 08:09:43.283 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@12177953
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:09:43.327 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:10:13.099 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:10:13.099 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:10:13.099 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:10:43.111 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:10:43.111 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:10:43.111 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:11:13.121 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:11:13.121 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:11:13.121 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:11:43.130 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:11:43.130 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:11:43.130 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:12:13.132 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:12:13.132 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:12:13.132 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:12:43.142 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:12:43.143 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:12:43.143 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:13:13.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:13:13.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:13:13.144 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:13:43.146 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:13:43.146 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:13:43.146 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:14:13.151 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:14:13.152 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:14:13.152 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:14:43.161 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:14:43.161 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:14:43.161 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:15:13.168 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:15:13.168 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:15:13.168 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:15:43.110 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:15:43.110 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:15:43.110 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:16:12.960 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:16:12.962 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:16:12.962 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:16:42.810 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:16:42.810 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:16:42.810 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:17:12.658 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:17:12.658 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:17:12.658 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:17:42.504 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:17:42.504 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:17:42.504 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:18:12.343 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:18:12.343 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:18:12.343 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:18:42.195 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:18:42.195 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:18:42.195 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:19:12.040 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:19:12.041 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:19:12.041 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:19:41.885 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:19:41.885 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:19:41.885 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:20:11.733 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:20:11.734 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:20:11.734 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:20:41.643 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:20:41.644 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:20:41.644 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:21:11.647 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:21:11.649 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:21:11.649 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:21:41.655 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:21:41.656 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:21:41.656 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:22:11.659 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:22:11.659 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:22:11.659 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:22:41.666 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:22:41.666 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:22:41.666 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:23:11.674 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:23:11.674 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:23:11.674 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:23:41.684 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:23:41.684 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:23:41.684 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 08:24:11.688 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:24:11.688 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 08:24:11.688 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
