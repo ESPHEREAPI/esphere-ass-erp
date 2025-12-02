@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   
   // Configuration API avec Gateway
-  private readonly API_URL = environment.apiUrl;
+  private readonly API_URL = environment.apiUrl; // https://localhost:8080/gateway-proxy/api/service-biometrie
   private readonly LOGIN_ENDPOINT = '/auth/users/login';
   private readonly LOGOUT_ENDPOINT = '/auth/users/logout';
   private readonly REFRESH_TOKEN_ENDPOINT = '/auth/users/refresh';
@@ -88,9 +88,10 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'X-Gateway-Token': environment.token_key
+      'X-Gateway-Token': environment.token_key // Token Gateway
     });
 
+    // Adapter les credentials au format backend
     const loginData = {
       username: credentials.username,
       password: credentials.password
@@ -120,14 +121,11 @@ export class AuthService {
           const userData = response.data;
           
           if (userData.userDTO) {
-            // Convertir expiresAt en timestamp (millisecondes)
-            const expiresAtTimestamp = this.convertToTimestamp(userData.expiresAt);
-            
             this.storeUserData(
               userData.userDTO, 
               userData.token, 
-              userData.refreshToken ?? "", 
-              expiresAtTimestamp
+              userData.refreshToken, 
+              userData.expiresAt
             );
             this.currentUserSubject.next(userData.userDTO);
             
@@ -210,8 +208,7 @@ export class AuthService {
           }
           
           if (response.expiresAt) {
-            const expiresAtTimestamp = this.convertToTimestamp(response.expiresAt);
-            this.setTokenExpiry(expiresAtTimestamp);
+            this.setTokenExpiry(response.expiresAt);
           }
         }
       }),
@@ -246,33 +243,29 @@ export class AuthService {
       )
       .subscribe({
         next: () => console.log('✅ Token is valid'),
-        error: () => console.error('❌ Token invalid')
+        error: () => console.error('❌ Token is invalid')
       });
   }
 
-  private storeUserData(user: User, token: string, refreshToken: string, expiresAt: number): void {
+  private storeUserData(
+    user: User, 
+    token?: string, 
+    refreshToken?: string, 
+    expiresAt?: Date
+  ): void {
     localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(user));
-    localStorage.setItem(this.AUTH_TOKEN_KEY, token);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-    this.setTokenExpiry(expiresAt);
     
-    if (environment.enableDebugLogs) {
-      console.log('✅ User data stored in localStorage');
+    if (token) {
+      localStorage.setItem(this.AUTH_TOKEN_KEY, token);
     }
-  }
-
-  public getStoredUser(): User | null {
-    const userData = localStorage.getItem(this.CURRENT_USER_KEY);
-    if (userData) {
-      try {
-        return JSON.parse(userData);
-      } catch (e) {
-        console.error('Failed to parse stored user data');
-        this.clearUserData();
-        return null;
-      }
+    
+    if (refreshToken) {
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
     }
-    return null;
+    
+    if (expiresAt) {
+      this.setTokenExpiry(expiresAt);
+    }
   }
 
   private clearUserData(): void {
@@ -281,9 +274,21 @@ export class AuthService {
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.TOKEN_EXPIRY_KEY);
     localStorage.removeItem('remember_me');
+  }
+
+  public  getStoredUser(): User | null {
+    const userJson = localStorage.getItem(this.CURRENT_USER_KEY);
     
-    if (environment.enableDebugLogs) {
-      console.log('✅ User data cleared from localStorage');
+    if (!userJson) {
+      return null;
+    }
+    
+    try {
+      return JSON.parse(userJson).userDTO;
+    } catch (error) {
+      console.error('❌ Error parsing stored user');
+      this.clearUserData();
+      return null;
     }
   }
 
@@ -291,11 +296,14 @@ export class AuthService {
     return localStorage.getItem(this.AUTH_TOKEN_KEY);
   }
 
-  private setTokenExpiry(expiresAt: number): void {
-    localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiresAt.toString());
+  private setTokenExpiry(expiresAt: Date): void {
+    if (expiresAt) {
+      const expiryTime = new Date(expiresAt).getTime();
+      localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiryTime.toString());
+    }
   }
 
-  private isTokenExpired(): boolean {
+  isTokenExpired(): boolean {
     const expiryTime = localStorage.getItem(this.TOKEN_EXPIRY_KEY);
     
     if (!expiryTime) {
@@ -307,34 +315,6 @@ export class AuthService {
 
   private enableRememberMe(): void {
     localStorage.setItem('remember_me', 'true');
-  }
-
-  /**
-   * 🔄 Convertir une date (string/Date/number) en timestamp
-   */
-  private convertToTimestamp(expiresAt: any): number {
-    // Si c'est déjà un number (timestamp), le retourner tel quel
-    if (typeof expiresAt === 'number') {
-      return expiresAt;
-    }
-    
-    // Si c'est une string (format ISO) ou un Date object
-    if (expiresAt) {
-      const timestamp = new Date(expiresAt).getTime();
-      
-      // Vérifier que la conversion est valide
-      if (isNaN(timestamp)) {
-        console.warn('⚠️ Invalid expiresAt format:', expiresAt);
-        // Par défaut, expiration dans 1 heure
-        return Date.now() + (60 * 60 * 1000);
-      }
-      
-      return timestamp;
-    }
-    
-    // Si expiresAt est null/undefined, définir une expiration par défaut (1 heure)
-    console.warn('⚠️ No expiresAt provided, setting default expiration (1 hour)');
-    return Date.now() + (60 * 60 * 1000);
   }
 
   getUserRole(): string | null {
@@ -350,27 +330,6 @@ export class AuthService {
   hasAnyRole(roles: string[]): boolean {
     const userRole = this.getUserRole();
     return userRole ? roles.includes(userRole) : false;
-  }
-
-  /**
-   * ✅ AMÉLIORATION : Vérifier réellement si c'est une erreur réseau
-   */
-  private async isRealNetworkError(): Promise<boolean> {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-      await fetch('https://www.google.com/favicon.ico', {
-        method: 'HEAD',
-        mode: 'no-cors',
-        signal: controller.signal
-      });
-
-      clearTimeout(timeoutId);
-      return false; // Connexion Internet OK
-    } catch (error) {
-      return true; // Vraie erreur réseau
-    }
   }
 
   /**
@@ -417,21 +376,12 @@ export class AuthService {
       errorDetails.message = error.error.message;
       errorDetails.status = 0;
       
-      console.error('❌ Network error (ErrorEvent):', errorDetails.message);
+      console.error('❌ Network error:', errorDetails.message);
       
-      // Vérifier si c'est vraiment une erreur réseau avant de rediriger
-      this.isRealNetworkError().then(isNetworkError => {
-        if (isNetworkError) {
-          console.error('🔴 Confirmed: Real network error - Redirecting to network-error page');
-          this.router.navigate(['/network-error'], {
-            state: { 
-              previousUrl: this.router.url,
-              error: errorDetails
-            }
-          });
-        } else {
-          console.warn('⚠️ Not a real network error (CORS/SSL/Other) - Showing generic error');
-          // Ne pas rediriger vers network-error si la connexion Internet fonctionne
+      this.router.navigate(['/network-error'], {
+        state: { 
+          previousUrl: this.router.url,
+          error: errorDetails
         }
       });
     }
@@ -476,6 +426,7 @@ export class AuthService {
       console.error('❌ Unknown error type');
       console.error('Error value:', error);
       
+      // Tentative d'extraction d'informations
       if (error && typeof error === 'object') {
         try {
           errorDetails.rawError = JSON.stringify(error, null, 2);
@@ -503,22 +454,10 @@ export class AuthService {
     
     switch (status) {
       case 0:
-        // ✅ AMÉLIORATION : Ne rediriger vers network-error que si c'est vraiment un problème de connexion
-        errorDetails.message = 'Impossible de contacter le serveur';
-        console.error('❌ HTTP Status 0 - Checking if real network error...');
-        
-        this.isRealNetworkError().then(isNetworkError => {
-          if (isNetworkError) {
-            console.error('🔴 Confirmed: Real network error (no internet connection)');
-            this.router.navigate(['/network-error'], {
-              state: { previousUrl: this.router.url, error: errorDetails }
-            });
-          } else {
-            console.warn('⚠️ Status 0 but internet is OK - Likely CORS/SSL/Preflight issue');
-            console.warn('⚠️ Not redirecting to network-error page');
-            // Afficher un message d'erreur générique au lieu de rediriger
-            errorDetails.message = 'Erreur de communication avec le serveur. Vérifiez la configuration CORS/SSL.';
-          }
+        errorDetails.message = 'Impossible de contacter le serveur. Vérifiez votre connexion ou le certificat SSL.';
+        console.error('❌ No response from server (Gateway/SSL issue)');
+        this.router.navigate(['/network-error'], {
+          state: { previousUrl: this.router.url, error: errorDetails }
         });
         break;
 
@@ -555,16 +494,8 @@ export class AuthService {
       case 408:
         errorDetails.message = 'Délai d\'attente dépassé';
         console.error('❌ Timeout');
-        
-        // Vérifier si c'est vraiment un problème réseau
-        this.isRealNetworkError().then(isNetworkError => {
-          if (isNetworkError) {
-            this.router.navigate(['/network-error'], {
-              state: { previousUrl: this.router.url, error: errorDetails }
-            });
-          } else {
-            console.warn('⚠️ Timeout but internet OK - Server too slow');
-          }
+        this.router.navigate(['/network-error'], {
+          state: { previousUrl: this.router.url, error: errorDetails }
         });
         break;
 

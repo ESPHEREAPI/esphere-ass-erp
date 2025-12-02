@@ -1,0 +1,35 @@
+2025-12-02 00:31:33.707 [BiometryHikariPool housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Thread starvation or clock leap detected (housekeeper delta=1h59m17s419ms522µs100ns).
+2025-12-02 00:31:33.712 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Before cleanup stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.712 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - After cleanup  stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.713 [BiometryHikariPool housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-12-02 00:31:33.716 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@21d92dd6: (connection has passed maxLifetime)
+2025-12-02 00:31:33.717 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@51bed3b4: (connection has passed maxLifetime)
+2025-12-02 00:31:33.718 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@752d0f57: (connection has passed maxLifetime)
+2025-12-02 00:31:33.719 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1083d98f: (connection has passed maxLifetime)
+2025-12-02 00:31:33.720 [BiometryHikariPool connection closer] DEBUG com.zaxxer.hikari.pool.PoolBase - BiometryHikariPool - Closing connection com.mysql.cj.jdbc.ConnectionImpl@70ac26c0: (connection has passed maxLifetime)
+2025-12-02 00:31:33.737 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c298daa
+2025-12-02 00:31:33.771 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=1, active=0, idle=1, waiting=0)
+2025-12-02 00:31:33.779 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@1d148791
+2025-12-02 00:31:33.818 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2025-12-02 00:31:33.826 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@2cc37900
+2025-12-02 00:31:33.866 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=3, active=0, idle=3, waiting=0)
+2025-12-02 00:31:33.874 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@7d3b78de
+2025-12-02 00:31:33.912 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=4, active=0, idle=4, waiting=0)
+2025-12-02 00:31:33.921 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@49acfd78
+2025-12-02 00:31:33.960 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.960 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.960 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.960 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)
+2025-12-02 00:31:33.961 [BiometryHikariPool connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - BiometryHikariPool - Connection not added, stats (total=5, active=0, idle=5, waiting=0)

@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.performLogin();
     setTimeout(() => {
       console.log('Login:', this.credentials.username);
-      console.log('Mot de passe:', this.credentials.password);
+      console.log('Mot de passe:','*************');
       console.log('Se souvenir:', this.credentials.remember);
 
       // 👉 Ici ta logique d'authentification réelle
