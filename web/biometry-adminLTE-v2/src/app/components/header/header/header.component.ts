@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    
     this.loadUserData();
     this.loadNotificationCounts();
   }

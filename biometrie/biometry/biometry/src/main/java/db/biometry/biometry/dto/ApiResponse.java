@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import lombok.Builder;
 
 /**
  * DTO de réponse API standardisée
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * 
  * @author JIATOU FRANCK
  */
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

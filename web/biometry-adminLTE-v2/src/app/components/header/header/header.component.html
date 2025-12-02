@@ -1,7 +1,7 @@
 <header class="main-header">
   <a routerLink="/admin/accueil" class="logo">
     <span class="logo-mini"><b>A</b>LT</span>
-    <span class="logo-lg">{{ user?.prestataire ?? ""| translate }}</span>
+    <span class="logo-lg">{{ user?.prestataire ?? ("") | translate }}</span>
   </a>
 
   <nav class="navbar navbar-static-top" role="navigation">
@@ -93,21 +93,23 @@
           </ul>
         </li>
 
-        <!-- User Menu -->
+        <!-- User Menu        <pre>{{ user| json  }}</pre -->
         <li class="dropdown user user-menu" [class.open]="dropdowns['user']">
           <a href="#" 
              class="dropdown-toggle" 
              (click)="toggleDropdown('user', $event)">
             <img src="/img/user2-160x160.png" class="user-image" alt="User image">
-            <span class="hidden-xs">{{ user?.nomcomplet }} <i class="caret"></i></span>
+            <span class="hidden-xs">{{ user?.nomcomplet}} <i class="caret"></i></span>
           </a>
           <ul class="dropdown-menu">
             <li class="user-header">
               <img src="/img/user2-160x160.png" class="img-circle" alt="User image">
               <p>
-                {{ user?.nomcomplet  }} - {{ user?.profil_name?? "" | translate  }}
+                {{ user?.nomcomplet  }} - {{ user?.profil_name?? ("")  | translate  }}
                 <small>{{ 'membre_depuis' | translate }} 2024</small>
               </p>
+            
+    
             </li>
             <li class="user-footer">
               <div class="pull-left">
@@ -136,7 +138,7 @@
         </li>
       </ul>
     </div>
-    <!-- Ajoutez ce bouton juste avant la fermeture de <ul class="nav navbar-nav"> -->
+    <!-- Ajoutez ce bouton juste avant la fermeture de <ul class="nav navbar-nav" -->
 <li>
   <a (click)="toggleControlSidebar(); $event.preventDefault()" style="cursor: pointer;">
     <i class="fa fa-gears"></i>
