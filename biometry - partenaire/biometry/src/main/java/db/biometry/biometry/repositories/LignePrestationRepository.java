@@ -5,6 +5,10 @@
 package db.biometry.biometry.repositories;
 
 import db.biometry.biometry.dtos.PrestationPrestataireDTO;
+import db.biometry.biometry.dtos.StatistiqueTypePrestationDTO;
+import db.biometry.biometry.dtos.StatistiquesGlobalesDTO;
+import db.biometry.biometry.dtos.StatistiquesParPeriodeDTO;
+import db.biometry.biometry.dtos.TopPrestationDTO;
 import db.biometry.biometry.entite.Dbx45tyLignePrestation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -97,6 +101,53 @@ public interface LignePrestationRepository extends JpaRepository<Dbx45tyLignePre
             @Param("dateDebut") LocalDateTime dateDebut,
             @Param("dateFin") LocalDateTime dateFin);
 
+    @Query("SELECT new db.biometry.biometry.dtos.StatistiqueTypePrestationDTO("
+            + "lp.id, "
+            + "pr.naturePrestation, "
+            + "pr.naturePrestation, "
+            + "COUNT(lp), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN 0 "
+            + "    WHEN lp.taux < 100 THEN ((100 - lp.taux) * (lp.valeurModif * lp.nbreModif) / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "    WHEN lp.taux < 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) ELSE (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "  END"
+            + "), 0)) "
+            + "FROM Dbx45tyLignePrestation lp "
+            + " INNER JOIN lp. prestationId pr "
+            + " INNER JOIN pr.visiteId vi "
+            + " INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
+            + "AND lp.date BETWEEN :dateDebut AND :dateFin "
+            + "AND lp.etat = :encaisse "
+            + "GROUP BY lp.id, pr.naturePrestation "
+            + "ORDER BY COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "    WHEN lp.taux < 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) ELSE (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "  END"
+            + "), 0) DESC")
+    List<StatistiqueTypePrestationDTO> getStatistiquesParTypePrestation(
+            @Param("souscripteur") String souscripteur,
+            @Param("dateDebut") LocalDateTime dateDebut,
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String etatPrestation);
+//@Query(" SELECT pr  WHERE pr.visiteId.codeAdherent.souscripteur= :souscripteur")
+
     /**
      * Top prestations par fréquence d'utilisation
      */
@@ -136,12 +187,13 @@ public interface LignePrestationRepository extends JpaRepository<Dbx45tyLignePre
     /**
      * Nombre total de prestations pour un souscripteur
      */
-    @Query("SELECT COUNT(lp) FROM Dbx45tyLignePrestation lp  where lp.prestationId.visiteId.codeAdherent.souscripteur= :souscripteur AND lp.date BETWEEN :dateDebut AND :dateFin")
+    @Query("SELECT COUNT(pr) FROM  Dbx45tyPrestation pr inner join  Dbx45tyLignePrestation lp on pr.id=lp.prestationId.id  where pr.visiteId.codeAdherent.souscripteur= :souscripteur AND lp.date BETWEEN :dateDebut AND :dateFin and lp.etat= :encaisse ")
 
     Long countPrestationsBySouscripteur(
             @Param("souscripteur") String souscripteur,
             @Param("dateDebut") LocalDateTime dateDebut,
-            @Param("dateFin") LocalDateTime dateFin);
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String etatPrestation);
 
     /**
      * Prestations par prestataire
@@ -150,7 +202,7 @@ public interface LignePrestationRepository extends JpaRepository<Dbx45tyLignePre
             + "lp.prestataireId.id, "
             + "lp.prestataireId.nom, "
             + "lp.prestataireId.categorieId.nom, "
-            + "COUNT(lp), "
+            + "COUNT(lp.prestationId.visiteId), "
             + "COALESCE(SUM(lp.valeur * lp.nbre), 0)) "
             + "FROM Dbx45tyLignePrestation lp "
             + "WHERE lp.prestationId.visiteId.codeAdherent.souscripteur = :souscripteur "
@@ -166,4 +218,120 @@ public interface LignePrestationRepository extends JpaRepository<Dbx45tyLignePre
     List<Dbx45tyLignePrestation> listeDeatailPrestation(@Param("codeAdherent") String souscripteur,
             @Param("dateDebut") LocalDateTime dateDebut,
             @Param("dateFin") LocalDateTime dateFin);
+
+    //statistique global des prestation par periode 
+    @Query("SELECT new db.biometry.biometry.dtos.StatistiquesGlobalesDTO("
+            + "COUNT(lp.prestationId.visiteId), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN 0 "
+            + "    WHEN lp.taux < 100 THEN ((100 - lp.taux) * (lp.valeurModif * lp.nbreModif) / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "    WHEN lp.taux < 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.taux *(lp.valeurModif * lp.nbreModif)/ 100) ELSE (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeurModif * lp.nbreModif) END "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(AVG(lp.valeurModif), 0)) "
+            + "FROM Dbx45tyLignePrestation lp WHERE lp.prestationId.visiteId.codeAdherent.souscripteur= :souscripteur and lp.date BETWEEN :dateDebut and  :dateFin"
+            + " AND lp.etat = :encaisse")
+    StatistiquesGlobalesDTO getStatistiquesGlobales(
+            @Param("souscripteur") String souscripteur,
+            @Param("dateDebut") LocalDateTime dateDebut,
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String etatprestation);
+
+    @Query("SELECT new db.biometry.biometry.dtos.StatistiquesParPeriodeDTO("
+            + "lp.date, "
+            + "COUNT(pr.visiteId), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN 0 "
+            + "    WHEN lp.taux < 100 THEN ((100 - lp.taux) * (lp.valeurModif * lp.nbreModif) / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN lp.taux = 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeur * lp.nbre) END "
+            + "    WHEN lp.taux < 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) ELSE (lp.taux * (lp.valeur * lp.nbre) / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeur * lp.nbre) END "
+            + "  END"
+            + "), 0)) "
+            + "FROM Dbx45tyLignePrestation lp "
+            + "INNER JOIN lp.prestationId pr "
+            + "INNER JOIN pr.visiteId vi "
+            + "INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
+            + "AND lp.etat = :encaisse "
+            + "AND lp.date BETWEEN :dateDebut AND :dateFin "
+            + "GROUP BY DATE(lp.date) "
+            + "ORDER BY DATE(lp.date)")
+    List<StatistiquesParPeriodeDTO> getStatistiquesParPeriode(
+            @Param("souscripteur") String souscripteur,
+            @Param("dateDebut") LocalDateTime dateDebut,
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("format") String format,
+            @Param("encaisse") String etatPrestation);
+    
+    
+
+    @Query("SELECT new db.biometry.biometry.dtos.TopPrestationDTO("
+            + "lp.id, "
+            + "ad.assurePrincipal , "
+            + "ad.assurePrincipal, "
+            + "COUNT(pr.visiteId), "
+            + "COALESCE(SUM("
+            + "CASE"
+            + "    WHEN lp.taux = 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeur * lp.nbre) END "
+            + "    WHEN lp.taux < 100 THEN "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.taux * (lp.valeurModif * lp.nbreModif) / 100) ELSE (lp.taux * (lp.valeur * lp.nbre) / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN lp.valeurModif IS NOT NULL THEN (lp.valeurModif * lp.nbreModif) ELSE (lp.valeur * lp.nbre) END "
+            + "  END"
+            + "), 0)) "
+            + "FROM Dbx45tyLignePrestation lp "
+            + "INNER JOIN lp.prestationId pr "
+            + "INNER JOIN pr.visiteId vi "
+            + "INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
+            + "AND lp.etat = :encaisse "
+            + "AND lp.date BETWEEN :dateDebut AND :dateFin "
+            + "GROUP BY lp.id, pr.naturePrestation   ORDER BY COUNT(DISTINCT vi.id) DESC "
+           
+    )
+    List<TopPrestationDTO> getTopPrestations(
+            @Param("souscripteur") String souscripteur,
+            @Param("dateDebut") LocalDateTime dateDebut,
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String encaisse);
+
+    //nombre total de consultationm
+//    @Query("SELECT COUNT(pr.visiteId) FROM Dbx45tyLignePrestation lp "
+//            + "INNER JOIN lp.prestationId pr "
+//            + "INNER JOIN pr.visiteId vi"
+//            + "INNER JOIN vi.codeAdherent ad "
+//            + "WHERE ad.souscripteur = :souscripteur "
+//            + "AND lp.etat = :encaisse "
+//            + "AND c.date BETWEEN :dateDebut AND :dateFin "
+//    )
+//     Long nombrePrestationForSouscripteur(
+//            @Param("souscripteur") String souscripteur,
+//            @Param("dateDebut") LocalDateTime dateDebut,
+//            @Param("dateFin") LocalDateTime dateFin,
+//            @Param("encaisse") String encaisse);
+
+
+
 }
