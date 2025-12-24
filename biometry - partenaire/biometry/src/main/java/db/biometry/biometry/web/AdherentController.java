@@ -5,14 +5,12 @@
 package db.biometry.biometry.web;
 import db.biometry.biometry.dtos.AdherentDTO;
 import db.biometry.biometry.dtos.AdherentFilterDTO;
-import db.biometry.biometry.dtos.DashboardStatisticsDTO;
 import db.biometry.biometry.dtos.DetailConsomationAdherentDTO;
 import db.biometry.biometry.services.AdherentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +34,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/adherents")
+//@RequestMapping("/api/v1/adherents")
+@RequestMapping("/service-biometrie-partenaire")
 @RequiredArgsConstructor
 @Tag(name = "Gestion des Adhérents", description = "APIs pour la gestion des adhérents/assurés")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class AdherentController {
     private final AdherentService adherentService;
     
@@ -49,7 +48,7 @@ public class AdherentController {
      * @param filter Critères de recherche
      * @return Page d'adhérents
      */
-    @PostMapping("/search")
+    @PostMapping("/adherents/search")
     @Operation(
             summary = "Recherche d'adhérents",
             description = "Recherche des adhérents avec filtres multiples et pagination"
@@ -70,7 +69,7 @@ public class AdherentController {
      * @param codeAdherent Code de l'adhérent
      * @return Profil détaillé
      */
-    @GetMapping("/{codeAdherent}")
+    @GetMapping("/adherents/{codeAdherent}")
     @Operation(
             summary = "Détails d'un adhérent",
             description = "Récupère le profil complet d'un adhérent incluant ses ayants droit et sa consommation"
@@ -114,7 +113,7 @@ public class AdherentController {
      * @param adherentDTO Nouvelles données
      * @return Adhérent mis à jour
      */
-    @PutMapping("/{codeAdherent}")
+    @PutMapping("/adherents/{codeAdherent}")
     @Operation(
             summary = "Modifier un adhérent",
             description = "Met à jour les informations d'un adhérent existant"
@@ -137,7 +136,7 @@ public class AdherentController {
      * @param codeAdherent Code de l'adhérent
      * @return Confirmation de suppression
      */
-    @DeleteMapping("/{codeAdherent}")
+    @DeleteMapping("/adherents/{codeAdherent}")
     @Operation(
             summary = "Supprimer un adhérent",
             description = "Supprime logiquement un adhérent (changement de statut)"
@@ -160,7 +159,7 @@ public class AdherentController {
      * @param statut Nouveau statut
      * @return Adhérent mis à jour
      */
-    @PatchMapping("/{codeAdherent}/statut")
+    @PatchMapping("/adherents/{codeAdherent}/statut")
     @Operation(
             summary = "Changer le statut",
             description = "Modifie le statut d'un adhérent (ACTIF, SUSPENDU, RESILIE)"
@@ -199,7 +198,7 @@ public class AdherentController {
              return ResponseEntity.ok(consomation);
        }
        
-         @GetMapping("/all/{souscripteur}")
+         @GetMapping("/adherents/all/{souscripteur}")
     @Operation(
             summary = "Détails d'un adhérent",
             description = "Récupère le profil complet d'un adhérent incluant ses ayants droit et sa consommation"

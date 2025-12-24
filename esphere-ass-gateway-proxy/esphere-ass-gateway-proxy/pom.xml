@@ -11,7 +11,7 @@
     <groupId>org.sid</groupId>
     <artifactId>esphere-ass-gateway-proxy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>esphere-ass-gateway-proxy</name>
+    <name>zenithe-gateway-proxy</name>
     <description>API Gateway avec Spring Cloud Gateway</description>
     <url/>
     <licenses>

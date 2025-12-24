@@ -11,7 +11,7 @@
     <groupId>com.micrommerce</groupId>
     <artifactId>esphere-ass-eureka-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>esphere-ass-eureka-server</name>
+    <name>zenithe-eureka-server</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>
