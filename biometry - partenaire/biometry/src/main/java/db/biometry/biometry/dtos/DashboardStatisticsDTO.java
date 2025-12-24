@@ -118,8 +118,8 @@ public class DashboardStatisticsDTO {
         private LocalDateTime dateDebut;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDateTime dateFin;
+         private BigDecimal montantRembourse;
         private BigDecimal montantTotal;
-        private BigDecimal montantRembourse;
         private Integer nombreConsultations;
         private Integer nombrePrestations;
     }
