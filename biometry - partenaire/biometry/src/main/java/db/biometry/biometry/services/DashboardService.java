@@ -19,12 +19,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import db.biometry.biometry.enums.EtatPrestation;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Service métier pour le tableau de bord souscripteur Génère les statistiques
@@ -93,29 +96,31 @@ public class DashboardService {
         log.debug("Calcul de la consommation globale");
 
         // Récupération des statistiques depuis la base
-        StatistiquesGlobalesDTO stats = consultationRepository.getStatistiquesGlobales(
-                codeSouscripteur, dateDebut, dateFin);
-
+        StatistiquesGlobalesDTO statsConsultation = consultationRepository.getStatistiquesGlobales(
+                codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
+        StatistiquesGlobalesDTO statsExamen_ordonnance = lignePrestationRepository.getStatistiquesGlobales(codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
 //       Long nombreConsultations = stats[0] != null ? (Long.parseLong(""+stats[0]) ) : 0L;
 //        BigDecimal totalDepenses = stats[1] != null ? (BigDecimal) stats[1] : BigDecimal.ZERO;
 //        BigDecimal totalRembourse = stats[2] != null ? (BigDecimal) stats[2] : BigDecimal.ZERO;
 //        BigDecimal moyenneDepense = stats[3] != null ? (BigDecimal) stats[3] : BigDecimal.ZERO;
-       
-        Long nombreConsultations = stats.getNombreConsultations() != null ? stats.getNombreConsultations() : 0L;
 
-        BigDecimal totalDepenses = stats.getTotalDepenses() != null ? stats.getTotalDepenses() : BigDecimal.ZERO;
+        Long nombreConsultations = statsConsultation.getNombreConsultations() != null ? statsConsultation.getNombreConsultations() : 0L;
+        // nombreConsultations = nombreConsultations + (statsExamen_ordonnance.getNombreConsultations() != null ? statsExamen_ordonnance.getNombreConsultations() : 0L);
 
-        BigDecimal totalRembourse = stats.getTotalRembourse() != null ? stats.getTotalRembourse()  : BigDecimal.ZERO;
+        BigDecimal totalDepenses = statsConsultation.getTotalDepenses() != null ? statsConsultation.getTotalDepenses() : BigDecimal.ZERO;
+        totalDepenses = totalDepenses.add(statsExamen_ordonnance.getTotalDepenses() != null ? statsExamen_ordonnance.getTotalDepenses() : BigDecimal.ZERO);
 
-        BigDecimal moyenneDepense = stats.getMoyenneDepenses()!= null ? stats.getMoyenneDepenses(): BigDecimal.ZERO;
+        BigDecimal totalRembourse = statsConsultation.getTotalRembourse() != null ? statsConsultation.getTotalRembourse() : BigDecimal.ZERO;
+        totalRembourse = totalRembourse.add(statsExamen_ordonnance.getTotalRembourse() != null ? statsExamen_ordonnance.getTotalRembourse() : BigDecimal.ZERO);
+        BigDecimal moyenneDepense = statsConsultation.getMoyenneDepenses() != null ? statsConsultation.getMoyenneDepenses() : BigDecimal.ZERO;
+        moyenneDepense = moyenneDepense.add(statsExamen_ordonnance.getMoyenneDepenses() != null ? statsExamen_ordonnance.getMoyenneDepenses() : BigDecimal.ZERO);
 
         // Calcul du total à charge
         BigDecimal totalACharge = totalDepenses.subtract(totalRembourse);
-
         // Nombre de prestations
         Long nombrePrestations = lignePrestationRepository.countPrestationsBySouscripteur(
-                codeSouscripteur, dateDebut, dateFin);
-
+                codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
+        // Long nombrePrestations=statsExamen_ordonnance.getNombreConsultations();
         // Nombre d'assurés et ayants droit actifs
         Long nombreAssuresActifs = adherentRepository.countActiveAdherentsBySouscripteur(codeSouscripteur);
         Long nombreAyantsDroitsActifs = ayantDroitRepository.countActiveBySouscripteur(codeSouscripteur);
@@ -176,7 +181,19 @@ public class DashboardService {
         }
 
         List<StatistiquesParPeriodeDTO> results = consultationRepository.getStatistiquesParPeriode(
-                codeSouscripteur, dateDebut, dateFin, format);
+                codeSouscripteur, dateDebut, dateFin, format, EtatPrestation.encaisse.name());
+
+        List<StatistiquesParPeriodeDTO> resultsExem_Ordonnance = lignePrestationRepository.getStatistiquesParPeriode(
+                codeSouscripteur, dateDebut, dateFin, format, EtatPrestation.encaisse.name());
+        //resultsExem_Ordonnance.addAll(results);
+        System.out.println("avant la fusion******");
+        results.forEach(System.out::println);
+        System.out.println("avant la fusion exam******");
+        resultsExem_Ordonnance.forEach(System.out::println);
+
+        results = this.fusionnerStatistiques(results, resultsExem_Ordonnance);
+        System.out.println("apres la fusion exam******");
+        results.forEach(System.out::println);
 
         List<DashboardStatisticsDTO.StatistiquePeriodeDTO> statistiques = new ArrayList<>();
 
@@ -184,7 +201,7 @@ public class DashboardService {
             String periode = result.getPeriode();
             Long nombreConsultations = result.getNombreConsultations();
             BigDecimal montantTotal = result.getTotalDepenses();
-            BigDecimal montantRembourse = result.getTotalRembourse();
+            BigDecimal montantRembourse = result.getTotalRembourse();//represente le ticket moderateur
 
             statistiques.add(DashboardStatisticsDTO.StatistiquePeriodeDTO.builder()
                     .periode(typePeriode)
@@ -198,6 +215,129 @@ public class DashboardService {
         return statistiques;
     }
 
+    public List<StatistiquesParPeriodeDTO> fusionnerStatistiques(
+            List<StatistiquesParPeriodeDTO> consultations,
+            List<StatistiquesParPeriodeDTO> examens) {
+
+        return Stream.concat(consultations.stream(), examens.stream())
+                .collect(Collectors.groupingBy(
+                        StatistiquesParPeriodeDTO::getPeriode,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> {
+                                    Date date = list.get(0).getDate();
+                                    String periode = list.get(0).getPeriode();
+
+                                    Long totalConsultations = list.stream()
+                                            .map(StatistiquesParPeriodeDTO::getNombreConsultations)
+                                            .reduce(0L, Long::sum);
+
+                                    BigDecimal totalDepenses = list.stream()
+                                            .map(StatistiquesParPeriodeDTO::getTotalDepenses)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                                    BigDecimal totalRembourse = list.stream()
+                                            .map(StatistiquesParPeriodeDTO::getTotalRembourse)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                                    StatistiquesParPeriodeDTO result = new StatistiquesParPeriodeDTO(
+                                            date,
+                                            totalConsultations,
+                                            totalDepenses.doubleValue(),
+                                            totalRembourse.doubleValue()
+                                    );
+
+                                    return result;
+                                }
+                        )
+                ))
+                .values()
+                .stream()
+                .sorted(Comparator.comparing(StatistiquesParPeriodeDTO::getDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<StatistiqueTypePrestationDTO> fusionnerStatistiquesTypePrestation(
+            List<StatistiqueTypePrestationDTO> listprestation_1,
+            List<StatistiqueTypePrestationDTO> listPrestation_2) {
+
+        return Stream.concat(listprestation_1.stream(), listPrestation_2.stream())
+                .collect(Collectors.groupingBy(
+                        StatistiqueTypePrestationDTO::getCategorie,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> {
+                                    //Date date = list.get(0).getDate();
+                                    String categorie = list.get(0).getCategorie();
+                                    String typeId = "" + list.get(0).getTypeId();
+                                    String nom = list.get(0).getNom();
+
+                                    Long totalnombreConsultations = list.stream()
+                                            .map(StatistiqueTypePrestationDTO::getNombreConsultations)
+                                            .reduce(0L, Long::sum);
+
+                                    BigDecimal totalDepenses = list.stream()
+                                            .map(StatistiqueTypePrestationDTO::getTotalDepenses)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                                    BigDecimal totalRembourse = list.stream()
+                                            .map(StatistiqueTypePrestationDTO::getTotalRembourse)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                                    StatistiqueTypePrestationDTO result = new StatistiqueTypePrestationDTO(typeId, nom, categorie, totalnombreConsultations, totalDepenses.doubleValue(), totalRembourse.doubleValue()
+                                    );
+
+                                    return result;
+                                }
+                        )
+                ))
+                .values()
+                .stream()
+                .sorted(Comparator.comparing(StatistiqueTypePrestationDTO::getCategorie))
+                .collect(Collectors.toList());
+    }
+    
+     //prestation by top adherent consomation 
+    public List<TopPrestationDTO> fusionnerStatistiquesTopPrestionAherent(
+        List<TopPrestationDTO> listprestation_1,
+        List<TopPrestationDTO> listPrestation_2) {
+    
+    List<TopPrestationDTO> listeFusionnee = Stream.concat(listprestation_1.stream(), listPrestation_2.stream())
+            .collect(Collectors.groupingBy(
+                    TopPrestationDTO::getNom,
+                    Collectors.collectingAndThen(
+                            Collectors.toList(),
+                            list -> {
+                                String categorie = list.get(0).getCategorie();
+                                String typeId = "" + list.get(0).getTypeId();
+                                String nom = list.get(0).getNom();
+                                Long totalnombreConsultations = list.stream()
+                                        .map(TopPrestationDTO::getNombreConsultations)
+                                        .reduce(0L, Long::sum);
+                                BigDecimal totalDepenses = list.stream()
+                                        .map(TopPrestationDTO::getTotalDepenses)
+                                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+                             
+                                TopPrestationDTO result = new TopPrestationDTO(
+                                    typeId, nom, categorie, totalnombreConsultations, totalDepenses
+                                );
+                                return result;
+                            }
+                    )
+            ))
+            .values()
+            .stream()
+            // Tri par nombre de consultations décroissant (du plus grand au plus petit)
+            .sorted(Comparator.comparing(TopPrestationDTO::getNombreConsultations).reversed())
+            .collect(Collectors.toList());
+    
+//    // Attribuer les rangs après le tri
+//    for (int i = 0; i < listeFusionnee.size(); i++) {
+//        listeFusionnee.get(i).setRang(i + 1);
+//    }
+    
+    return listeFusionnee;
+}
     /**
      * Calcule les statistiques par type de prestation
      */
@@ -209,7 +349,20 @@ public class DashboardService {
         log.debug("Calcul des statistiques par type de prestation");
 
         List<StatistiqueTypePrestationDTO> results = consultationRepository.getStatistiquesParTypePrestation(
-                codeSouscripteur, dateDebut, dateFin);
+                codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
+        List<StatistiqueTypePrestationDTO> resultsExamen_ordonnance = lignePrestationRepository.getStatistiquesParTypePrestation(
+                codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
+//         if (!resultsExamen_ordonnance.isEmpty()) {
+//            results.addAll(resultsExamen_ordonnance);
+//        }
+//         for (TypePrestations prestations : TypePrestations.values()) {
+//             
+//            
+//        }
+        results.forEach(System.out::println);
+
+        resultsExamen_ordonnance.forEach(System.out::println);
+        results = fusionnerStatistiquesTypePrestation(results, resultsExamen_ordonnance);
 
         List<DashboardStatisticsDTO.StatistiqueTypePrestationDTO> statistiques = new ArrayList<>();
         BigDecimal totalGlobal = BigDecimal.ZERO;
@@ -222,7 +375,7 @@ public class DashboardService {
 
         // Construction des statistiques avec pourcentages
         for (StatistiqueTypePrestationDTO result : results) {
-            String typeId = ""+result.getTypeId();
+            String typeId = "" + result.getTypeId();
             String typeNom = result.getNom();
             String categorie = result.getCategorie();
             Long nombreUtilisations = result.getNombreConsultations();
@@ -272,7 +425,13 @@ public class DashboardService {
         log.debug("Récupération du top {} des prestations", limit);
 
         List<TopPrestationDTO> results = consultationRepository.getTopPrestations(
-                codeSouscripteur, dateDebut, dateFin);
+                codeSouscripteur, dateDebut, dateFin,EtatPrestation.encaisse.name());
+//        if(results.isEmpty()){
+//            results=lignePrestationRepository.getTopPrestations(codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name());
+//        } else {
+//           results.addAll(lignePrestationRepository.getTopPrestations(codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name()));
+//        }
+           results=fusionnerStatistiquesTopPrestionAherent(results, lignePrestationRepository.getTopPrestations(codeSouscripteur, dateDebut, dateFin, EtatPrestation.encaisse.name()));
 
         List<DashboardStatisticsDTO.TopPrestationDTO> topPrestations = new ArrayList<>();
         Long totalUtilisations = 0L;
@@ -288,7 +447,7 @@ public class DashboardService {
         for (int i = 0; i < Math.min(limit, results.size()); i++) {
             TopPrestationDTO result = results.get(i);
             String typeId = result.getTypeId();
-            String typeNom =  result.getNom();
+            String typeNom = result.getNom();
             String categorie = result.getCategorie();
             Long nombreUtilisations = result.getNombreConsultations();
             BigDecimal montantTotal = result.getTotalDepenses();
@@ -341,7 +500,7 @@ public class DashboardService {
         // Construction du top avec limit
         int rang = 1;
         for (int i = 0; i < Math.min(limit, results.size()); i++) {
-           PrestationPrestataireDTO result = results.get(i);
+            PrestationPrestataireDTO result = results.get(i);
             String prestataireId = result.getPrestataireId();
             String nomPrestataire = result.getNomPrestataire();
             String categoriePrestataire = result.getCategorie();

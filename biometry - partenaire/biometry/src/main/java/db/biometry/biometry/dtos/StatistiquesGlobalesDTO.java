@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class StatistiquesGlobalesDTO {
      Long nombreConsultations;
         BigDecimal totalDepenses;
-        BigDecimal totalRembourse;
+        BigDecimal totalRembourse;// ticket moderateur
         BigDecimal moyenneDepenses;
 
     public StatistiquesGlobalesDTO(Long nombreConsultations, Double totalDepenses, Double totalRembourse, Double moyenneDepenses) {

@@ -1,0 +1,5 @@
+# Created at 2025-11-26T15:19:46.162
+Boot Manifest-JAR contains absolute paths in classpath 'E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\biometry\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

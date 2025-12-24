@@ -30,10 +30,11 @@ import lombok.RequiredArgsConstructor;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/dashboard")
+@RequestMapping("/service-biometrie-partenaire")
+
 @RequiredArgsConstructor
 @Tag(name = "Tableau de Bord", description = "APIs pour le tableau de bord souscripteur")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class DashboardController {
      private final DashboardService dashboardService;
     
@@ -45,7 +46,7 @@ public class DashboardController {
      * @param dateFin Date de fin de la période
      * @return Statistiques du tableau de bord
      */
-    @GetMapping("/statistics")
+    @GetMapping("/dashboard/statistics")
     @Operation(
             summary = "Statistiques du tableau de bord",
             description = "Récupère toutes les statistiques et indicateurs pour le tableau de bord souscripteur"
@@ -88,7 +89,7 @@ public class DashboardController {
      * @param codeSouscripteur Code du souscripteur
      * @return Statistiques du mois
      */
-    @GetMapping("/statistics/current-month")
+    @GetMapping("/dashboard/statistics/current-month")
     @Operation(
             summary = "Statistiques du mois en cours",
             description = "Récupère les statistiques pour le mois en cours"
@@ -114,7 +115,7 @@ public class DashboardController {
      * @param codeSouscripteur Code du souscripteur
      * @return Statistiques de l'année
      */
-    @GetMapping("/statistics/current-year")
+    @GetMapping("/dashboard/statistics/current-year")
     @Operation(
             summary = "Statistiques de l'année en cours",
             description = "Récupère les statistiques pour l'année en cours"
@@ -140,7 +141,7 @@ public class DashboardController {
      * @param codeSouscripteur Code du souscripteur
      * @return Statistiques de la semaine
      */
-    @GetMapping("/statistics/last-week")
+    @GetMapping("/dashboard/statistics/last-week")
     @Operation(
             summary = "Statistiques des 7 derniers jours",
             description = "Récupère les statistiques pour les 7 derniers jours"

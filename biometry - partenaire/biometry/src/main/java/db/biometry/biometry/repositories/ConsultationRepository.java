@@ -54,64 +54,120 @@ public interface ConsultationRepository extends JpaRepository<Dbx45tyConsultatio
     /**
      * Statistiques de consommation globale pour un souscripteur
      */
+    //@Query("SELECT c  FROM Dbx45tyConsultation c inner join Dbx45tyVisite vi on c.visiteId=vi.id inner join Dbx45tyAdherent ad on vi.codeAdherent.codeAdherent=ad.codeAdherent where ad.souscripteur= :souscripteur")
     @Query("SELECT new db.biometry.biometry.dtos.StatistiquesGlobalesDTO("
             + "COUNT(c), "
-            + "COALESCE(SUM(c.montant), 0), "
-            + "COALESCE(SUM(CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN 0 "
+            + "    WHEN c.taux < 100 THEN ((100 - c.taux) * c.montantModif / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montantModif END "
+            + "    WHEN c.taux < 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN (c.taux * c.montantModif / 100) ELSE (c.taux * c.montant / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "  END"
+            + "), 0), "
             + "COALESCE(AVG(c.montant), 0)) "
             + "FROM Dbx45tyConsultation c "
-          
-            + "WHERE c.visiteId.codeAdherent.souscripteur = :souscripteur "
-            + "AND c.date BETWEEN :dateDebut AND :dateFin")
+            + "INNER JOIN c.visiteId vi "
+            + "INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
+            + "AND c.date BETWEEN :dateDebut AND :dateFin "
+            + "AND c.etatConsultation = :encaisse")
     StatistiquesGlobalesDTO getStatistiquesGlobales(
             @Param("souscripteur") String souscripteur,
             @Param("dateDebut") LocalDateTime dateDebut,
-            @Param("dateFin") LocalDateTime dateFin);
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String etatprestation);
 
     /**
      * Statistiques par type de prestation
      */
     @Query("SELECT new db.biometry.biometry.dtos.StatistiqueTypePrestationDTO("
-            + "tp.id, "
-            + "tp.nom, "
-            + "tp.categorie, "
+            + "c.id, "
+            + "c.typeConsultation.categorie, "
+            + "c.typeConsultation.categorie, "
             + "COUNT(c), "
-            + "COALESCE(SUM(c.montant), 0), "
-            + "COALESCE(SUM(CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END), 0)) "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN 0 "
+            + "    WHEN c.taux < 100 THEN ((100 - c.taux) * c.montantModif / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "    WHEN c.taux < 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN (c.taux * c.montantModif / 100) ELSE (c.taux * c.montant / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "  END"
+            + "), 0)) "
             + "FROM Dbx45tyConsultation c "
-            + "JOIN c.typeConsultation tp "
-           
-            + "WHERE c.visiteId.codeAdherent.souscripteur = :souscripteur "
+            + "INNER JOIN c.typeConsultation tp "
+            + " INNER JOIN c.visiteId vi "
+            + " INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
             + "AND c.date BETWEEN :dateDebut AND :dateFin "
-            + "GROUP BY tp.id, tp.nom, tp.categorie "
-            + "ORDER BY SUM(c.montant) DESC")
+            + "AND c.etatConsultation = :encaisse "
+            + "GROUP BY c.id, tp.nom, tp.categorie "
+            + "ORDER BY COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "    WHEN c.taux < 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN (c.taux * c.montantModif / 100) ELSE (c.taux * c.montant / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "  END"
+            + "), 0) DESC")
     List<StatistiqueTypePrestationDTO> getStatistiquesParTypePrestation(
             @Param("souscripteur") String souscripteur,
             @Param("dateDebut") LocalDateTime dateDebut,
-            @Param("dateFin") LocalDateTime dateFin);
+            @Param("dateFin") LocalDateTime dateFin,
+            @Param("encaisse") String etatPrestation);
 
     /**
      * Top 5 des types de prestation les plus utilisés
      */
-   @Query("SELECT new db.biometry.biometry.dtos.TopPrestationDTO(" +
-       "tp.id, " +
-       "tp.nom, " +
-       "tp.categorie, " +
-       "COUNT(c), " +
-       "COALESCE(SUM(c.montant), 0)) " +
-       "FROM Dbx45tyConsultation c " +
-       "JOIN c.typeConsultation tp " +
-       "JOIN c.visiteId v " +
-       "JOIN v.codeAdherent benef " +
-       "WHERE benef.souscripteur = :souscripteur " +
-       "AND c.date BETWEEN :dateDebut AND :dateFin " +
-       "GROUP BY tp.id, tp.nom, tp.categorie " +
-       "ORDER BY COUNT(c) DESC")
-List<TopPrestationDTO> getTopPrestations(
-        @Param("souscripteur") String souscripteur,
-        @Param("dateDebut") LocalDateTime dateDebut,
-        @Param("dateFin") LocalDateTime dateFin);
-
+    @Query("SELECT new db.biometry.biometry.dtos.TopPrestationDTO("
+            + "c.id, "
+            + "adh.assurePrincipal, "
+            + "adh.assurePrincipal, "
+            + "COUNT(c), "
+            + "COALESCE(SUM("
+            + "CASE"
+            + "    WHEN c.taux = 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "    WHEN c.taux < 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN (c.taux * c.montantModif / 100) ELSE (c.taux * c.montant / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "  END"
+            + "), 0)) "
+            + "FROM Dbx45tyConsultation c "
+            + "INNER JOIN c.typeConsultation tp "
+            + "INNER JOIN c.visiteId v "
+            + "INNER JOIN v.codeAdherent adh "
+            + "WHERE adh.souscripteur = :souscripteur "
+             + "AND c.etatConsultation = :encaisse "
+            + "AND c.date BETWEEN :dateDebut AND :dateFin "
+            + "GROUP BY c.id, tp.nom, tp.categorie "
+            + "ORDER BY COUNT(c) DESC")
+    List<TopPrestationDTO> getTopPrestations(
+            @Param("souscripteur") String souscripteur,
+            @Param("dateDebut") LocalDateTime dateDebut,
+            @Param("dateFin") LocalDateTime dateFin,
+             @Param("encaisse") String etatPrestation);
 
     /**
      * Statistiques par période (jour, semaine, mois, année)
@@ -119,18 +175,37 @@ List<TopPrestationDTO> getTopPrestations(
     @Query("SELECT new db.biometry.biometry.dtos.StatistiquesParPeriodeDTO("
             + "c.date, "
             + "COUNT(c), "
-            + "COALESCE(SUM(c.montant), 0), "
-            + "COALESCE(SUM(CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END), 0)) "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN 0 "
+            + "    WHEN c.taux < 100 THEN ((100 - c.taux) * c.montantModif / 100) "
+            + "    ELSE 0 "
+            + "  END"
+            + "), 0), "
+            + "COALESCE(SUM("
+            + "  CASE "
+            + "    WHEN c.taux = 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "    WHEN c.taux < 100 THEN "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN (c.taux * c.montantModif / 100) ELSE (c.taux * c.montant / 100) END "
+            + "    ELSE "
+            + "      CASE WHEN c.montantModif IS NOT NULL THEN c.montantModif ELSE c.montant END "
+            + "  END"
+            + "), 0)) "
             + "FROM Dbx45tyConsultation c "
-           
-            + "WHERE c.visiteId .codeAdherent.souscripteur = :souscripteur "
+            + "INNER JOIN c.visiteId vi "
+            + "INNER JOIN vi.codeAdherent ad "
+            + "WHERE ad.souscripteur = :souscripteur "
+            + "AND c.etatConsultation = :encaisse "
+            + "AND c.date BETWEEN :dateDebut AND :dateFin "
             + "GROUP BY DATE(c.date) "
             + "ORDER BY DATE(c.date)")
     List<StatistiquesParPeriodeDTO> getStatistiquesParPeriode(
             @Param("souscripteur") String souscripteur,
             @Param("dateDebut") LocalDateTime dateDebut,
             @Param("dateFin") LocalDateTime dateFin,
-            @Param("format") String format);
+            @Param("format") String format,
+            @Param("encaisse") String etatPrestation);
 
     /**
      * Consommation par adhérent
@@ -197,6 +272,7 @@ List<TopPrestationDTO> getTopPrestations(
             @Param("codeAdherent") String codeAdherent,
             @Param("dateDebut") LocalDateTime dateDebut,
             @Param("dateFin") LocalDateTime dateFin);
+
     @Query("SELECT c FROM Dbx45tyConsultation c WHERE c.visiteId.codeAdherent.codeAdherent= :codeAdherent and c.date BETWEEN :dateDebut and :dateFin")
     List<Dbx45tyConsultation> listeConsulTationDetailAdherent(@Param("codeAdherent") String codeAdherent,
             @Param("dateDebut") LocalDateTime dateDebut,
