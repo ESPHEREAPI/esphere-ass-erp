@@ -1,0 +1,5 @@
+*.jar
+target/
+backup/*.sql
+*.war
+*.class

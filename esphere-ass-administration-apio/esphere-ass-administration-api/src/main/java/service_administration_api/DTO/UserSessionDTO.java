@@ -4,6 +4,7 @@
  */
 package service_administration_api.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import service_administration_api.utils.JwtExpiration;
  * @author USER01
  */
 @NoArgsConstructor
-@AllArgsConstructor
+
 @Data
 public class UserSessionDTO {
      /**
@@ -49,31 +50,29 @@ public class UserSessionDTO {
      * Format attendu par Angular : 1705147200000
      */
     @JsonProperty("expiresAt")
-    private LocalDateTime expiresAt;
+    // ⭐ Utiliser Date au lieu de LocalDateTime
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "UTC")
+    private Date expiresAt;
     
-    /**
-     * Constructeur de convenance
-     */
-    public UserSessionDTO(UserDTO userDTO, String token, String refreshToken) {
+    public UserSessionDTO(UserDTO userDTO, String token, String refreshToken, Date expiresAt) {
         this.userDTO = userDTO;
         this.token = token;
         this.refreshToken = refreshToken;
-        // Par défaut : expiration dans 1 heure
-        this.expiresAt = JwtExpiration.convetLongToDate(System.currentTimeMillis() + (60 * 60 * 1000));
+        this.expiresAt = expiresAt;
     }
     
     /**
      * Vérifier si la session est expirée
      */
     public boolean isExpired() {
-        return System.currentTimeMillis() > JwtExpiration.convertToLong(this.expiresAt);
+        return System.currentTimeMillis() > (this.expiresAt.getTime());
     }
     
     /**
      * Obtenir le temps restant avant expiration (en secondes)
      */
     public long getTimeUntilExpiration() {
-        long remaining = JwtExpiration.convertToLong(this.expiresAt) - System.currentTimeMillis();
+        long remaining = this.expiresAt.getTime() - System.currentTimeMillis();
         return Math.max(0, remaining / 1000);
     }
 }

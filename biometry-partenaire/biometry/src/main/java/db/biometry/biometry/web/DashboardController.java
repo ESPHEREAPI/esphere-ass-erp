@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Slf4j
 @RestController
-@RequestMapping("/service-biometrie-partenaire")
+//@RequestMapping("/service-biometrie-partenaire")
 
 @RequiredArgsConstructor
 @Tag(name = "Tableau de Bord", description = "APIs pour le tableau de bord souscripteur")

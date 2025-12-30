@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/service-biometrie-partenaire")
+//@RequestMapping("/service-biometrie-partenaire")
 //@CrossOrigin("*")
 public class UtlisateurRestController {
 
