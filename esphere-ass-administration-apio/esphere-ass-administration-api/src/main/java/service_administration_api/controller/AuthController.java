@@ -33,7 +33,8 @@ import service_administration_api.service.OracleAuthService;
  * @author USER01
  */
 @RestController
-@RequestMapping("/esphere-ass-microservice-admin/auth/users")
+//@RequestMapping("/esphere-ass-microservice-admin/auth/users")
+@RequestMapping("/auth")
 
 public class AuthController {
  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);

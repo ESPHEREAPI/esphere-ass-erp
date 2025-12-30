@@ -41,27 +41,28 @@ public class SecurityConfig {
      * Security 6.x
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                // Désactivation de CSRF (car on utilise JWT)
-                .csrf(csrf -> csrf.disable())
-                // Configuration CORS
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // Gestion des exceptions d'authentification
-                .exceptionHandling(exception -> exception
+   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+            // Désactivation de CSRF (car on utilise JWT)
+            .csrf(csrf -> csrf.disable())
+            // Configuration CORS
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // Gestion des exceptions d'authentification
+            .exceptionHandling(exception -> exception
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                )
-                // Gestion de session - STATELESS (pas de session)
-                .sessionManagement(session -> session
+            )
+            // Gestion de session - STATELESS (pas de session)
+            .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                // Configuration des autorisations
-                .authorizeHttpRequests(authorize -> authorize
+            )
+            // Configuration des autorisations
+            .authorizeHttpRequests(authorize -> authorize
                 // Endpoints publics (sans authentification)
                 .requestMatchers(
-                        "/auth/users/login",
-                        "/auth/users/login",
+                        "/auth/users/login",                    // ✅ Sans préfixe
+                        "/api/service-biometrie/auth/users/login",  // ✅ Avec préfixe complet
                         "/auth/users/refresh",
+                        "/api/service-biometrie/auth/users/refresh",
                         "/auth/health",
                         "/public/**",
                         "/actuator/**",
@@ -77,13 +78,14 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/auth/users/**").hasRole("ADMIN")
                 // Toutes les autres requêtes nécessitent une authentification
                 .anyRequest().authenticated()
-                );
+            );
 
-        // Ajout du filtre JWT avant le filtre d'authentification par défaut
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    // Ajout du filtre JWT avant le filtre d'authentification par défaut
+    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+}
+    
 
     /**
      * Configuration CORS pour autoriser les requêtes du frontend Compatible
@@ -100,6 +102,8 @@ public class SecurityConfig {
                 "http://localhost:8080", // Gateway
                 "https://localhost:8080", // Gateway HTTPS
                 "http://localhost:8081", // Backend direct
+                   "https://localhost:8180", // Backend direct
+                  "http://localhost:8180", // Backend direct
                 "https://localhost:8081" // Backend direct HTTPS
         // En production, retirez "*" et ajoutez seulement vos domaines
         // "https://votre-domaine.com",

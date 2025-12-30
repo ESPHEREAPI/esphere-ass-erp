@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 //@RequestMapping("/api/v1/adherents")
-@RequestMapping("/service-biometrie-partenaire")
+//@RequestMapping("/service-biometrie-partenaire")
 @RequiredArgsConstructor
 @Tag(name = "Gestion des Adhérents", description = "APIs pour la gestion des adhérents/assurés")
 //@CrossOrigin("*")
