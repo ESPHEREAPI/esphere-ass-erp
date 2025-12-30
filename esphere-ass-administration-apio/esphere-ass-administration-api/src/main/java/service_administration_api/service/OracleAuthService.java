@@ -24,6 +24,7 @@ import service_administration_api.DTO.UserSessionDTO;
 import service_administration_api.JwtTokenProvider;
 import service_administration_api.mapper.MapperDtoImpl;
 import service_administration_api.utils.JwtExpiration;
+import java.util.Date;
 
 /**
  *
@@ -37,17 +38,17 @@ import service_administration_api.utils.JwtExpiration;
 public class OracleAuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(OracleAuthService.class);
-    
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
+
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
-    
+
     @Autowired
     private MapperDtoImpl mapper;
-    
-    @Value("${oracle.jdbc.url:jdbc:oracle:thin:@//localhost:1521/ORCLASS}")
+
+    @Value("${oracle.jdbc.url:jdbc:oracle:thin:@77.68.94.193:1521:ZINSDB}")
     private String oracleJdbcUrl;
 
     // Stockage en mémoire des refresh tokens actifs
@@ -100,112 +101,126 @@ public class OracleAuthService {
             case "LOCKED(TIMED)":
                 logger.warn("Account locked for user: {}", username);
                 return ApiResponse.error("Compte verrouillé", "ACCOUNT_LOCKED");
-            
+
             case "EXPIRED":
             case "EXPIRED & LOCKED":
                 logger.warn("Password expired for user: {}", username);
                 return ApiResponse.error("Mot de passe expiré", "PASSWORD_EXPIRED");
-            
+
             case "EXPIRED(GRACE)":
                 logger.warn("Password in grace period for user: {}", username);
                 return ApiResponse.error("Mot de passe expiré (période de grâce)", "PASSWORD_GRACE");
-            
+
+            /**
+             * 🔐 Authentification complète avec génération de tokens JWT ✅
+             */
+            // ... votre code de vérification ...
             case "OPEN":
-                // Tenter l'authentification Oracle
                 if (!tryOracleLogin(username, password)) {
                     logger.warn("Invalid password for user: {}", username);
                     return ApiResponse.error("Mot de passe incorrect", "INVALID_PASSWORD");
                 }
 
-                // Authentification réussie - Générer les tokens JWT
                 try {
                     String token = jwtTokenProvider.generateToken(username);
                     String refreshToken = jwtTokenProvider.generateRefreshToken(username);
-                    long expiresAt = jwtTokenProvider.calculateExpirationTimestamp();
 
-                    // Stocker le refresh token actif
+                    // ⭐ Calculer la date d'expiration en Date (pas LocalDateTime)
+                    long expiresAtTimestamp = jwtTokenProvider.calculateExpirationTimestamp();
+                    Date expiresAt = new Date(expiresAtTimestamp);
+
+                    // Vérification de sécurité
+                    Date now = new Date();
+                    logger.info("🕐 Token expiration check:");
+                    logger.info("  Now: {}", now);
+                    logger.info("  ExpiresAt: {}", expiresAt);
+                    logger.info("  Diff (minutes): {}", (expiresAt.getTime() - now.getTime()) / 60000);
+
+                    if (expiresAt.before(now)) {
+                        logger.error("❌ CRITICAL: expiresAt is in the past!");
+                        expiresAt = new Date(System.currentTimeMillis() + 3600000); // Force 1h
+                    }
+
                     activeRefreshTokens.put(username, refreshToken);
 
-                    // Récupérer les informations utilisateur
                     UserDTO userDTO = mapper.mapUserSessionDTOByuserDTO(username);
-
-                    // Si le mapper ne retourne pas de UserDTO, créer un par défaut
                     if (userDTO == null) {
                         userDTO = createDefaultUserDTO(username);
                     }
 
-                    // Créer la session
+                    // ⭐ Créer la session avec Date
                     UserSessionDTO session = new UserSessionDTO(
                             userDTO,
                             token,
                             refreshToken,
-                            JwtExpiration.convetLongToDate(expiresAt)
+                            expiresAt
                     );
-                    
-                    logger.info("Authentication successful for user: {}", username);
+
+                    logger.info("✅ Authentication successful for user: {}", username);
                     return ApiResponse.success("Connexion réussie", session);
-                    
+
                 } catch (Exception e) {
                     logger.error("Error generating tokens for user: {}", username, e);
                     return ApiResponse.error("Erreur lors de la génération des tokens", "TOKEN_GENERATION_ERROR");
                 }
-            
+
             default:
                 logger.warn("Unknown account status for user {}: {}", username, accountStatus);
                 return ApiResponse.error("État du compte inconnu : " + accountStatus, "UNKNOWN_STATUS");
         }
+
     }
 
     /**
      * 🔄 Rafraîchir le token JWT
      */
-    public ApiResponse<UserSessionDTO> refreshToken(String refreshToken) {
-        try {
-            // Valider le refresh token
-            if (!jwtTokenProvider.validateToken(refreshToken)) {
-                logger.warn("Invalid refresh token");
-                return ApiResponse.error("Refresh token invalide", "INVALID_REFRESH_TOKEN");
-            }
-
-            // Extraire le username
-            String username = jwtTokenProvider.getUsernameFromToken(refreshToken);
-
-            // Vérifier si le refresh token est actif
-            String storedToken = activeRefreshTokens.get(username);
-            if (storedToken == null || !storedToken.equals(refreshToken)) {
-                logger.warn("Refresh token not found or expired for user: {}", username);
-                return ApiResponse.error("Refresh token expiré ou invalide", "REFRESH_TOKEN_EXPIRED");
-            }
-
-            // Générer de nouveaux tokens
-            String newToken = jwtTokenProvider.generateToken(username);
-            String newRefreshToken = jwtTokenProvider.generateRefreshToken(username);
-            long expiresAt = jwtTokenProvider.calculateExpirationTimestamp();
-
-            // Mettre à jour le refresh token actif
-            activeRefreshTokens.put(username, newRefreshToken);
-
-            // Récupérer les informations utilisateur
-            UserDTO userDTO = mapper.mapUserSessionDTOByuserDTO(username);
-            if (userDTO == null) {
-                userDTO = createDefaultUserDTO(username);
-            }
-
-            // Créer la nouvelle session
-            UserSessionDTO session = new UserSessionDTO(
-                    userDTO,
-                    newToken,
-                    newRefreshToken,
-                    JwtExpiration.convetLongToDate(expiresAt)
-            );
-            
-            logger.info("Token refreshed successfully for user: {}", username);
-            return ApiResponse.success("Token rafraîchi avec succès", session);
-            
-        } catch (Exception e) {
-            logger.error("Error refreshing token", e);
-            return ApiResponse.error("Erreur lors du rafraîchissement du token", "REFRESH_ERROR");
+   
+/**
+ * 🔄 Rafraîchir le token JWT
+ */
+public ApiResponse<UserSessionDTO> refreshToken(String refreshToken) {
+    try {
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            logger.warn("Invalid refresh token");
+            return ApiResponse.error("Refresh token invalide", "INVALID_REFRESH_TOKEN");
         }
+
+        String username = jwtTokenProvider.getUsernameFromToken(refreshToken);
+        String storedToken = activeRefreshTokens.get(username);
+        
+        if (storedToken == null || !storedToken.equals(refreshToken)) {
+            logger.warn("Refresh token not found or expired for user: {}", username);
+            return ApiResponse.error("Refresh token expiré ou invalide", "REFRESH_TOKEN_EXPIRED");
+        }
+
+        String newToken = jwtTokenProvider.generateToken(username);
+        String newRefreshToken = jwtTokenProvider.generateRefreshToken(username);
+        
+        // ⭐ Date au lieu de LocalDateTime
+        long expiresAtTimestamp = jwtTokenProvider.calculateExpirationTimestamp();
+        Date expiresAt = new Date(expiresAtTimestamp);
+
+        activeRefreshTokens.put(username, newRefreshToken);
+
+        UserDTO userDTO = mapper.mapUserSessionDTOByuserDTO(username);
+        if (userDTO == null) {
+            userDTO = createDefaultUserDTO(username);
+        }
+
+        UserSessionDTO session = new UserSessionDTO(
+            userDTO,
+            newToken,
+            newRefreshToken,
+            expiresAt
+        );
+        
+        logger.info("Token refreshed successfully for user: {}", username);
+        return ApiResponse.success("Token rafraîchi avec succès", session);
+        
+    } catch (Exception e) {
+        logger.error("Error refreshing token", e);
+        return ApiResponse.error("Erreur lors du rafraîchissement du token", "REFRESH_ERROR");
+    }
     }
 
     /**
@@ -218,10 +233,10 @@ public class OracleAuthService {
 
             // Supprimer le refresh token actif
             activeRefreshTokens.remove(username);
-            
+
             logger.info("User logged out successfully: {}", username);
             return ApiResponse.success("Déconnexion réussie", null);
-            
+
         } catch (Exception e) {
             logger.error("Error during logout", e);
             return ApiResponse.error("Erreur lors de la déconnexion", "LOGOUT_ERROR");
@@ -236,13 +251,13 @@ public class OracleAuthService {
             if (jwtTokenProvider.validateToken(token)) {
                 String username = jwtTokenProvider.getUsernameFromToken(token);
                 boolean isExpired = jwtTokenProvider.isTokenExpired(token);
-                
+
                 Map<String, Object> result = Map.of(
                         "valid", true,
                         "username", username,
                         "expired", isExpired
                 );
-                
+
                 logger.info("Token verified for user: {}", username);
                 return ApiResponse.success("Token valide", result);
             } else {
@@ -262,7 +277,6 @@ public class OracleAuthService {
         UserDTO userDTO = UserDTO.builder()
                 .username(username)
                 .email(username + "@zenithe.com").build();
-       
 
         // Extraire le nom/prénom depuis le username Oracle si possible
         String[] parts = username.split("_");
@@ -277,7 +291,7 @@ public class OracleAuthService {
         // Rôle par défaut
         RoleDTO role = new RoleDTO("USER", "Utilisateur standard");
         userDTO.setRole(role);
-        
+
         return userDTO;
     }
 
@@ -294,5 +308,5 @@ public class OracleAuthService {
     public int getActiveUsersCount() {
         return activeRefreshTokens.size();
     }
-    
+
 }
