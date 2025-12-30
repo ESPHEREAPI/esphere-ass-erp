@@ -1,0 +1,276 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:9.0
+    container_name: esphere-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: DeepWater@2021
+      MYSQL_DATABASE: biometry
+    command: --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pDeepWater@2021"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: esphere-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: DeepWater@2021
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "8090:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - microservices-network
+
+  # ============================================
+  # ZIPKIN - Distributed Tracing
+  # ============================================
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: esphere-zipkin
+    restart: unless-stopped
+    ports:
+      - "9411:9411"
+    environment:
+      - STORAGE_TYPE=mem
+      # Pour persister dans MySQL (optionnel)
+      # - STORAGE_TYPE=mysql
+      # - MYSQL_HOST=mysql
+      # - MYSQL_TCP_PORT=3306
+      # - MYSQL_USER=root
+      # - MYSQL_PASS=DeepWater@2021
+      # - MYSQL_DB=zipkin
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9411/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Configuration Server
+  config-server:
+    build:
+      context: ./esphere-ass-config-serveur/esphere-ass-config-serveur
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:9101"
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9101/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Eureka Server
+  eureka-server:
+    build:
+      context: ./esphere-ass-eureka-server/esphere-ass-eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    depends_on:
+      config-server:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
+  # API Gateway
+  gateway-proxy:
+    build:
+      context: ./esphere-ass-gateway-proxy/esphere-ass-gateway-proxy
+      dockerfile: Dockerfile
+    container_name: gateway-proxy
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - microservices-network
+    restart: unless-stopped
+
+  # Service biometrie
+  biometry:
+    build:
+      context: ./biometrie/biometry
+      dockerfile: Dockerfile
+    container_name: biometry
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/biometry?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=DeepWater@2021
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - microservices-network
+    restart: unless-stopped
+
+  # Biométrie Partenaire
+  biometrie-partenaire:
+    build:
+      context: ./biometry-partenaire/biometry
+      dockerfile: Dockerfile
+    container_name: biometrie-partenaire
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/biometry?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=DeepWater@2021
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - microservices-network
+    restart: unless-stopped
+
+  # Admin Service (Oracle 11g distant sur 77.68.94.193)
+  esphere-ass-microservice-admin:
+    build:
+      context: ./esphere-ass-administration-apio/esphere-ass-administration-api
+      dockerfile: Dockerfile
+    container_name: esphere-ass-microservice-admin
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@77.68.94.193:1521:ZINSDB
+      - SPRING_DATASOURCE_USERNAME=ORASSADM
+      - SPRING_DATASOURCE_PASSWORD=zen5000tech
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=oracle.jdbc.OracleDriver
+      - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=30000
+      - SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT=5000
+      - SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=10
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - microservices-network
+    restart: unless-stopped
+
+  # Frontend Angular 18
+  frontend:
+    build:
+      context: ./web/espace-souscripteur-frontend/zenithe-biometrie/zenithe-biometrie-espace-client
+      dockerfile: Dockerfile
+    container_name: frontend-angular
+    ports:
+      - "8000:8080"
+    depends_on:
+      - gateway-proxy
+    networks:
+      - microservices-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Frontend Biometry
+  frontend-biometry:
+    build:
+      context: ./web/biometry-adminLTE-v2
+      dockerfile: Dockerfile
+    container_name: frontend-biometry
+    ports:
+      - "8180:8080"
+    depends_on:
+      - gateway-proxy
+    networks:
+      - microservices-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Frontend Esphere ASS
+  frontend-esphere-ass:
+    build:
+      context: ./web/AdminLTE-3_2_0-angular/adminlte-angular-app
+      dockerfile: Dockerfile
+    container_name: frontend-esphere-ass
+    ports:
+      - "8282:8080"
+    depends_on:
+      - gateway-proxy
+    networks:
+      - microservices-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+# Déclaration unique du réseau
+networks:
+  microservices-network:
+    driver: bridge
+
+# Déclaration des volumes
+volumes:
+  mysql_data:
+    driver: local

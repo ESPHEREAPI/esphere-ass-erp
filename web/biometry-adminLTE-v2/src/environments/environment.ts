@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   
   // URL Gateway complète
-  apiUrl: 'https://localhost:8081/gateway-proxy/api/service-biometrie',
-  
+  //apiUrl: 'https://localhost:8081/gateway-proxy/api/service-biometrie',
+  apiUrl:'/gateway-proxy/api/service-biometrie',
   // Token Gateway (clé d'authentification)
   token_key: '3cfa76ef890d4aed2d3981a7c93bd1a13c8796dafcb4f94fa578234a0df56b321',
   
