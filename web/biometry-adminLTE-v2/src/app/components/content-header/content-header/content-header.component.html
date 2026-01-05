@@ -1,0 +1,16 @@
+<section class="content-header">
+  <h1>
+    {{ pageTitle }}
+    <small>Panneau de contrôle</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/dashboard"><i class="fa fa-dashboard"></i> Accueil</a>
+    </li>
+    <li *ngFor="let breadcrumb of breadcrumbs; let last = last"
+        [class.active]="last">
+      <a *ngIf="!last" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+      <span *ngIf="last">{{ breadcrumb.label }}</span>
+    </li>
+  </ol>
+</section>
