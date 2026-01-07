@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
+  return new TranslateHttpLoader(http, './i18n/', '.json');
 }
 
 // Fonction d'initialisation de la traduction

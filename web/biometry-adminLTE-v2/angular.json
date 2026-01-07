@@ -16,6 +16,7 @@
             "outputPath": "dist/biometry-admin-lte-v2",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "baseHref": "/biometry/",
             "polyfills": [
               "zone.js"
             ],
@@ -53,7 +54,8 @@
                   "maximumError": "10kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/biometry/"
             },
             "development": {
               "optimization": false,
