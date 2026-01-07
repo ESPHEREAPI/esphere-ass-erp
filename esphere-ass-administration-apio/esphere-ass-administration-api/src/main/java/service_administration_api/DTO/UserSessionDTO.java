@@ -6,12 +6,9 @@ package service_administration_api.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
-import service_administration_api.utils.JwtExpiration;
 
 /**
  * DTO pour la session utilisateur après authentification

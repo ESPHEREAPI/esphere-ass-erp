@@ -16,6 +16,7 @@
             "outputPath": "dist/adminlte-angular-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "baseHref": "/biometry-espace-client/",
             "polyfills": [
               "zone.js"
             ],
@@ -69,7 +70,8 @@
                 },
                 "fonts": true
               },
-              "sourceMap": false
+              "sourceMap": false,
+              "baseHref": "/biometry-espace-client/"
             },
             "development": {
               "optimization": false,
