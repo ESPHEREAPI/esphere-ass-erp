@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap, finalize } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+//import { environment } from '../../environments/environment';
 import { UserSession } from '../models/user-session';
 import { ApiResponse } from '../models/api-response';
 import { LoginRequest } from '../models/login-request';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -448,7 +449,7 @@ export class AuthService {
 
   /**
    * 🔴 Gérer les erreurs HTTP spécifiques
-   */
+
   private handleHttpError(error: HttpErrorResponse, errorDetails: any, context: string): void {
     const status = error.status;
     
@@ -537,6 +538,122 @@ export class AuthService {
         }
     }
   }
+    */
+
+  /**
+ * 🔴 Gérer les erreurs HTTP spécifiques
+ */
+private handleHttpError(error: HttpErrorResponse, errorDetails: any, context: string): void {
+  const status = error.status;
+  
+  // ✅ Ne pas rediriger automatiquement pendant le login
+  const isLoginContext = context === 'Login';
+  
+  switch (status) {
+    case 0:
+      errorDetails.message = 'Impossible de contacter le serveur. Vérifiez votre connexion ou le certificat SSL.';
+      console.error('❌ No response from server (Gateway/SSL issue)');
+      
+      // ✅ NE PAS rediriger si on est en train de se connecter
+      if (!isLoginContext) {
+        this.router.navigate(['/network-error'], {
+          state: { previousUrl: this.router.url, error: errorDetails }
+        });
+      }
+      break;
+
+    case 400:
+      errorDetails.message = 'Requête invalide';
+      errorDetails.serverMessage = this.extractErrorMessage(error);
+      console.error('❌ Bad Request:', errorDetails.serverMessage);
+      break;
+
+    case 401:
+      // ✅ Gérer différemment selon le contexte
+      if (isLoginContext) {
+        errorDetails.message = 'Identifiants incorrects';
+        console.error('❌ Login failed - Invalid credentials');
+      } else {
+        errorDetails.message = 'Session expirée';
+        console.error('❌ Unauthorized - Session expired');
+        this.clearUserData();
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/login'], {
+          queryParams: { sessionExpired: 'true' }
+        });
+      }
+      break;
+
+    case 403:
+      errorDetails.message = 'Accès refusé';
+      console.error('❌ Forbidden');
+      if (!isLoginContext) {
+        this.router.navigate(['/error'], {
+          queryParams: { code: 403 },
+          state: { errorCode: 403, errorDetails }
+        });
+      }
+      break;
+
+    case 404:
+      errorDetails.message = 'Service non trouvé. Vérifiez l\'URL de la Gateway.';
+      console.error('❌ Not Found - Check Gateway URL');
+      break;
+
+    case 408:
+      errorDetails.message = 'Délai d\'attente dépassé';
+      console.error('❌ Timeout');
+      if (!isLoginContext) {
+        this.router.navigate(['/network-error'], {
+          state: { previousUrl: this.router.url, error: errorDetails }
+        });
+      }
+      break;
+
+    case 502:
+      errorDetails.message = 'Gateway indisponible';
+      console.error('❌ Bad Gateway');
+      if (!isLoginContext) {
+        this.router.navigate(['/error'], {
+          queryParams: { code: 502 },
+          state: { errorCode: 502, errorDetails }
+        });
+      }
+      break;
+
+    case 503:
+      errorDetails.message = 'Service temporairement indisponible';
+      console.error('❌ Service Unavailable');
+      if (!isLoginContext) {
+        this.router.navigate(['/error'], {
+          queryParams: { code: 503 },
+          state: { errorCode: 503, errorDetails }
+        });
+      }
+      break;
+
+    case 504:
+      errorDetails.message = 'Gateway timeout';
+      console.error('❌ Gateway Timeout');
+      if (!isLoginContext) {
+        this.router.navigate(['/error'], {
+          queryParams: { code: 504 },
+          state: { errorCode: 504, errorDetails }
+        });
+      }
+      break;
+
+    default:
+      errorDetails.message = `Erreur ${status}`;
+      console.error(`❌ HTTP Error ${status}`);
+      if (status >= 400 && !isLoginContext) {
+        this.router.navigate(['/error'], {
+          queryParams: { code: status },
+          state: { errorCode: status, errorDetails }
+        });
+      }
+  }
+}
 
   private extractErrorMessage(error: HttpErrorResponse): string {
     if (error.error?.message) return error.error.message;

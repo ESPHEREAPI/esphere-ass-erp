@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       console.log('Login:', this.credentials.username);
       console.log('Mot de passe:','*************');
-      console.log('Se souvenir:', this.credentials.remember);
+      //console.log('Se souvenir:', this.credentials.remember);
 
       // 👉 Ici ta logique d'authentification réelle
      // this.router.navigateByUrl('/dashboard');
@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   //  const { username, password } = this.credentials;
   this.credentials.username=this.loginForm.get("username")?.value ?? "";
   this.credentials.password=this.loginForm.get("password")?.value ?? "";
-  this.credentials.remember=this.loginForm.get("password")?.value ?? "";
+  this.credentials.remember=this.loginForm.get("remember")?.value ?? "";
 
     this.authService.login(this.credentials)
       .pipe(
