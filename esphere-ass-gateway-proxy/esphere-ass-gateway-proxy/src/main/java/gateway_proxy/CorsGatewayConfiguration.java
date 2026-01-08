@@ -72,6 +72,14 @@ public class CorsGatewayConfiguration {
         corsConfig.addAllowedOriginPattern("http://localhost:8282");   // Angular dev
         corsConfig.addAllowedOriginPattern("https://localhost:8282");  // Angular dev HTTPS
 
+        // Ajouter APRÈS les patterns localhost
+        corsConfig.addAllowedOriginPattern("http://77.68.94.193:*");
+        corsConfig.addAllowedOriginPattern("https://77.68.94.193:*");
+
+// Spécifique
+        corsConfig.addAllowedOriginPattern("https://77.68.94.193");
+        corsConfig.addAllowedOriginPattern("http://77.68.94.193");
+
         /**
          * 📝 RECOMMANDATION PRODUCTION : Remplacer les patterns par des
          * origines exactes :
@@ -231,32 +239,26 @@ public class CorsGatewayConfiguration {
 }
 
 /**
+ * ======================================== FAQ - Questions Fréquentes
  * ========================================
- * FAQ - Questions Fréquentes
- * ========================================
- * 
- * Q: Pourquoi ma requête échoue avec "CORS policy" ?
- * R: 1. Vérifiez que l'origine est dans addAllowedOriginPattern
- *    2. Vérifiez que la méthode est dans addAllowedMethod
- *    3. Vérifiez que les headers sont dans addAllowedHeader
- *    4. Vérifiez les logs Gateway pour voir la requête OPTIONS
- * 
- * Q: Dois-je aussi configurer CORS dans le backend Spring Boot ?
- * R: NON si la Gateway gère déjà CORS
- *    Le backend ne voit QUE la Gateway, pas le frontend
- *    CORS doit être configuré à la frontière (Gateway)
- * 
- * Q: Quelle est la différence entre cette config et bootstrap.properties ?
- * R: Cette classe = Configuration Java programmatique (plus flexible)
- *    bootstrap.properties = Configuration déclarative (plus simple)
- *    Choisissez l'une ou l'autre, pas les deux
- * 
- * Q: Pourquoi @Order(-1) ?
- * R: Pour que CORS s'exécute AVANT les autres filtres
- *    Sinon, une authentification pourrait bloquer OPTIONS
- * 
- * Q: Que fait exactement maxAge(3600L) ?
- * R: Cache la réponse preflight pendant 1 heure
- *    Réduit le nombre de requêtes OPTIONS
- *    Améliore les performances
+ *
+ * Q: Pourquoi ma requête échoue avec "CORS policy" ? R: 1. Vérifiez que
+ * l'origine est dans addAllowedOriginPattern 2. Vérifiez que la méthode est
+ * dans addAllowedMethod 3. Vérifiez que les headers sont dans addAllowedHeader
+ * 4. Vérifiez les logs Gateway pour voir la requête OPTIONS
+ *
+ * Q: Dois-je aussi configurer CORS dans le backend Spring Boot ? R: NON si la
+ * Gateway gère déjà CORS Le backend ne voit QUE la Gateway, pas le frontend
+ * CORS doit être configuré à la frontière (Gateway)
+ *
+ * Q: Quelle est la différence entre cette config et bootstrap.properties ? R:
+ * Cette classe = Configuration Java programmatique (plus flexible)
+ * bootstrap.properties = Configuration déclarative (plus simple) Choisissez
+ * l'une ou l'autre, pas les deux
+ *
+ * Q: Pourquoi @Order(-1) ? R: Pour que CORS s'exécute AVANT les autres filtres
+ * Sinon, une authentification pourrait bloquer OPTIONS
+ *
+ * Q: Que fait exactement maxAge(3600L) ? R: Cache la réponse preflight pendant
+ * 1 heure Réduit le nombre de requêtes OPTIONS Améliore les performances
  */

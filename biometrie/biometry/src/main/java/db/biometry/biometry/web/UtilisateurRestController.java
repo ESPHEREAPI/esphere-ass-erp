@@ -105,6 +105,8 @@ public class UtilisateurRestController  {
                             .data(authResponse)
                             .timestamp(LocalDateTime.now())
                             .build());
+            
+            
 
         } catch (UtilisateurException e) {
             log.error("❌ Erreur d'authentification pour: {} - {}", 

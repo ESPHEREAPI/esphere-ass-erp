@@ -5,38 +5,50 @@ import { catchError, throwError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
-
+  
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      let errorCode = error.status;
-      let errorDetails = {
+      const errorCode = error.status;
+      const errorDetails = {
         url: req.url,
         timestamp: new Date(),
-        message: error.message
+        message: error.message,
+        status: errorCode
       };
 
-      // Gérer les erreurs réseau (pas de connexion)
-      if (error.status === 0 || error.error instanceof ProgressEvent) {
-        // Erreur de connexion réseau
-        const currentUrl = router.url;
-        router.navigate(['/network-error'], {
-          state: { previousUrl: currentUrl }
-        });
+      console.error('🔴 ErrorInterceptor caught:', {
+        status: errorCode,
+        url: req.url,
+        message: error.message
+      });
+
+      // ✅ NE PAS rediriger automatiquement sur erreur 0 (SSL)
+      // Laisser le AuthService gérer ces erreurs
+      if (error.status === 0) {
+        console.warn('⚠️ Network/SSL error detected - letting AuthService handle it');
+        // Ne pas rediriger, juste propager l'erreur
         return throwError(() => error);
       }
 
-      // Gérer les erreurs HTTP spécifiques
+      // Gérer les erreurs HTTP spécifiques SAUF pour les routes d'authentification
+      const isAuthRoute = req.url.includes('/auth/');
+      
       switch (errorCode) {
         case 401:
-          // Non autorisé - rediriger vers login
-          console.error('Unauthorized access - redirecting to login');
+          // ✅ Si route d'auth (login), ne pas rediriger automatiquement
+          if (isAuthRoute) {
+            console.log('❌ Login failed - showing error in component');
+            return throwError(() => error);
+          }
+          
+          // Sinon, rediriger vers login (session expirée)
+          console.error('🔐 Unauthorized access - redirecting to login');
           router.navigate(['/login'], {
-            queryParams: { returnUrl: router.url }
+            queryParams: { returnUrl: router.url, sessionExpired: 'true' }
           });
           break;
 
         case 403:
-          // Accès interdit
           router.navigate(['/error'], {
             queryParams: { code: 403 },
             state: { errorCode: 403, errorDetails }
@@ -44,22 +56,20 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           break;
 
         case 404:
-          // Ressource non trouvée
-          router.navigate(['/error'], {
-            queryParams: { code: 404 },
-            state: { errorCode: 404, errorDetails }
-          });
-          break;
+          // Ne pas rediriger pour 404 sur API, juste logger
+          console.warn('⚠️ Resource not found:', req.url);
+          return throwError(() => error);
 
         case 408:
-          // Timeout
-          router.navigate(['/network-error'], {
-            state: { previousUrl: router.url }
-          });
+          // Timeout - ne rediriger que si pas une route d'auth
+          if (!isAuthRoute) {
+            router.navigate(['/network-error'], {
+              state: { previousUrl: router.url }
+            });
+          }
           break;
 
         case 429:
-          // Too many requests
           router.navigate(['/error'], {
             queryParams: { code: 429 },
             state: { errorCode: 429, errorDetails }
@@ -70,20 +80,20 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         case 502:
         case 503:
         case 504:
-          // Erreurs serveur
-          router.navigate(['/error'], {
-            queryParams: { code: errorCode },
-            state: { errorCode, errorDetails }
-          });
-          break;
-
-        default:
-          // Autres erreurs 4xx ou 5xx
-          if (errorCode >= 400) {
+          // Erreurs serveur - ne rediriger que si pas une route d'auth
+          if (!isAuthRoute) {
             router.navigate(['/error'], {
               queryParams: { code: errorCode },
               state: { errorCode, errorDetails }
             });
+          }
+          break;
+
+        default:
+          // Autres erreurs 4xx ou 5xx
+          if (errorCode >= 400 && !isAuthRoute) {
+            console.warn(`⚠️ HTTP ${errorCode} error on:`, req.url);
+            // Ne pas rediriger systématiquement, laisser le composant gérer
           }
       }
 
