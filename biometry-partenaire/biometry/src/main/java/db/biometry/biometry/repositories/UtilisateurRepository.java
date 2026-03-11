@@ -6,6 +6,7 @@ package db.biometry.biometry.repositories;
 
 import db.biometry.biometry.entite.Utilisateur;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer>{
-    Utilisateur findByLogin(String username);
+    Optional<Utilisateur> findByLogin(String username);
     @Query("SELECT u FROM Utilisateur u WHERE u.nom  like :kw or u.login like :kw")
      public List<Utilisateur> searchUser(@Param(value ="kw")String keyword);
     

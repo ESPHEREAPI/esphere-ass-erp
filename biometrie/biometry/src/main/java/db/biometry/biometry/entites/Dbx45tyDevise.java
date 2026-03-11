@@ -31,9 +31,8 @@ import java.math.BigDecimal;
     @NamedQuery(name = "Dbx45tyDevise.findBySeparateurMilliers", query = "SELECT d FROM Dbx45tyDevise d WHERE d.separateurMilliers = :separateurMilliers"),
     @NamedQuery(name = "Dbx45tyDevise.findBySeparateurDecimaux", query = "SELECT d FROM Dbx45tyDevise d WHERE d.separateurDecimaux = :separateurDecimaux"),
     @NamedQuery(name = "Dbx45tyDevise.findByTauxConversion", query = "SELECT d FROM Dbx45tyDevise d WHERE d.tauxConversion = :tauxConversion"),
-    @NamedQuery(name = "Dbx45tyDevise.findByPositionSymbole", query = "SELECT d FROM Dbx45tyDevise d WHERE d.positionSymbole = :positionSymbole"),
-    @NamedQuery(name = "Dbx45tyDevise.findByStatut", query = "SELECT d FROM Dbx45tyDevise d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyDevise.findBySupprime", query = "SELECT d FROM Dbx45tyDevise d WHERE d.supprime = :supprime")})
+    
+   })
 public class Dbx45tyDevise implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,15 +60,15 @@ public class Dbx45tyDevise implements Serializable {
     @Basic(optional = false)
     @Column(name = "taux_conversion")
     private BigDecimal tauxConversion;
-    @Basic(optional = false)
-    @Column(name = "position_symbole")
-    private String positionSymbole;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "position_symbole")
+//    private String positionSymbole;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
 
     public Dbx45tyDevise() {
     }
@@ -86,9 +85,9 @@ public class Dbx45tyDevise implements Serializable {
         this.separateurMilliers = separateurMilliers;
         this.separateurDecimaux = separateurDecimaux;
         this.tauxConversion = tauxConversion;
-        this.positionSymbole = positionSymbole;
-        this.statut = statut;
-        this.supprime = supprime;
+        //this.positionSymbole = positionSymbole;
+        //this.statut = statut;
+       // this.supprime = supprime;
     }
 
     public Short getId() {
@@ -147,29 +146,23 @@ public class Dbx45tyDevise implements Serializable {
         this.tauxConversion = tauxConversion;
     }
 
-    public String getPositionSymbole() {
-        return positionSymbole;
-    }
+   
 
-    public void setPositionSymbole(String positionSymbole) {
-        this.positionSymbole = positionSymbole;
-    }
+//    public String getStatut() {
+//        return statut;
+//    }
+//
+//    public void setStatut(String statut) {
+//        this.statut = statut;
+//    }
 
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-    public String getSupprime() {
-        return supprime;
-    }
-
-    public void setSupprime(String supprime) {
-        this.supprime = supprime;
-    }
+//    public String getSupprime() {
+//        return supprime;
+//    }
+//
+//    public void setSupprime(String supprime) {
+//        this.supprime = supprime;
+//    }
 
     @Override
     public int hashCode() {

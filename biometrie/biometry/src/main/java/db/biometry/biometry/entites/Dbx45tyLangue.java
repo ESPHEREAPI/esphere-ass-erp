@@ -35,9 +35,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyLangue.findByCodeIso", query = "SELECT d FROM Dbx45tyLangue d WHERE d.codeIso = :codeIso"),
     @NamedQuery(name = "Dbx45tyLangue.findByCodeFin", query = "SELECT d FROM Dbx45tyLangue d WHERE d.codeFin = :codeFin"),
     @NamedQuery(name = "Dbx45tyLangue.findByCode", query = "SELECT d FROM Dbx45tyLangue d WHERE d.code = :code"),
-    @NamedQuery(name = "Dbx45tyLangue.findByFormatDate", query = "SELECT d FROM Dbx45tyLangue d WHERE d.formatDate = :formatDate"),
-    @NamedQuery(name = "Dbx45tyLangue.findByStatut", query = "SELECT d FROM Dbx45tyLangue d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyLangue.findBySupprime", query = "SELECT d FROM Dbx45tyLangue d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "Dbx45tyLangue.findByFormatDate", query = "SELECT d FROM Dbx45tyLangue d WHERE d.formatDate = :formatDate")
+  })
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -65,12 +64,12 @@ public class Dbx45tyLangue implements Serializable {
     @Basic(optional = false)
     @Column(name = "format_date")
     private String formatDate;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "langueId")
     private List<Dbx45tyMenuLangue> dbx45tyMenuLangueList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "langueDefaut")

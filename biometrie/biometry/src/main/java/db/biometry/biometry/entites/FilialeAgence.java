@@ -35,9 +35,8 @@ import lombok.NoArgsConstructor;
 @NamedQueries({
     @NamedQuery(name = "FilialeAgence.findAll", query = "SELECT d FROM FilialeAgence d"),
     @NamedQuery(name = "FilialeAgence.findById", query = "SELECT d FROM FilialeAgence d WHERE d.id = :id"),
-    @NamedQuery(name = "FilialeAgence.findByDateCreation", query = "SELECT d FROM FilialeAgence d WHERE d.dateCreation = :dateCreation"),
-    @NamedQuery(name = "FilialeAgence.findByStatut", query = "SELECT d FROM FilialeAgence d WHERE d.statut = :statut"),
-    @NamedQuery(name = "FilialeAgence.findBySupprime", query = "SELECT d FROM FilialeAgence d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "FilialeAgence.findByDateCreation", query = "SELECT d FROM FilialeAgence d WHERE d.dateCreation = :dateCreation")
+  })
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -54,12 +53,12 @@ public class FilialeAgence implements Serializable {
     @Column(name = "date_creation")
     @Temporal(TemporalType.DATE)
     private Date dateCreation;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(mappedBy = "filialeAgenceId")
     private List<Employe> dbx45tyEmployeList;
     @JoinColumn(name = "agence_id", referencedColumnName = "id")

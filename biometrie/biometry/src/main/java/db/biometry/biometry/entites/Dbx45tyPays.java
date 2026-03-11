@@ -31,8 +31,9 @@ import java.util.List;
     @NamedQuery(name = "Dbx45tyPays.findById", query = "SELECT d FROM Dbx45tyPays d WHERE d.id = :id"),
     @NamedQuery(name = "Dbx45tyPays.findByCodeIso", query = "SELECT d FROM Dbx45tyPays d WHERE d.codeIso = :codeIso"),
     @NamedQuery(name = "Dbx45tyPays.findByCodePostal", query = "SELECT d FROM Dbx45tyPays d WHERE d.codePostal = :codePostal"),
-    @NamedQuery(name = "Dbx45tyPays.findByStatut", query = "SELECT d FROM Dbx45tyPays d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyPays.findBySupprime", query = "SELECT d FROM Dbx45tyPays d WHERE d.supprime = :supprime")})
+//    @NamedQuery(name = "Dbx45tyPays.findByStatut", query = "SELECT d FROM Dbx45tyPays d WHERE d.statut = :statut"),
+//    @NamedQuery(name = "Dbx45tyPays.findBySupprime", query = "SELECT d FROM Dbx45tyPays d WHERE d.supprime = :supprime")
+})
 public class Dbx45tyPays implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,12 +46,12 @@ public class Dbx45tyPays implements Serializable {
     private String codeIso;
     @Column(name = "code_postal")
     private String codePostal;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paysId")
     private List<Dbx45tyPaysLangue> dbx45tyPaysLangueList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paysId")
@@ -73,8 +74,8 @@ public class Dbx45tyPays implements Serializable {
 
     public Dbx45tyPays(Integer id, String statut, String supprime) {
         this.id = id;
-        this.statut = statut;
-        this.supprime = supprime;
+//        this.statut = statut;
+//        this.supprime = supprime;
     }
 
     public Integer getId() {
@@ -101,21 +102,21 @@ public class Dbx45tyPays implements Serializable {
         this.codePostal = codePostal;
     }
 
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-    public String getSupprime() {
-        return supprime;
-    }
-
-    public void setSupprime(String supprime) {
-        this.supprime = supprime;
-    }
+//    public String getStatut() {
+//        return statut;
+//    }
+//
+//    public void setStatut(String statut) {
+//        this.statut = statut;
+//    }
+//
+//    public String getSupprime() {
+//        return supprime;
+//    }
+//
+//    public void setSupprime(String supprime) {
+//        this.supprime = supprime;
+//    }
 
     public List<Dbx45tyPaysLangue> getDbx45tyPaysLangueList() {
         return dbx45tyPaysLangueList;

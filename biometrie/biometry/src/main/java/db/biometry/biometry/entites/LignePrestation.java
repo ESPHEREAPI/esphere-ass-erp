@@ -4,10 +4,14 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.EtatType;
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -107,10 +111,12 @@ public class LignePrestation implements Serializable {
     private Date dateEncaisse;
     @Basic(optional = false)
     @Column(name = "etat")
-    private String etat;
+      @Enumerated(EnumType.STRING)
+    private EtatType etat;
     @Basic(optional = false)
     @Column(name = "supprime")
-    private String supprime;
+    @Enumerated(EnumType.STRING)
+    private StatutType supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lignePrestationId")
     private List<LignePrestationAudit> dbx45tyLignePrestationAuditList;
     @JoinColumn(name = "employe_valide_rejete_id", referencedColumnName = "id")

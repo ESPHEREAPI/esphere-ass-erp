@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,8 @@ import java.util.List;
     @NamedQuery(name = "Dbx45tyRegion.findById", query = "SELECT d FROM Dbx45tyRegion d WHERE d.id = :id"),
     @NamedQuery(name = "Dbx45tyRegion.findByCode", query = "SELECT d FROM Dbx45tyRegion d WHERE d.code = :code"),
     @NamedQuery(name = "Dbx45tyRegion.findByStatut", query = "SELECT d FROM Dbx45tyRegion d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyRegion.findBySupprime", query = "SELECT d FROM Dbx45tyRegion d WHERE d.supprime = :supprime")})
+//    @NamedQuery(name = "Dbx45tyRegion.findBySupprime", query = "SELECT d FROM Dbx45tyRegion d WHERE d.supprime = :supprime")
+})
 public class Dbx45tyRegion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,11 +48,13 @@ public class Dbx45tyRegion implements Serializable {
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
+     
     @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+    @Enumerated(EnumType.STRING)
+    private StatutType statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "regionId")
     private List<Dbx45tyRegionLangue> dbx45tyRegionLangueList;
     @JoinColumn(name = "pays_id", referencedColumnName = "id")
@@ -65,11 +71,11 @@ public class Dbx45tyRegion implements Serializable {
         this.id = id;
     }
 
-    public Dbx45tyRegion(Integer id, String code, String statut, String supprime) {
+    public Dbx45tyRegion(Integer id, String code, StatutType statut, String supprime) {
         this.id = id;
         this.code = code;
         this.statut = statut;
-        this.supprime = supprime;
+//        this.supprime = supprime;
     }
 
     public Integer getId() {
@@ -88,21 +94,21 @@ public class Dbx45tyRegion implements Serializable {
         this.code = code;
     }
 
-    public String getStatut() {
+    public StatutType getStatut() {
         return statut;
     }
 
-    public void setStatut(String statut) {
+    public void setStatut(StatutType statut) {
         this.statut = statut;
     }
 
-    public String getSupprime() {
-        return supprime;
-    }
-
-    public void setSupprime(String supprime) {
-        this.supprime = supprime;
-    }
+//    public String getSupprime() {
+//        return supprime;
+//    }
+//
+//    public void setSupprime(String supprime) {
+//        this.supprime = supprime;
+//    }
 
     public List<Dbx45tyRegionLangue> getDbx45tyRegionLangueList() {
         return dbx45tyRegionLangueList;

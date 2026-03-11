@@ -4,9 +4,12 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,8 +37,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyExamen.findByNom", query = "SELECT d FROM Dbx45tyExamen d WHERE d.nom = :nom"),
     @NamedQuery(name = "Dbx45tyExamen.findByCotation", query = "SELECT d FROM Dbx45tyExamen d WHERE d.cotation = :cotation"),
     @NamedQuery(name = "Dbx45tyExamen.findByPrix", query = "SELECT d FROM Dbx45tyExamen d WHERE d.prix = :prix"),
-    @NamedQuery(name = "Dbx45tyExamen.findByStatut", query = "SELECT d FROM Dbx45tyExamen d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyExamen.findBySupprime", query = "SELECT d FROM Dbx45tyExamen d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "Dbx45tyExamen.findByStatut", query = "SELECT d FROM Dbx45tyExamen d WHERE d.statut = :statut")
+  })
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -62,11 +65,12 @@ public class Dbx45tyExamen implements Serializable {
     @Column(name = "prix")
     private Double prix;
     @Basic(optional = false)
+       @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+    private StatutType statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+   // private String supprime;
     @OneToMany(mappedBy = "examenId")
     private List<LignePrestation> dbx45tyLignePrestationList;
 

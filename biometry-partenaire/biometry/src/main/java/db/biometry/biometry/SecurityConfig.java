@@ -1,8 +1,77 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-// */
-//package db.biometry.biometry;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package db.biometry.biometry;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.*;
+
+import java.util.List;
+import org.springframework.security.authentication.AuthenticationProvider;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtAuthFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider; // ← injecté depuis UserDetailsConfig
+
+    @Value("${cors.allowed-origins}")
+    private String allowedOrigins;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable) // ← désactiver ici
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider) // ← ajout
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/adherents/**").permitAll()
+                .requestMatchers("/subscriber/**").permitAll()
+                .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/v3/api-docs/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/dashboard/**").permitAll()
+                .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+        config.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(12);
+//    }
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -24,10 +93,11 @@
 //import java.util.Arrays;
 //import java.util.List;
 //
+
 ///**
-// * Configuration de la sécurité Spring Security avec JWT
-// * Gère l'authentification et l'autorisation
-// * 
+// * Configuration de la sécurité Spring Security avec JWT Gère l'authentification
+// * et l'autorisation
+// *
 // * @author JIATOU FRANCK
 // * @version 1.0
 // */
@@ -43,7 +113,7 @@
 //    // Note: JwtAuthenticationFilter et CustomUserDetailsService à implémenter
 //    // private final JwtAuthenticationFilter jwtAuthFilter;
 //    // private final UserDetailsService userDetailsService;
-//    
+//
 //    /**
 //     * Configuration de la chaîne de filtres de sécurité
 //     */
@@ -53,37 +123,33 @@
 //                .csrf(AbstractHttpConfigurer::disable)
 //                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 //                .authorizeHttpRequests(auth -> auth
-//                        // Endpoints publics
-//                        .requestMatchers("/api/v1/auth/**").permitAll()
+//                // Endpoints publics
+//                .requestMatchers("/api/v1/auth/**").permitAll()
 //                .requestMatchers("/v3/api-docs/**",
-//            "/swagger-ui.html",
-//            "/swagger-ui/**").permitAll()
-//                        .requestMatchers("/actuator/**").permitAll()
-//                        
-//                        // Endpoints du tableau de bord - Accès SOUSCRIPTEUR
-//                        .requestMatchers("/api/v1/dashboard/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
-//                        
-//                        // Endpoints de gestion des adhérents - Accès SOUSCRIPTEUR
-//                        .requestMatchers(HttpMethod.GET, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
-//                        .requestMatchers(HttpMethod.PUT, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/api/v1/adherents/**").hasRole("ADMIN")
-//                        
-//                        // Endpoints de reporting - Accès SOUSCRIPTEUR
-//                        .requestMatchers("/api/v1/reporting/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
-//                        
-//                        // Tous les autres endpoints nécessitent une authentification
-//                        .anyRequest().authenticated()
+//                        "/swagger-ui.html",
+//                        "/swagger-ui/**").permitAll()
+//                .requestMatchers("/actuator/**").permitAll()
+//                // Endpoints du tableau de bord - Accès SOUSCRIPTEUR
+//                .requestMatchers("/api/v1/dashboard/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
+//                // Endpoints de gestion des adhérents - Accès SOUSCRIPTEUR
+//                .requestMatchers(HttpMethod.GET, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
+//                .requestMatchers(HttpMethod.POST, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
+//                .requestMatchers(HttpMethod.PUT, "/api/v1/adherents/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
+//                .requestMatchers(HttpMethod.DELETE, "/api/v1/adherents/**").hasRole("ADMIN")
+//                // Endpoints de reporting - Accès SOUSCRIPTEUR
+//                .requestMatchers("/api/v1/reporting/**").hasAnyRole("SOUSCRIPTEUR", "ADMIN")
+//                // Tous les autres endpoints nécessitent une authentification
+//                .anyRequest().authenticated()
 //                )
 //                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                );
-//                // .authenticationProvider(authenticationProvider())
-//                // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//        
+//        // .authenticationProvider(authenticationProvider())
+//        // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//
 //        return http.build();
 //    }
-//    
+//
 //    /**
 //     * Configuration CORS
 //     */
@@ -96,13 +162,13 @@
 //        configuration.setExposedHeaders(List.of("Authorization"));
 //        configuration.setAllowCredentials(true);
 //        configuration.setMaxAge(3600L);
-//        
+//
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 //        source.registerCorsConfiguration("/**", configuration);
-//        
+//
 //        return source;
 //    }
-//    
+//
 //    /**
 //     * Encodeur de mots de passe BCrypt
 //     */
@@ -110,7 +176,7 @@
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
-//    
+//
 //    /**
 //     * Gestionnaire d'authentification
 //     */
@@ -118,10 +184,10 @@
 //    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 //        return config.getAuthenticationManager();
 //    }
-//    
+//
 //    /**
-//     * Fournisseur d'authentification
-//     * Note: Nécessite UserDetailsService à implémenter
+//     * Fournisseur d'authentification Note: Nécessite UserDetailsService à
+//     * implémenter
 //     */
 //    /*
 //    @Bean
@@ -131,5 +197,5 @@
 //        authProvider.setPasswordEncoder(passwordEncoder());
 //        return authProvider;
 //    }
-//    */
-//}
+//     */
+}

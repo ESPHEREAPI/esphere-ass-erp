@@ -45,6 +45,7 @@ E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\bi
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\Dbx45tyZoneMondeLangue.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\Employe.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\FilialeAgence.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\Genre.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\LignePrestation.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\LignePrestationAudit.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\LignePrestationsVues.java
@@ -55,7 +56,16 @@ E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\bi
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\TauxPrestation.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\TypePrestation.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\entites\Utilisateur.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\EnroleType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\Etat_consultationType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\EtatType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\ImprimerType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\Nature_consultationType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\NaturePrestationType.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\StatutType.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\TypeProfils.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\TypeProfilUser.java
+E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\enums\TypeSousProfil.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\exceptions\GlobalExceptionHandler.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\exceptions\UtilisateurException.java
 E:\zenithe\ERP_Projet_Esphere\ESPHERE-ASS\biometrie\biometry\src\main\java\db\biometry\biometry\mapper\MapperDtoImpl.java

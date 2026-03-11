@@ -6,7 +6,6 @@ package db.biometry.biometry.services;
 
 import db.biometry.biometry.dtos.UserDTO;
 import db.biometry.biometry.dtos.UserLogin;
-import db.biometry.biometry.dtos.UtilisateurDto;
 import db.biometry.biometry.exceptions.UtilisateurException;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
  */
 public interface UtilisateurService {
     UserDTO findUserByLogin(UserLogin userLog);
+     UserDTO findSouscripteurByLogin(UserLogin userLog);
     List<UserDTO>listeUtilisateur();
     UserDTO getUser(int userId)throws UtilisateurException;
     List<UserDTO>seacrhUsers(String keyword);

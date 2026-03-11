@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,7 +40,7 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Utilisateur.findAll", query = "SELECT d FROM Utilisateur d"),
     @NamedQuery(name = "Utilisateur.findById", query = "SELECT d FROM Utilisateur d WHERE d.id = :id"),
     @NamedQuery(name = "Utilisateur.findByGenre", query = "SELECT d FROM Utilisateur d WHERE d.genre = :genre"),
-    @NamedQuery(name = "Utilisateur.findByType", query = "SELECT d FROM Utilisateur d WHERE d.type = :type"),
+//    @NamedQuery(name = "Utilisateur.findByType", query = "SELECT d FROM Utilisateur d WHERE d.type = :type"),
     @NamedQuery(name = "Utilisateur.findByNom", query = "SELECT d FROM Utilisateur d WHERE d.nom = :nom"),
     @NamedQuery(name = "Utilisateur.findByPrenom", query = "SELECT d FROM Utilisateur d WHERE d.prenom = :prenom"),
     @NamedQuery(name = "Utilisateur.findByDateNaissance", query = "SELECT d FROM Utilisateur d WHERE d.dateNaissance = :dateNaissance"),
@@ -49,14 +52,15 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Utilisateur.findByLogin", query = "SELECT d FROM Utilisateur d WHERE d.login = :login"),
     @NamedQuery(name = "Utilisateur.findByMotPasse", query = "SELECT d FROM Utilisateur d WHERE d.motPasse = :motPasse"),
     @NamedQuery(name = "Utilisateur.findByStatut", query = "SELECT d FROM Utilisateur d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Utilisateur.findBySupprime", query = "SELECT d FROM Utilisateur d WHERE d.supprime = :supprime"),
-    @NamedQuery(name = "Utilisateur.findByNewsletter", query = "SELECT d FROM Utilisateur d WHERE d.newsletter = :newsletter"),
+//    @NamedQuery(name = "Utilisateur.findBySupprime", query = "SELECT d FROM Utilisateur d WHERE d.supprime = :supprime"),
+//    @NamedQuery(name = "Utilisateur.findByNewsletter", query = "SELECT d FROM Utilisateur d WHERE d.newsletter = :newsletter"),
     @NamedQuery(name = "Utilisateur.findByDateCreation", query = "SELECT d FROM Utilisateur d WHERE d.dateCreation = :dateCreation"),
-    @NamedQuery(name = "Utilisateur.findByOauthProvider", query = "SELECT d FROM Utilisateur d WHERE d.oauthProvider = :oauthProvider"),
-    @NamedQuery(name = "Utilisateur.findByOauthUid", query = "SELECT d FROM Utilisateur d WHERE d.oauthUid = :oauthUid"),
+//    @NamedQuery(name = "Utilisateur.findByOauthProvider", query = "SELECT d FROM Utilisateur d WHERE d.oauthProvider = :oauthProvider"),
+//    @NamedQuery(name = "Utilisateur.findByOauthUid", query = "SELECT d FROM Utilisateur d WHERE d.oauthUid = :oauthUid"),
     @NamedQuery(name = "Utilisateur.findByLocalisation", query = "SELECT d FROM Utilisateur d WHERE d.localisation = :localisation"),
     @NamedQuery(name = "Utilisateur.findByActivite", query = "SELECT d FROM Utilisateur d WHERE d.activite = :activite"),
-    @NamedQuery(name = "Utilisateur.findBySituationMatrimoniale", query = "SELECT d FROM Utilisateur d WHERE d.situationMatrimoniale = :situationMatrimoniale")})
+//    @NamedQuery(name = "Utilisateur.findBySituationMatrimoniale", query = "SELECT d FROM Utilisateur d WHERE d.situationMatrimoniale = :situationMatrimoniale")
+})
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -70,10 +74,11 @@ public class Utilisateur implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "genre")
-    private String genre;
-    @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+      @Enumerated(EnumType.STRING)
+    private Genre genre;
+//    @Basic(optional = false)
+//    @Column(name = "type")
+//    private String type;
     @Column(name = "nom")
     private String nom;
     @Column(name = "prenom")
@@ -98,28 +103,29 @@ public class Utilisateur implements Serializable {
     @Column(name = "mot_passe")
     private String motPasse;
     @Basic(optional = false)
+     @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
-    @Basic(optional = false)
-    @Column(name = "newsletter")
-    private String newsletter;
+    private StatutType statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "newsletter")
+//    private String newsletter;
     @Basic(optional = false)
     @Column(name = "date_creation")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    @Column(name = "oauth_provider")
-    private String oauthProvider;
-    @Column(name = "oauth_uid")
-    private String oauthUid;
+//    @Column(name = "oauth_provider")
+//    private String oauthProvider;
+//    @Column(name = "oauth_uid")
+//    private String oauthUid;
     @Column(name = "localisation")
     private String localisation;
     @Column(name = "activite")
     private String activite;
-    @Column(name = "situation_matrimoniale")
-    private String situationMatrimoniale;
+//    @Column(name = "situation_matrimoniale")
+//    private String situationMatrimoniale;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurId")
     private List<Employe> dbx45tyEmployeList;
     @JoinColumn(name = "langue_defaut", referencedColumnName = "id")
@@ -127,7 +133,7 @@ public class Utilisateur implements Serializable {
     private Dbx45tyLangue langueDefaut;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurId")
     private List<Dbx45tyInternaute> dbx45tyInternauteList;
-    private Boolean actif;
+   //private Boolean actif;
 
     
 }

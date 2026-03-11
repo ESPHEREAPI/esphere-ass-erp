@@ -16,6 +16,7 @@ import db.biometry.biometry.entite.Dbx45tyConsultation;
 import db.biometry.biometry.entite.Dbx45tyPrestataire;
 import db.biometry.biometry.entite.Dbx45tyVisite;
 import db.biometry.biometry.entite.RolePermissions;
+import db.biometry.biometry.entite.Subscribers;
 import db.biometry.biometry.entite.Utilisateur;
 import db.biometry.biometry.repositories.AdherentRepository;
 import db.biometry.biometry.repositories.AyantDroitRepository;
@@ -74,6 +75,19 @@ public class BiometrieMapperImpl implements Serializable{
        userDto.setFirstName(user.getPrenom());
        userDto.setLastname(user.getNom());
        userDto.setTel(user.getTelephone());
+       userDto.setId(user.getId().longValue());
+     
+        return userDto;
+    }
+    
+     public UserDTO formUtilisateur(Subscribers user) {
+        UserDTO userDto = new UserDTO();
+       // BeanUtils.copyProperties(user, userDto);
+       userDto.setUserName(user.getPolicyNumber());
+       userDto.setEmail(user.getEmail());
+       userDto.setFirstName(user.getUsername());
+       userDto.setLastname(user.getFullName());
+       userDto.setTel(user.getPhoneNumber());
        userDto.setId(user.getId().longValue());
      
         return userDto;

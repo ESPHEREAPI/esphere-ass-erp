@@ -34,12 +34,12 @@ import java.util.List;
     @NamedQuery(name = "Dbx45tyMenu.findByNomAction", query = "SELECT d FROM Dbx45tyMenu d WHERE d.nomAction = :nomAction"),
     @NamedQuery(name = "Dbx45tyMenu.findByNumeroOrdre", query = "SELECT d FROM Dbx45tyMenu d WHERE d.numeroOrdre = :numeroOrdre"),
     @NamedQuery(name = "Dbx45tyMenu.findByClassImage", query = "SELECT d FROM Dbx45tyMenu d WHERE d.classImage = :classImage"),
-    @NamedQuery(name = "Dbx45tyMenu.findByType", query = "SELECT d FROM Dbx45tyMenu d WHERE d.type = :type"),
+//    @NamedQuery(name = "Dbx45tyMenu.findByType", query = "SELECT d FROM Dbx45tyMenu d WHERE d.type = :type"),
     @NamedQuery(name = "Dbx45tyMenu.findByPosition", query = "SELECT d FROM Dbx45tyMenu d WHERE d.position = :position"),
-    @NamedQuery(name = "Dbx45tyMenu.findByApparaitNav", query = "SELECT d FROM Dbx45tyMenu d WHERE d.apparaitNav = :apparaitNav"),
-    @NamedQuery(name = "Dbx45tyMenu.findByApparaitNavBar", query = "SELECT d FROM Dbx45tyMenu d WHERE d.apparaitNavBar = :apparaitNavBar"),
-    @NamedQuery(name = "Dbx45tyMenu.findByStatut", query = "SELECT d FROM Dbx45tyMenu d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyMenu.findBySupprime", query = "SELECT d FROM Dbx45tyMenu d WHERE d.supprime = :supprime"),
+//    @NamedQuery(name = "Dbx45tyMenu.findByApparaitNav", query = "SELECT d FROM Dbx45tyMenu d WHERE d.apparaitNav = :apparaitNav"),
+//    @NamedQuery(name = "Dbx45tyMenu.findByApparaitNavBar", query = "SELECT d FROM Dbx45tyMenu d WHERE d.apparaitNavBar = :apparaitNavBar"),
+//    @NamedQuery(name = "Dbx45tyMenu.findByStatut", query = "SELECT d FROM Dbx45tyMenu d WHERE d.statut = :statut"),
+//    @NamedQuery(name = "Dbx45tyMenu.findBySupprime", query = "SELECT d FROM Dbx45tyMenu d WHERE d.supprime = :supprime"),
     @NamedQuery(name = "Dbx45tyMenu.findByCheminPere", query = "SELECT d FROM Dbx45tyMenu d WHERE d.cheminPere = :cheminPere")})
 public class Dbx45tyMenu implements Serializable {
 
@@ -61,24 +61,24 @@ public class Dbx45tyMenu implements Serializable {
     private short numeroOrdre;
     @Column(name = "class_image")
     private String classImage;
-    @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+//    @Basic(optional = false)
+//    @Column(name = "type")
+//    private String type;
     @Basic(optional = false)
     @Column(name = "position")
     private short position;
-    @Basic(optional = false)
-    @Column(name = "apparait_nav")
-    private String apparaitNav;
-    @Basic(optional = false)
-    @Column(name = "apparait_nav_bar")
-    private String apparaitNavBar;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "apparait_nav")
+//    private String apparaitNav;
+//    @Basic(optional = false)
+//    @Column(name = "apparait_nav_bar")
+//    private String apparaitNavBar;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @Column(name = "chemin_pere")
     private String cheminPere;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuId")
@@ -102,12 +102,12 @@ public class Dbx45tyMenu implements Serializable {
         this.id = id;
         this.nomModule = nomModule;
         this.numeroOrdre = numeroOrdre;
-        this.type = type;
+//        this.type = type;
         this.position = position;
-        this.apparaitNav = apparaitNav;
-        this.apparaitNavBar = apparaitNavBar;
-        this.statut = statut;
-        this.supprime = supprime;
+//        this.apparaitNav = apparaitNav;
+//        this.apparaitNavBar = apparaitNavBar;
+//        this.statut = statut;
+//        this.supprime = supprime;
     }
 
     public Integer getId() {
@@ -158,13 +158,13 @@ public class Dbx45tyMenu implements Serializable {
         this.classImage = classImage;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public String getType() {
+//        return type;
+//    }
+//
+//    public void setType(String type) {
+//        this.type = type;
+//    }
 
     public short getPosition() {
         return position;
@@ -174,37 +174,37 @@ public class Dbx45tyMenu implements Serializable {
         this.position = position;
     }
 
-    public String getApparaitNav() {
-        return apparaitNav;
-    }
+//    public String getApparaitNav() {
+//        return apparaitNav;
+//    }
+//
+//    public void setApparaitNav(String apparaitNav) {
+//        this.apparaitNav = apparaitNav;
+//    }
 
-    public void setApparaitNav(String apparaitNav) {
-        this.apparaitNav = apparaitNav;
-    }
+//    public String getApparaitNavBar() {
+//        return apparaitNavBar;
+//    }
+//
+//    public void setApparaitNavBar(String apparaitNavBar) {
+//        this.apparaitNavBar = apparaitNavBar;
+//    }
 
-    public String getApparaitNavBar() {
-        return apparaitNavBar;
-    }
-
-    public void setApparaitNavBar(String apparaitNavBar) {
-        this.apparaitNavBar = apparaitNavBar;
-    }
-
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-    public String getSupprime() {
-        return supprime;
-    }
-
-    public void setSupprime(String supprime) {
-        this.supprime = supprime;
-    }
+//    public String getStatut() {
+//        return statut;
+//    }
+//
+//    public void setStatut(String statut) {
+//        this.statut = statut;
+//    }
+//
+//    public String getSupprime() {
+//        return supprime;
+//    }
+//
+//    public void setSupprime(String supprime) {
+//        this.supprime = supprime;
+//    }
 
     public String getCheminPere() {
         return cheminPere;

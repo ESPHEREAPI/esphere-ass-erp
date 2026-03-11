@@ -4,9 +4,14 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.entites.Dbx45tyAgence.StatutType;
+import db.biometry.biometry.enums.EnroleType;
+import db.biometry.biometry.enums.ImprimerType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -89,17 +94,23 @@ public class Dbx45tyAdherent implements Serializable {
     @Column(name = "groupe")
     private Short groupe;
     @Basic(optional = false)
+    // @Column(name = "enrole")
+    // Si enrole est vraiment un ENUM dans la DB
+    @Enumerated(EnumType.STRING)  // ✅ Utilise le nom de l'enum
     @Column(name = "enrole")
-    private String enrole;
+    private EnroleType enrole;
+    //private String enrole;
     @Column(name = "date_enrole")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnrole;
     @Basic(optional = false)
     @Column(name = "imprime")
-    private String imprime;
+    @Enumerated(EnumType.STRING)
+    private ImprimerType imprime;
     @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
+    private StatutType statut;
     @OneToMany(mappedBy = "codeAdherent")
     private List<Dbx45tyAyantDroit> dbx45tyAyantDroitList;
 
@@ -110,7 +121,7 @@ public class Dbx45tyAdherent implements Serializable {
         this.codeAdherent = codeAdherent;
     }
 
-    public Dbx45tyAdherent(String codeAdherent, int numero, String enrole, String imprime, String statut) {
+    public Dbx45tyAdherent(String codeAdherent, int numero, EnroleType enrole, ImprimerType imprime, StatutType statut) {
         this.codeAdherent = codeAdherent;
         this.numero = numero;
         this.enrole = enrole;
@@ -246,11 +257,11 @@ public class Dbx45tyAdherent implements Serializable {
         this.groupe = groupe;
     }
 
-    public String getEnrole() {
+    public EnroleType getEnrole() {
         return enrole;
     }
 
-    public void setEnrole(String enrole) {
+    public void setEnrole(EnroleType enrole) {
         this.enrole = enrole;
     }
 
@@ -262,19 +273,19 @@ public class Dbx45tyAdherent implements Serializable {
         this.dateEnrole = dateEnrole;
     }
 
-    public String getImprime() {
+    public ImprimerType getImprime() {
         return imprime;
     }
 
-    public void setImprime(String imprime) {
+    public void setImprime(ImprimerType imprime) {
         this.imprime = imprime;
     }
 
-    public String getStatut() {
+    public StatutType getStatut() {
         return statut;
     }
 
-    public void setStatut(String statut) {
+    public void setStatut(StatutType statut) {
         this.statut = statut;
     }
 
@@ -310,5 +321,12 @@ public class Dbx45tyAdherent implements Serializable {
     public String toString() {
         return "db.biometry.biometry.entites.Dbx45tyAdherent[ codeAdherent=" + codeAdherent + " ]";
     }
+
+    // Définir l'enum
+   
+    
+    
+    
+      
     
 }

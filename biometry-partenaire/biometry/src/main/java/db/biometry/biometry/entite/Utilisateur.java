@@ -22,6 +22,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -53,7 +57,7 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "Dbx45tyUtilisateur.findByLocalisation", query = "SELECT d FROM Utilisateur d WHERE d.localisation = :localisation"),
     @NamedQuery(name = "Dbx45tyUtilisateur.findByActivite", query = "SELECT d FROM Utilisateur d WHERE d.activite = :activite"),
     @NamedQuery(name = "Dbx45tyUtilisateur.findBySituationMatrimoniale", query = "SELECT d FROM Utilisateur d WHERE d.situationMatrimoniale = :situationMatrimoniale")})
-public class Utilisateur implements Serializable {
+public class Utilisateur implements Serializable,UserDetails {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -362,5 +366,27 @@ public class Utilisateur implements Serializable {
     public String toString() {
         return "db.biometry.biometry.entite.Dbx45tyUtilisateur[ id=" + id + " ]";
     }
+    
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER,ROLE_ADMIN,ROLE_SOUSCRIPTEUR,ROLE_ADHERENT,ROLE_SERVICE_SANTE,")); // adaptez selon vos rôles
+    }
+
+    @Override
+    public String getPassword() {
+        return motPasse; // ← nom de votre champ password
+    }
+
+    @Override
+    public String getUsername() {
+        return login; // ← nom de votre champ login
+    }
+
+    // Ces 4 méthodes retournent true par défaut (compte actif)
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
     
 }

@@ -4,9 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.EnroleType;
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -58,14 +62,16 @@ public class Dbx45tyAyantDroit implements Serializable {
     @Column(name = "police")
     private String police;
     @Basic(optional = false)
+     @Enumerated(EnumType.STRING)
     @Column(name = "enrole")
-    private String enrole;
+    private EnroleType enrole;
     @Column(name = "date_enrole")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnrole;
     @Basic(optional = false)
     @Column(name = "statut")
-    private String statut;
+     @Enumerated(EnumType.STRING)
+    private StatutType statut;
     @JoinColumn(name = "code_adherent", referencedColumnName = "code_adherent")
     @ManyToOne
     private Dbx45tyAdherent codeAdherent;
@@ -77,7 +83,7 @@ public class Dbx45tyAyantDroit implements Serializable {
         this.codeAyantDroit = codeAyantDroit;
     }
 
-    public Dbx45tyAyantDroit(String codeAyantDroit, String lienpare, String enrole, String statut) {
+    public Dbx45tyAyantDroit(String codeAyantDroit, String lienpare, EnroleType enrole, StatutType statut) {
         this.codeAyantDroit = codeAyantDroit;
         this.lienpare = lienpare;
         this.enrole = enrole;
@@ -140,11 +146,11 @@ public class Dbx45tyAyantDroit implements Serializable {
         this.police = police;
     }
 
-    public String getEnrole() {
+    public EnroleType getEnrole() {
         return enrole;
     }
 
-    public void setEnrole(String enrole) {
+    public void setEnrole(EnroleType enrole) {
         this.enrole = enrole;
     }
 
@@ -157,10 +163,10 @@ public class Dbx45tyAyantDroit implements Serializable {
     }
 
     public String getStatut() {
-        return statut;
+        return statut.toString();
     }
 
-    public void setStatut(String statut) {
+    public void setStatut(StatutType statut) {
         this.statut = statut;
     }
 

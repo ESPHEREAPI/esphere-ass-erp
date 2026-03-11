@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,7 +38,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyVille.findByCode", query = "SELECT d FROM Dbx45tyVille d WHERE d.code = :code"),
     @NamedQuery(name = "Dbx45tyVille.findByCodeZone", query = "SELECT d FROM Dbx45tyVille d WHERE d.codeZone = :codeZone"),
     @NamedQuery(name = "Dbx45tyVille.findByStatut", query = "SELECT d FROM Dbx45tyVille d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyVille.findBySupprime", query = "SELECT d FROM Dbx45tyVille d WHERE d.supprime = :supprime")})
+//    @NamedQuery(name = "Dbx45tyVille.findBySupprime", query = "SELECT d FROM Dbx45tyVille d WHERE d.supprime = :supprime")
+})
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -58,10 +62,11 @@ public class Dbx45tyVille implements Serializable {
     private String codeZone;
     @Basic(optional = false)
     @Column(name = "statut")
-    private String statut;
+     @Enumerated(EnumType.STRING)
+    private StatutType statut;
     @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(mappedBy = "villeId")
     private List<Prestataire> dbx45tyPrestataireList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "villeId")

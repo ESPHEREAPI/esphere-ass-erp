@@ -4,14 +4,18 @@
  */
 package db.biometry.biometry.dtos;
 
+import db.biometry.biometry.enums.ProfilType;
 import java.util.Date;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author USER01
  */
-@Data
+@Getter
+@Setter
 public class UserDTO {
 
     private Long id;
@@ -27,7 +31,7 @@ public class UserDTO {
     private Date createdAt;
     private Date updatedAt;
     private Date lastlogin;
-    private Boolean isActive;
+    private Boolean active;
     private Boolean echeck_connection = Boolean.FALSE;
     private RoleDTO role;
     private ProfilDTO profil;
@@ -39,5 +43,13 @@ public class UserDTO {
     private Long boutiqueid;
 
     private Boolean autorisationDeletes;
+     private ProfilType profilType;
+     private Date effet;
+     private Date echeance;
+
+    public void setActive(boolean active) {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    this.active=active;
+    }
 
 }

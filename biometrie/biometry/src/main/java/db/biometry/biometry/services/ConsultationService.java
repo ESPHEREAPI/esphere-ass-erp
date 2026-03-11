@@ -6,6 +6,8 @@ package db.biometry.biometry.services;
 
 
 import db.biometry.biometry.entites.Dbx45tyConsultation;
+import db.biometry.biometry.enums.Etat_consultationType;
+import db.biometry.biometry.enums.StatutType;
 import db.biometry.biometry.repository.ConsultationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,8 +101,8 @@ public class ConsultationService {
                 throw new IllegalArgumentException("La consultation ne peut pas être nulle");
             }
             
-            if (consultation.getNatureConsultation() == null || 
-                consultation.getNatureConsultation().trim().isEmpty()) {
+            if (consultation.getNatureConsultation() == null 
+                ) {
                 throw new IllegalArgumentException("La nature de la consultation est obligatoire");
             }
             
@@ -110,12 +112,12 @@ public class ConsultationService {
             
             // Par défaut, une nouvelle consultation est en attente
             if (consultation.getEtatConsultation() == null) {
-                consultation.setEtatConsultation("EN_ATTENTE");
+                consultation.setEtatConsultation(Etat_consultationType.attente_validation);
             }
             
             // Par défaut, une consultation n'est pas supprimée
             if (consultation.getSupprime() == null) {
-                consultation.setSupprime(NON_SUPPRIME);
+                consultation.setSupprime(StatutType.UNKNOWN);
             }
             
             // Sauvegarde
@@ -169,7 +171,7 @@ public class ConsultationService {
             
             // Suppression logique
             Dbx45tyConsultation cons = consultation.get();
-            cons.setSupprime("OUI");
+            cons.setSupprime(StatutType.TYPE1);
             consultationRepository.save(cons);
             
         } catch (Exception e) {
@@ -185,7 +187,7 @@ public class ConsultationService {
      * @param nouvelEtat Nouvel état (EN_ATTENTE, ENCAISSE, REJETE, VALIDE)
      * @return Consultation mise à jour
      */
-    public Dbx45tyConsultation changerEtat(Integer id, String nouvelEtat) {
+    public Dbx45tyConsultation changerEtat(Integer id, Etat_consultationType nouvelEtat) {
         try {
             Optional<Dbx45tyConsultation> consultation = consultationRepository.findById(id);
             

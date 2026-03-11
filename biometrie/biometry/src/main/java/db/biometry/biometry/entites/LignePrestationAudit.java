@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NamedQueries({
     @NamedQuery(name = "LignePrestationAudit.findAll", query = "SELECT d FROM LignePrestationAudit d"),
     @NamedQuery(name = "LignePrestationAudit.findById", query = "SELECT d FROM LignePrestationAudit d WHERE d.id = :id"),
-    @NamedQuery(name = "LignePrestationAudit.findByEtatLignePrestation", query = "SELECT d FROM LignePrestationAudit d WHERE d.etatLignePrestation = :etatLignePrestation"),
+    
     @NamedQuery(name = "LignePrestationAudit.findByDate", query = "SELECT d FROM LignePrestationAudit d WHERE d.date = :date")})
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
@@ -48,9 +48,9 @@ public class LignePrestationAudit implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "etat_ligne_prestation")
-    private String etatLignePrestation;
+//    @Basic(optional = false)
+//    @Column(name = "etat_ligne_prestation")
+//    private String etatLignePrestation;
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)

@@ -3,129 +3,109 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package db.biometry.biometry.exceptions;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * Gestionnaire global des exceptions
- * Capture et formate toutes les exceptions de l'application
- * 
- * @author JIATOU FRANCK
- * @version 1.0
- */
-/**
  *
- * @author USER01
+ * @author JIATOU FRANCK
+ * @version 2.0
  */
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler {
-   /**
-     * Gère les exceptions de ressource non trouvée
-     */
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
-            ResourceNotFoundException ex, 
-            WebRequest request) {
-        
-        log.error("Ressource non trouvée: {}", ex.getMessage());
-        
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
-                .error("Ressource non trouvée")
-                .message(ex.getMessage())
-                .path(request.getDescription(false).replace("uri=", ""))
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
-    
-    /**
-     * Gère les exceptions de validation
-     */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    // ── 400 Validation (Spring override) ─────────────────────────────────────
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
-            WebRequest request) {
-        
-        log.error("Erreur de validation: {}", ex.getMessage());
-        
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+        Map<String, String> errors = new LinkedHashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(err -> {
+            String field = (err instanceof FieldError fe) ? fe.getField() : err.getObjectName();
+            errors.put(field, err.getDefaultMessage());
         });
-        
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error("Erreur de validation")
-                .message("Les données fournies sont invalides")
-                .path(request.getDescription(false).replace("uri=", ""))
-                .validationErrors(errors)
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+
+        return buildResponse(HttpStatus.BAD_REQUEST, "Erreur de validation", errors, request);
     }
-    
-    /**
-     * Gère les exceptions d'argument illégal
-     */
+
+    // ── 400 Argument illégal ──────────────────────────────────────────────────
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(
-            IllegalArgumentException ex,
-            WebRequest request) {
-        
+    public ResponseEntity<Object> handleIllegalArgument(
+            IllegalArgumentException ex, WebRequest request) {
         log.error("Argument illégal: {}", ex.getMessage());
-        
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error("Argument invalide")
-                .message(ex.getMessage())
-                .path(request.getDescription(false).replace("uri=", ""))
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), null, request);
     }
-    
-    /**
-     * Gère toutes les autres exceptions non prévues
-     */
+
+    // ── 404 Ressource non trouvée ─────────────────────────────────────────────
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleNotFound(
+            ResourceNotFoundException ex, WebRequest request) {
+        log.error("Ressource non trouvée: {}", ex.getMessage());
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), null, request);
+    }
+
+    // ── 409 Doublon ───────────────────────────────────────────────────────────
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<Object> handleDuplicate(
+            DuplicateResourceException ex, WebRequest request) {
+        log.error("Ressource dupliquée: {}", ex.getMessage());
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), null, request);
+    }
+
+    // ── 410 Token expiré ──────────────────────────────────────────────────────
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<Object> handleTokenExpired(
+            TokenExpiredException ex, WebRequest request) {
+        log.error("Token expiré: {}", ex.getMessage());
+        return buildResponse(HttpStatus.GONE, ex.getMessage(), null, request);
+    }
+
+    // ── 500 Catch-all ─────────────────────────────────────────────────────────
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGlobalException(
-            Exception ex,
-            WebRequest request) {
-        
-        log.error("Erreur inattendue: ", ex);
-        
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .error("Erreur interne du serveur")
-                .message("Une erreur inattendue s'est produite. Veuillez contacter l'administrateur.")
-                .path(request.getDescription(false).replace("uri=", ""))
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+        log.error("Erreur inattendue", ex);
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Une erreur interne s'est produite. Veuillez contacter l'administrateur.",
+                null, request);
     }
-    
+
+    // ── Helper ────────────────────────────────────────────────────────────────
+    private ResponseEntity<Object> buildResponse(
+            HttpStatus status, String message, Object details, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", Instant.now());
+        body.put("status",    status.value());
+        body.put("error",     status.getReasonPhrase());
+        body.put("message",   message);
+        if (details != null) body.put("details", details);
+        body.put("path",      request.getDescription(false).replace("uri=", ""));
+
+        return new ResponseEntity<>(body, status);
+    }
+
     /**
      * Classe interne pour la réponse d'erreur
      */

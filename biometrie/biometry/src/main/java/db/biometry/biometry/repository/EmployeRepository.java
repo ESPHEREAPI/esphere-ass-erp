@@ -28,12 +28,12 @@ public interface EmployeRepository extends JpaRepository<Employe, Integer>{
     /**
      * Recherche un employé par son identifiant de connexion application
      */
-    Optional<Employe> findByConnexionAppli(String connexionAppli);
+   // Optional<Employe> findByConnexionAppli(String connexionAppli);
     
     /**
      * Vérifie si un employé existe avec cet identifiant de connexion
      */
-    boolean existsByConnexionAppli(String connexionAppli);
+  //  boolean existsByConnexionAppli(String connexionAppli);
     
     /**
      * Recherche les employés par prestataire
@@ -72,13 +72,13 @@ public interface EmployeRepository extends JpaRepository<Employe, Integer>{
     /**
      * Recherche les employés actifs (ayant un utilisateur actif)
      */
-    @Query("SELECT e FROM Employe e WHERE e.utilisateurId.actif = true")
+    @Query("SELECT e FROM Employe e WHERE e.utilisateurId.statut = '1'")
     List<Employe> findEmployesActifs();
     
     /**
      * Recherche les employés inactifs
      */
-    @Query("SELECT e FROM Employe e WHERE e.utilisateurId.actif = false")
+    @Query("SELECT e FROM Employe e WHERE e.utilisateurId.statut = '-1'")
     List<Employe> findEmployesInactifs();
     
     /**
@@ -165,11 +165,11 @@ public interface EmployeRepository extends JpaRepository<Employe, Integer>{
            "(:prestataireId IS NULL OR e.prestataireId.id = :prestataireId) AND " +
            "(:profilId IS NULL OR e.profilId.id = :profilId) AND " +
            "(:filialeId IS NULL OR e.filialeAgenceId.id = :filialeId) AND " +
-           "(:actif IS NULL OR e.utilisateurId.actif = :actif)")
+           "(:actif IS NULL OR e.utilisateurId.statut = :actif)")
     List<Employe> findWithFilters(@Param("prestataireId") Integer prestataireId,
                                  @Param("profilId") Integer profilId,
                                  @Param("filialeId") Integer filialeId,
-                                 @Param("actif") Boolean actif);
+                                 @Param("actif") String actif);
     
     /**
      * Recherche textuelle dans les informations de l'employé
@@ -177,7 +177,7 @@ public interface EmployeRepository extends JpaRepository<Employe, Integer>{
      * @return 
      */
     @Query("SELECT e FROM Employe e WHERE " +
-           "LOWER(e.connexionAppli) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+          
            "LOWER(e.utilisateurId.nom) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
            "LOWER(e.utilisateurId.prenom) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
            "LOWER(e.utilisateurId.email) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")

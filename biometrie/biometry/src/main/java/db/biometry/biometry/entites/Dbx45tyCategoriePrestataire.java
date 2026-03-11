@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -47,8 +50,9 @@ public class Dbx45tyCategoriePrestataire implements Serializable {
     @Column(name = "nom")
     private String nom;
     @Basic(optional = false)
+     @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
+    private StatutType statut;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorieId")
     private List<Prestataire> dbx45tyPrestataireList;
 

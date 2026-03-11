@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminLayoutComponentComponent } from "./admin-layout.component/admin-layout.component.component";
+
 import { PrimeNG } from 'primeng/config';
 import { RouterOutlet } from '@angular/router';
 
@@ -16,5 +16,5 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.primeng.ripple.set(true);
   }
-  title = 'adminlte-angular-app';
+  title = 'Biometry-Backend';
 }

@@ -542,6 +542,7 @@ public class DashboardService {
         // TODO: Implémenter la logique en fonction de la structure de vos polices
         // Cette méthode nécessite de récupérer les plafonds depuis TauxPrestationRepository
         // et de les comparer avec les consommations réelles
+       // BigDecimal plafondGlobal=
         return DashboardStatisticsDTO.TauxUtilisationPlafondDTO.builder()
                 .plafondGlobal(BigDecimal.ZERO)
                 .montantUtilise(BigDecimal.ZERO)

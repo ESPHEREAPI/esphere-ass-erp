@@ -4,10 +4,15 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.Etat_consultationType;
+import db.biometry.biometry.enums.Nature_consultationType;
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,8 +46,8 @@ import java.util.List;
     @NamedQuery(name = "Dbx45tyConsultation.findByDate", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.date = :date"),
     @NamedQuery(name = "Dbx45tyConsultation.findByDateValideRejete", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.dateValideRejete = :dateValideRejete"),
     @NamedQuery(name = "Dbx45tyConsultation.findByObservations", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.observations = :observations"),
-    @NamedQuery(name = "Dbx45tyConsultation.findByEtatConsultation", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.etatConsultation = :etatConsultation"),
-    @NamedQuery(name = "Dbx45tyConsultation.findBySupprime", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "Dbx45tyConsultation.findByEtatConsultation", query = "SELECT d FROM Dbx45tyConsultation d WHERE d.etatConsultation = :etatConsultation")
+    })
 public class Dbx45tyConsultation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,8 +60,10 @@ public class Dbx45tyConsultation implements Serializable {
     @Column(name = "taux")
     private Double taux;
     @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
     @Column(name = "nature_consultation")
-    private String natureConsultation;
+    private Nature_consultationType natureConsultation;
+    
     @Column(name = "nature_affection")
     private String natureAffection;
     @Basic(optional = false)
@@ -74,11 +81,13 @@ public class Dbx45tyConsultation implements Serializable {
     @Column(name = "observations")
     private String observations;
     @Basic(optional = false)
+     @Enumerated(EnumType.STRING)
     @Column(name = "etat_consultation")
-    private String etatConsultation;
+    private Etat_consultationType etatConsultation;
     @Basic(optional = false)
     @Column(name = "supprime")
-    private String supprime;
+    @Enumerated(EnumType.STRING)
+    private StatutType supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultationId")
     private List<Dbx45tyConsultationAudit> dbx45tyConsultationAuditList;
     @JoinColumn(name = "employe_valide_rejete_id", referencedColumnName = "id")
@@ -98,13 +107,13 @@ public class Dbx45tyConsultation implements Serializable {
         this.id = id;
     }
 
-    public Dbx45tyConsultation(Integer id, String natureConsultation, double montant, Date date, String etatConsultation, String supprime) {
+    public Dbx45tyConsultation(Integer id, Nature_consultationType natureConsultation, double montant, Date date, Etat_consultationType etatConsultation) {
         this.id = id;
         this.natureConsultation = natureConsultation;
         this.montant = montant;
         this.date = date;
         this.etatConsultation = etatConsultation;
-        this.supprime = supprime;
+       // this.supprime = supprime;
     }
 
     public Integer getId() {
@@ -123,11 +132,11 @@ public class Dbx45tyConsultation implements Serializable {
         this.taux = taux;
     }
 
-    public String getNatureConsultation() {
+    public Nature_consultationType getNatureConsultation() {
         return natureConsultation;
     }
 
-    public void setNatureConsultation(String natureConsultation) {
+    public void setNatureConsultation(Nature_consultationType natureConsultation) {
         this.natureConsultation = natureConsultation;
     }
 
@@ -179,21 +188,22 @@ public class Dbx45tyConsultation implements Serializable {
         this.observations = observations;
     }
 
-    public String getEtatConsultation() {
+    public Etat_consultationType getEtatConsultation() {
         return etatConsultation;
     }
 
-    public void setEtatConsultation(String etatConsultation) {
+    public void setEtatConsultation(Etat_consultationType etatConsultation) {
         this.etatConsultation = etatConsultation;
     }
 
-    public String getSupprime() {
+    public StatutType getSupprime() {
         return supprime;
     }
 
-    public void setSupprime(String supprime) {
+    public void setSupprime(StatutType supprime) {
         this.supprime = supprime;
     }
+
 
     public List<Dbx45tyConsultationAudit> getDbx45tyConsultationAuditList() {
         return dbx45tyConsultationAuditList;

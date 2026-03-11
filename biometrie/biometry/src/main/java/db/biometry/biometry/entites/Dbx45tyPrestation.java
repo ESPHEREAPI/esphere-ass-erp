@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.NaturePrestationType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,7 +41,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyPrestation.findById", query = "SELECT d FROM Dbx45tyPrestation d WHERE d.id = :id"),
     @NamedQuery(name = "Dbx45tyPrestation.findByNaturePrestation", query = "SELECT d FROM Dbx45tyPrestation d WHERE d.naturePrestation = :naturePrestation"),
     @NamedQuery(name = "Dbx45tyPrestation.findByDate", query = "SELECT d FROM Dbx45tyPrestation d WHERE d.date = :date"),
-    @NamedQuery(name = "Dbx45tyPrestation.findBySupprime", query = "SELECT d FROM Dbx45tyPrestation d WHERE d.supprime = :supprime")})
+//    @NamedQuery(name = "Dbx45tyPrestation.findBySupprime", query = "SELECT d FROM Dbx45tyPrestation d WHERE d.supprime = :supprime")
+})
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -53,14 +57,15 @@ public class Dbx45tyPrestation implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "nature_prestation")
-    private String naturePrestation;
+    @Enumerated(EnumType.STRING)
+    private NaturePrestationType naturePrestation;
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @JoinColumn(name = "prestataire_id", referencedColumnName = "id")
     @ManyToOne
     private Prestataire prestataireId;

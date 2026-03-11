@@ -29,7 +29,7 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Dbx45tyConsultationAudit.findAll", query = "SELECT d FROM Dbx45tyConsultationAudit d"),
     @NamedQuery(name = "Dbx45tyConsultationAudit.findById", query = "SELECT d FROM Dbx45tyConsultationAudit d WHERE d.id = :id"),
-    @NamedQuery(name = "Dbx45tyConsultationAudit.findByEtatConsultation", query = "SELECT d FROM Dbx45tyConsultationAudit d WHERE d.etatConsultation = :etatConsultation"),
+   
     @NamedQuery(name = "Dbx45tyConsultationAudit.findByDate", query = "SELECT d FROM Dbx45tyConsultationAudit d WHERE d.date = :date")})
 public class Dbx45tyConsultationAudit implements Serializable {
 
@@ -39,9 +39,9 @@ public class Dbx45tyConsultationAudit implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "etat_consultation")
-    private String etatConsultation;
+//    @Basic(optional = false)
+//    @Column(name = "etat_consultation")
+//    private String etatConsultation;
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,7 +62,7 @@ public class Dbx45tyConsultationAudit implements Serializable {
 
     public Dbx45tyConsultationAudit(Integer id, String etatConsultation, Date date) {
         this.id = id;
-        this.etatConsultation = etatConsultation;
+//        this.etatConsultation = etatConsultation;
         this.date = date;
     }
 
@@ -74,13 +74,13 @@ public class Dbx45tyConsultationAudit implements Serializable {
         this.id = id;
     }
 
-    public String getEtatConsultation() {
-        return etatConsultation;
-    }
-
-    public void setEtatConsultation(String etatConsultation) {
-        this.etatConsultation = etatConsultation;
-    }
+//    public String getEtatConsultation() {
+//        return etatConsultation;
+//    }
+//
+//    public void setEtatConsultation(String etatConsultation) {
+//        this.etatConsultation = etatConsultation;
+//    }
 
     public Date getDate() {
         return date;

@@ -6,6 +6,9 @@ package db.biometry.biometry.services;
 
 
 import db.biometry.biometry.entites.LignePrestation;
+import db.biometry.biometry.enums.EtatType;
+import db.biometry.biometry.enums.Etat_consultationType;
+import db.biometry.biometry.enums.StatutType;
 import db.biometry.biometry.repository.LignePrestationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,13 +142,13 @@ public class LignePrestationService {
             
             // Par défaut, une nouvelle ligne est en attente
             if (lignePrestation.getEtat() == null) {
-                lignePrestation.setEtat("EN_ATTENTE");
+                lignePrestation.setEtat(EtatType.attente_validation);
             }
             
-            // Par défaut, une ligne n'est pas supprimée
-            if (lignePrestation.getSupprime() == null) {
-                lignePrestation.setSupprime(NON_SUPPRIME);
-            }
+//            // Par défaut, une ligne n'est pas supprimée
+//            if (lignePrestation.getSupprime() == null) {
+//                lignePrestation.setSupprime(NON_SUPPRIME);
+//            }
             
             // Sauvegarde
             return lignePrestationRepository.save(lignePrestation);
@@ -198,7 +201,7 @@ public class LignePrestationService {
             
             // Suppression logique
             LignePrestation ligne = lignePrestation.get();
-            ligne.setSupprime("OUI");
+           // ligne.setSupprime(StatutType.TYPE1);
             lignePrestationRepository.save(ligne);
             
         } catch (Exception e) {
@@ -214,7 +217,7 @@ public class LignePrestationService {
      * @param nouvelEtat Nouvel état (EN_ATTENTE, ENCAISSE, REJETE, VALIDE)
      * @return Ligne de prestation mise à jour
      */
-    public LignePrestation changerEtat(Integer id, String nouvelEtat) {
+    public LignePrestation changerEtat(Integer id, EtatType nouvelEtat) {
         try {
             Optional<LignePrestation> lignePrestation = lignePrestationRepository.findById(id);
             
@@ -253,7 +256,7 @@ public class LignePrestationService {
         int count = 0;
         try {
             for (Integer id : ids) {
-                changerEtat(id, "valide");
+                changerEtat(id, EtatType.valide);
                 count++;
             }
             return count;
@@ -273,7 +276,7 @@ public class LignePrestationService {
         int count = 0;
         try {
             for (Integer id : ids) {
-                changerEtat(id, "encaisse");
+                changerEtat(id, EtatType.encaisse);
                 count++;
             }
             return count;

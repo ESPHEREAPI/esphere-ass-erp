@@ -4,18 +4,20 @@
  */
 package db.biometry.biometry.dtos;
 
-
 import java.io.Serializable;
 import lombok.Data;
+import db.biometry.biometry.enums.ProfilType;
 
 /**
  *
  * @author JIATOU FRANCK
  */
 @Data
-public class UserLogin implements Serializable{
+public class UserLogin implements Serializable {
+
     private int id;
-  private String userName;
-  private   String passWord;
-  
+    private String userName;
+    private String passWord;
+    private ProfilType profilType;
+
 }

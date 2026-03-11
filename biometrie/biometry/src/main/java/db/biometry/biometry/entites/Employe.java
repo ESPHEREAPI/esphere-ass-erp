@@ -33,8 +33,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "dbx45ty_employe")
 @NamedQueries({
     @NamedQuery(name = "Dbx45tyEmploye.findAll", query = "SELECT d FROM Employe d"),
-    @NamedQuery(name = "Dbx45tyEmploye.findById", query = "SELECT d FROM Employe d WHERE d.id = :id"),
-    @NamedQuery(name = "Dbx45tyEmploye.findByConnexionAppli", query = "SELECT d FROM Employe d WHERE d.connexionAppli = :connexionAppli")})
+    @NamedQuery(name = "Dbx45tyEmploye.findById", query = "SELECT d FROM Employe d WHERE d.id = :id")
+  })
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -49,8 +49,8 @@ public class Employe implements Serializable {
     @Column(name = "id", nullable = false, updatable = false)
     private Integer id;
 
-    @Column(name = "connexion_appli", nullable = false)
-    private String connexionAppli;
+//    @Column(name = "connexion_appli", nullable = false)
+//    private String connexionAppli;
 
     @ManyToOne
     @JoinColumn(name = "filiale_agence_id", referencedColumnName = "id")

@@ -8,6 +8,8 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,8 +42,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyAgence.findByCode", query = "SELECT d FROM Dbx45tyAgence d WHERE d.code = :code"),
     @NamedQuery(name = "Dbx45tyAgence.findByDateCreation", query = "SELECT d FROM Dbx45tyAgence d WHERE d.dateCreation = :dateCreation"),
     @NamedQuery(name = "Dbx45tyAgence.findBySiteWeb", query = "SELECT d FROM Dbx45tyAgence d WHERE d.siteWeb = :siteWeb"),
-    @NamedQuery(name = "Dbx45tyAgence.findByStatut", query = "SELECT d FROM Dbx45tyAgence d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyAgence.findBySupprime", query = "SELECT d FROM Dbx45tyAgence d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "Dbx45tyAgence.findByStatut", query = "SELECT d FROM Dbx45tyAgence d WHERE d.statut = :statut")
+    })
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -66,11 +68,12 @@ public class Dbx45tyAgence implements Serializable {
     @Column(name = "site_web")
     private String siteWeb;
     @Basic(optional = false)
+     @Enumerated(EnumType.STRING) 
     @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+    private StatutType statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agenceId")
     private List<FilialeAgence> dbx45tyFilialeAgenceList;
     @JoinColumn(name = "siege_social_id", referencedColumnName = "id")
@@ -78,5 +81,21 @@ public class Dbx45tyAgence implements Serializable {
     private FilialeAgence siegeSocialId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agenceId")
     private List<Dbx45tyAgenceLangue> dbx45tyAgenceLangueList;
+    
+     public enum StatutType {
+    UNKNOWN(-1),
+    TYPE1(1);
+    //TYPE2(2);
+
+    private final int value;
+
+    StatutType(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
 
 }

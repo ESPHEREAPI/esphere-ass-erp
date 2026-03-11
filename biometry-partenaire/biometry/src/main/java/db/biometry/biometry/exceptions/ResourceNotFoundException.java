@@ -24,4 +24,10 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }    
+    public ResourceNotFoundException(String resource, Long id) {
+        super(resource + " avec l'ID " + id + " introuvable");
+    }
+    public ResourceNotFoundException(String resource, String email) {
+        super(resource + " avec l'Email " + email + " introuvable");
+    }
 }

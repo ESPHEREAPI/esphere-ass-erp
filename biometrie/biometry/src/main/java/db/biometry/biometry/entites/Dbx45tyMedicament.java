@@ -36,10 +36,7 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Dbx45tyMedicament.findByNom", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.nom = :nom"),
     @NamedQuery(name = "Dbx45tyMedicament.findByOrigine", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.origine = :origine"),
     @NamedQuery(name = "Dbx45tyMedicament.findByPrix", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.prix = :prix"),
-    @NamedQuery(name = "Dbx45tyMedicament.findByQuantite", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.quantite = :quantite"),
-    @NamedQuery(name = "Dbx45tyMedicament.findByCategorie", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.categorie = :categorie"),
-    @NamedQuery(name = "Dbx45tyMedicament.findByStatut", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Dbx45tyMedicament.findBySupprime", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.supprime = :supprime")})
+    @NamedQuery(name = "Dbx45tyMedicament.findByQuantite", query = "SELECT d FROM Dbx45tyMedicament d WHERE d.quantite = :quantite")})
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
 @AllArgsConstructor         // Génère constructeur avec tous les champs
@@ -64,15 +61,15 @@ public class Dbx45tyMedicament implements Serializable {
     private Double prix;
     @Column(name = "quantite")
     private Double quantite;
-    @Basic(optional = false)
-    @Column(name = "categorie")
-    private String categorie;
-    @Basic(optional = false)
-    @Column(name = "statut")
-    private String statut;
-    @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Basic(optional = false)
+//    @Column(name = "categorie")
+//    private String categorie;
+//    @Basic(optional = false)
+//    @Column(name = "statut")
+//    private String statut;
+//    @Basic(optional = false)
+//    @Column(name = "supprime")
+//    private String supprime;
     @JoinColumn(name = "prestataire_id", referencedColumnName = "id")
     @ManyToOne
     private Prestataire prestataireId;

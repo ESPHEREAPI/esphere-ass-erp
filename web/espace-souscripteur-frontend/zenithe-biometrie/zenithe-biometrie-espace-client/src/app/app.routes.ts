@@ -1,21 +1,26 @@
 import { Routes } from '@angular/router';
-import { AdminLayoutComponentComponent } from './admin-layout.component/admin-layout.component.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginComponent } from './module-users/login/login.component';
-import { UsersComponent } from './module-users/users/users.component';
-import { AuthGuard } from './auth/auth.guard';
-import { RoleGuard } from './auth/role-guard';
-import { UserListComponent } from './user-manager/user-list/user-list.component';
-import { UserFormComponent } from './user-manager/user-form/user-form.component';
-import { UserDetailComponent } from './user-manager/user-detail/user-detail.component';
-import { GeneralSettingsComponent } from './module-users/general-settings/general-settings.component';
-import { SecuritySettingsComponent } from './module-users/security-settings/security-settings.component';
-import { UserRoleComponent } from './user-manager/user-role/user-role.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AdherentListComponent } from './pages/adherent-list/adherent-list.component';
-import { AdherentFormComponent } from './pages/adherent-form/adherent-form.component';
-import { AdherentProfileComponent } from './pages/adherent-profile/adherent-profile.component';
-import { DetailConsomationAdherentComponent } from './pages/detail-consomation-adherent/detail-consomation-adherent.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { HomeComponent } from './features/home/home.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
+import { ContactUsComponent } from './features/auth/contact-us/contact-us.component';
+import { AuthGuard } from './core/auth/auth.guard';
+import { AdminLayoutComponentComponent } from './shared/admin-layout.component/admin-layout.component.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { AdherentListComponent } from './features/adherent-list/adherent-list.component';
+import { AdherentFormComponent } from './features/adherent-form/adherent-form.component';
+import { AdherentProfileComponent } from './features/adherent-profile/adherent-profile.component';
+import { DetailConsomationAdherentComponent } from './features/detail-consomation-adherent/detail-consomation-adherent.component';
+import { UserRoleComponent } from './features/user-manager/user-role/user-role.component';
+import { RoleGuard } from './core/auth/role-guard';
+import { UserFormComponent } from './features/user-manager/user-form/user-form.component';
+import { UserDetailComponent } from './features/user-manager/user-detail/user-detail.component';
+import { GeneralSettingsComponent } from './features/general-settings/general-settings.component';
+import { SecuritySettingsComponent } from './features/security-settings/security-settings.component';
+import { SubscriberListComponent } from './features/souscripteur/subscriber-list/subscriber-list.component';
+import { SubscriberPageComponent } from './features/souscripteur/subscriber-page/subscriber-page.component';
+import { SubscriberDetailComponent } from './features/souscripteur/subscriber-detail/subscriber-detail.component';
+import { ActivateComponent } from './features/auth/activate/activate.component';
+
 
 export const routes: Routes = [
   // ✅ Route de login SANS protection (accessible à tous)
@@ -23,13 +28,17 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  
+
   // ✅ Route home publique
   {
     path: 'home',
     component: HomeComponent
   },
-  
+
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'contact-us', component: ContactUsComponent },
+   {path: 'activate', component: ActivateComponent },
+
   // ✅ Routes protégées sous AdminLayout
   {
     path: '',
@@ -37,14 +46,14 @@ export const routes: Routes = [
     component: AdminLayoutComponentComponent,
     children: [
       // Redirection par défaut vers dashboard
-      { 
-        path: '', 
-        redirectTo: 'dashboard', 
-        pathMatch: 'full' 
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
       },
-      { 
-        path: 'dashboard', 
-        component: DashboardComponent 
+      {
+        path: 'dashboard',
+        component: DashboardComponent
       },
       {
         path: 'adherents',
@@ -117,15 +126,11 @@ export const routes: Routes = [
           permissionCheckMethod: 'any'
         }
       },
-      {
-        path: 'general',
-        component: GeneralSettingsComponent,
-        canActivate: [RoleGuard],
-        data: {
-          permissions: ['READ'],
-          permissionCheckMethod: 'any'
-        }
-      },
+      { path: 'subscribers', component: SubscriberListComponent },
+      { path: 'subscribers/new', component: SubscriberPageComponent },
+      { path: 'subscribers/edit/:id', component: SubscriberPageComponent },
+      { path: 'subscribers/:id', component: SubscriberDetailComponent }, 
+      
       {
         path: 'security',
         component: SecuritySettingsComponent,
@@ -137,7 +142,7 @@ export const routes: Routes = [
       }
     ]
   },
-  
+
   // ✅ Route wildcard pour capturer les URLs invalides
   {
     path: '**',

@@ -4,10 +4,13 @@
  */
 package db.biometry.biometry.entites;
 
+import db.biometry.biometry.enums.StatutType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -38,7 +41,8 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name = "Prestataire.findByRegistre", query = "SELECT d FROM Prestataire d WHERE d.registre = :registre"),
     @NamedQuery(name = "Prestataire.findByLogo", query = "SELECT d FROM Prestataire d WHERE d.logo = :logo"),
     @NamedQuery(name = "Prestataire.findByStatut", query = "SELECT d FROM Prestataire d WHERE d.statut = :statut"),
-    @NamedQuery(name = "Prestataire.findBySupprime", query = "SELECT d FROM Prestataire d WHERE d.supprime = :supprime")})
+    //@NamedQuery(name = "Prestataire.findBySupprime", query = "SELECT d FROM Prestataire d WHERE d.supprime = :supprime")
+})
 
 @Data                       // Génère getters, setters, equals, hashCode, toString
 @NoArgsConstructor          // Génère constructeur vide
@@ -64,11 +68,12 @@ public class Prestataire implements Serializable {
     @Column(name = "logo")
     private String logo;
     @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
+    private StatutType statut;
     @Basic(optional = false)
-    @Column(name = "supprime")
-    private String supprime;
+//    @Column(name = "supprime")
+//    private String supprime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "prestataireId")
     private List<Employe> dbx45tyEmployeList;
     @OneToMany(mappedBy = "prestataireId")
@@ -83,5 +88,5 @@ public class Prestataire implements Serializable {
     private List<Dbx45tyPrestation> dbx45tyPrestationList;
     @OneToMany(mappedBy = "prestataireId")
     private List<LignePrestation> dbx45tyLignePrestationList;
-    
+
 }
