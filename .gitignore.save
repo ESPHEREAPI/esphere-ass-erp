@@ -1,1 +1,60 @@
 
+
+# ===========================
+# Fichiers SQL volumineux
+# ===========================
+*.sql
+*.sql.gz
+*.dump
+
+# ===========================
+# Java / Maven / Gradle
+# ===========================
+target/
+*.jar
+*.war
+*.ear
+*.class
+*.log
+
+# ===========================
+# Biométrie / Données sensibles
+# ===========================
+biometry*.sql
+biometry (12).sql
+biometrie/biometry/target/
+
+# ===========================
+# IDE & Éditeurs
+# ===========================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Node.js (si applicable)
+# ===========================
+node_modules/
+dist/
+.env
+.env.local
+
+# ===========================
+# Logs & temporaires
+# ===========================
+*.log
+*.tmp
+*.bak
+*.swp
